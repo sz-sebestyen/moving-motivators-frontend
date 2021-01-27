@@ -1,5 +1,5 @@
 import "./style.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const uuidList = (length) =>
@@ -32,9 +32,9 @@ const MMCard = (props) => {
   return (
     <div
       className="MMCard"
-      onDragStart={(event) => props.handleDragStart(event, props.value)}
-      draggable
       style={{ backgroundColor: cardMap[props.card.type] }}
+      draggable
+      onDragStart={(event) => props.handleDragStart(event, props.value)}
     ></div>
   );
 };
@@ -46,20 +46,18 @@ const MMBColumn = (props) => {
 
   const handleDrop = (event, targetValue) => {
     event.preventDefault();
-    const startTargetValue = +event.dataTransfer.getData("targetValue");
-    const startTargetIndex = +event.dataTransfer.getData("targetIndex");
-    console.log("startValue: ", startTargetValue);
-    if (startTargetValue !== undefined) {
-      //props.changeValue(props.index, targetValue);
-      console.log("setValue");
-      props.changeCardsOrder(startTargetIndex, props.index, targetValue);
-    }
+    const startTargetValue = event.dataTransfer.getData("targetValue");
+    const startTargetIndex = event.dataTransfer.getData("targetIndex");
     event.dataTransfer.clearData();
+
+    if (startTargetValue) {
+      props.changeCardsOrder(+startTargetIndex, props.index, targetValue);
+    }
   };
 
   const handleDragStart = (event, targetValue) => {
-    event.dataTransfer.setData("targetValue", targetValue.toString());
-    event.dataTransfer.setData("targetIndex", props.index.toString());
+    event.dataTransfer.setData("targetValue", targetValue);
+    event.dataTransfer.setData("targetIndex", props.index);
   };
 
   return (
@@ -92,29 +90,15 @@ const MMBCKeys = uuidList(10);
 
 const MMBoard = (props) => {
   console.log("render MMBoard");
+
   const [cards, setCards] = useState(getCards());
 
-  /*   const changeValue = (index, value) => {
-    setCards((prevState) => {
-      const newState = JSON.parse(JSON.stringify(prevState));
-      newState[index].value = value;
-      return newState;
-    });
-  }; */
-
   const changeCardsOrder = (startIndex, endIndex, value) => {
-    console.log({ startIndex, endIndex, value });
-
-    /*     if (startIndex === endIndex) {
-      changeValue(endIndex, value);
-    } else {
-    } */
     setCards((prevState) => {
       const movedCardType = prevState[startIndex].type;
-      console.log(prevState);
 
-      const newState = [];
       const endIndexIsSmaller = Math.min(startIndex, endIndex) === endIndex;
+      const newState = [];
       prevState.forEach((card, index) => {
         if (endIndexIsSmaller && index === endIndex)
           newState.push({ type: movedCardType, value });
@@ -124,7 +108,6 @@ const MMBoard = (props) => {
           newState.push({ type: movedCardType, value });
       });
 
-      console.log(newState);
       return newState;
     });
   };
@@ -139,7 +122,6 @@ const MMBoard = (props) => {
             index={index}
             card={cards[index]}
             changeCardsOrder={changeCardsOrder}
-            /* changeValue={changeValue} */
           />
         ))}
     </div>
