@@ -1,0 +1,23 @@
+.mmb {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  background-color: #3e3e3e;
+  height: 400px;
+}
+
+.MMBColumn {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  border-right: 1px dashed white;
+}
+
+.mmbTile {
+  border: 1px dashed teal;
+  padding: 4px;
+}
+
+.dummy,
+.MMCard {
+  height: 100%;
+  background-color: thistle;
+}
