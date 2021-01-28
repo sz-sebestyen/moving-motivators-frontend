@@ -2,12 +2,36 @@ import "./style.css";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import cardIMG0 from "../../images/card-acceptance.png";
+import cardIMG1 from "../../images/card-curiosity.png";
+import cardIMG2 from "../../images/card-freedom.png";
+import cardIMG3 from "../../images/card-goal.png";
+import cardIMG4 from "../../images/card-honor.png";
+import cardIMG5 from "../../images/card-mastery.png";
+import cardIMG6 from "../../images/card-order.png";
+import cardIMG7 from "../../images/card-power.png";
+import cardIMG8 from "../../images/card-relatedness.png";
+import cardIMG9 from "../../images/card-status.png";
+
 const uuidList = (length) =>
   Array(length)
     .fill()
     .map(() => uuidv4());
 
 const cardMap = [
+  cardIMG0,
+  cardIMG1,
+  cardIMG2,
+  cardIMG3,
+  cardIMG4,
+  cardIMG5,
+  cardIMG6,
+  cardIMG7,
+  cardIMG8,
+  cardIMG9,
+];
+
+/* [
   "#001122",
   "#112233",
   "#223344",
@@ -18,12 +42,12 @@ const cardMap = [
   "#778899",
   "#8899aa",
   "#99aabb",
-];
+]; */
 
 const getCards = () => {
   return Array(10)
     .fill()
-    .map((_, index) => ({ type: index, value: index % 3 }));
+    .map((_, index) => ({ type: index, value: 1 }));
 };
 
 const MMCard = (props) => {
@@ -32,10 +56,21 @@ const MMCard = (props) => {
   return (
     <div
       className="MMCard"
-      style={{ backgroundColor: cardMap[props.card.type] }}
       draggable
       onDragStart={(event) => props.handleDragStart(event, props.value)}
-    ></div>
+    >
+      <img
+        src={cardMap[props.card.type]}
+        alt="card"
+        style={{
+          width: "100%",
+          objectFit: "contain",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      />
+    </div>
   );
 };
 
@@ -48,7 +83,11 @@ const MMBColumn = (props) => {
     event.preventDefault();
     const startTargetValue = event.dataTransfer.getData("targetValue");
     const startTargetIndex = event.dataTransfer.getData("targetIndex");
-    event.dataTransfer.clearData();
+    console.log(
+      event.dataTransfer.getData("targetValue"),
+      event.dataTransfer.getData("targetIndex")
+    );
+    //event.dataTransfer.clearData();
 
     if (startTargetValue) {
       props.changeCardsOrder(+startTargetIndex, props.index, targetValue);
