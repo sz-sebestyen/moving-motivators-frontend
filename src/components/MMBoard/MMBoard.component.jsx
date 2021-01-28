@@ -161,6 +161,7 @@ const MMBoard = (props) => {
             index={index}
             card={cards[index]}
             changeCardsOrder={changeCardsOrder}
+            onDragStart={(event) => event.preventDefault()}
           />
         ))}
     </div>
