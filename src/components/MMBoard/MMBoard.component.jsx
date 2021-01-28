@@ -54,23 +54,20 @@ const MMCard = (props) => {
   console.log("render MMCard");
 
   return (
-    <div
+    <img
       className="MMCard"
       draggable
       onDragStart={(event) => props.handleDragStart(event, props.value)}
-    >
-      <img
-        src={cardMap[props.card.type]}
-        alt="card"
-        style={{
-          width: "100%",
-          objectFit: "contain",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      />
-    </div>
+      src={cardMap[props.card.type]}
+      alt="card"
+      style={{
+        width: "100%",
+        objectFit: "contain",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    />
   );
 };
 
@@ -80,6 +77,7 @@ const MMBColumn = (props) => {
   console.log("render MMBColumn");
 
   const handleDrop = (event, targetValue) => {
+    event.stopPropagation();
     event.preventDefault();
     const startTargetValue = event.dataTransfer.getData("targetValue");
     const startTargetIndex = event.dataTransfer.getData("targetIndex");
@@ -87,7 +85,7 @@ const MMBColumn = (props) => {
       event.dataTransfer.getData("targetValue"),
       event.dataTransfer.getData("targetIndex")
     );
-    //event.dataTransfer.clearData();
+    event.dataTransfer.clearData();
 
     if (startTargetValue) {
       props.changeCardsOrder(+startTargetIndex, props.index, targetValue);
@@ -95,6 +93,7 @@ const MMBColumn = (props) => {
   };
 
   const handleDragStart = (event, targetValue) => {
+    event.stopPropagation();
     event.dataTransfer.setData("targetValue", targetValue);
     event.dataTransfer.setData("targetIndex", props.index);
   };
@@ -111,6 +110,7 @@ const MMBColumn = (props) => {
             onDragOver={(event) => {
               event.preventDefault();
             }}
+            onDragStart={(event) => event.preventDefault()}
           >
             {index === props.card.value && (
               <MMCard
