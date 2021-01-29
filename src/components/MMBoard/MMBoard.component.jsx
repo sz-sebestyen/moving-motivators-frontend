@@ -79,23 +79,16 @@ const MMBColumn = (props) => {
   const handleDrop = (event, targetValue) => {
     event.stopPropagation();
     event.preventDefault();
-    const startTargetValue = event.dataTransfer.getData("targetValue");
-    const startTargetIndex = event.dataTransfer.getData("targetIndex");
-    console.log(
-      event.dataTransfer.getData("targetValue"),
-      event.dataTransfer.getData("targetIndex")
-    );
-    event.dataTransfer.clearData();
 
-    if (startTargetValue) {
-      props.changeCardsOrder(+startTargetIndex, props.index, targetValue);
+    if (props.dragTarget.value !== undefined) {
+      props.changeCardsOrder(props.dragTarget.index, props.index, targetValue);
     }
+    props.setDragTarget({ value: undefined, index: undefined });
   };
 
   const handleDragStart = (event, targetValue) => {
     event.stopPropagation();
-    event.dataTransfer.setData("targetValue", targetValue);
-    event.dataTransfer.setData("targetIndex", props.index);
+    props.setDragTarget({ value: targetValue, index: props.index });
   };
 
   return (
@@ -151,6 +144,11 @@ const MMBoard = (props) => {
     });
   };
 
+  const [dragTarget, setDragTarget] = useState({
+    value: undefined,
+    index: undefined,
+  });
+
   return (
     <div className="mmb">
       {Array(10)
@@ -162,6 +160,8 @@ const MMBoard = (props) => {
             card={cards[index]}
             changeCardsOrder={changeCardsOrder}
             onDragStart={(event) => event.preventDefault()}
+            dragTarget={dragTarget}
+            setDragTarget={setDragTarget}
           />
         ))}
     </div>
