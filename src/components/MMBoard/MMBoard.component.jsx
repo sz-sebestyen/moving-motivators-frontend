@@ -1,5 +1,5 @@
 import "./style.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import cardIMG0 from "../../images/card-acceptance.png";
@@ -51,7 +51,7 @@ const getCards = () => {
 };
 
 const MMCard = (props) => {
-  console.log("render MMCard");
+  // console.log("render MMCard");
 
   return (
     <img
@@ -74,40 +74,60 @@ const MMCard = (props) => {
 const MMBTKeys = uuidList(3);
 
 const MMBColumn = (props) => {
-  console.log("render MMBColumn");
+  // console.log("render MMBColumn");
 
-  const handleDrop = (event, targetValue) => {
+  const updateCards = (event, targetValue, isDrop = true) => {
     event.stopPropagation();
     event.preventDefault();
 
     if (props.dragTarget.value !== undefined) {
       props.changeCardsOrder(props.dragTarget.index, props.index, targetValue);
     }
-    props.setDragTarget({ value: undefined, index: undefined });
+
+    if (isDrop)
+      props.setDragTarget({
+        value: undefined,
+        index: undefined,
+      });
+    else
+      props.setDragTarget({
+        value: targetValue,
+        index: props.index,
+      });
   };
 
   const handleDragStart = (event, targetValue) => {
     event.stopPropagation();
-    props.setDragTarget({ value: targetValue, index: props.index });
+    props.setDragTarget({
+      value: targetValue,
+      index: props.index,
+    });
   };
 
   return (
     <div className="MMBColumn">
       {Array(3)
         .fill()
-        .map((_, index) => (
+        .map((_, value) => (
           <div
             className="mmbTile"
-            key={MMBTKeys[index]}
-            onDrop={(event) => handleDrop(event, index)}
-            onDragOver={(event) => {
-              event.preventDefault();
+            key={MMBTKeys[value]}
+            onDrop={(event) => updateCards(event, value)}
+            onDragEnter={(event) => {
+              if (
+                props.dragEnterTarget.value !== value ||
+                props.dragEnterTarget.index !== props.index
+              ) {
+                props.setDragEnterTarget({ value, index: props.index });
+                updateCards(event, value, false);
+              }
             }}
+            onDragOver={(event) => event.preventDefault()}
             onDragStart={(event) => event.preventDefault()}
           >
-            {index === props.card.value && (
+            {value === props.card.value && (
               <MMCard
-                value={index}
+                value={value}
                 card={props.card}
                 handleDragStart={handleDragStart}
               ></MMCard>
@@ -121,7 +141,7 @@ const MMBColumn = (props) => {
 const MMBCKeys = uuidList(10);
 
 const MMBoard = (props) => {
-  console.log("render MMBoard");
+  // console.log("render MMBoard");
 
   const [cards, setCards] = useState(getCards());
 
@@ -149,6 +169,11 @@ const MMBoard = (props) => {
     index: undefined,
   });
 
+  const [dragEnterTarget, setDragEnterTarget] = useState({
+    value: undefined,
+    index: undefined,
+  });
+
   return (
     <div className="mmb">
       {Array(10)
@@ -162,6 +187,8 @@ const MMBoard = (props) => {
             onDragStart={(event) => event.preventDefault()}
             dragTarget={dragTarget}
             setDragTarget={setDragTarget}
+            dragEnterTarget={dragEnterTarget}
+            setDragEnterTarget={setDragEnterTarget}
           />
         ))}
     </div>
