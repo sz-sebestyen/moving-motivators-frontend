@@ -48,6 +48,7 @@ const MMCard = (props) => {
       src={cardMap[props.type]}
       onDragStart={(event) => {
         event.stopPropagation();
+        event.dataTransfer.effectAllowed = "move";
         props.setDragTarget(props.card.index);
         const box = event.target.getBoundingClientRect();
         props.setDragOffset({
@@ -107,6 +108,7 @@ const MMBoard = (props) => {
 
   const handleDragOver = (event) => {
     event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
     const [index, value] = getDropCoords(event, mmb.current, dragOffset);
     if (
       (dragOverTarget.value !== value || dragOverTarget.index !== index) &&
