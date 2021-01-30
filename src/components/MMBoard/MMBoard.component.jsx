@@ -13,6 +13,8 @@ import cardIMG7 from "../../images/card-power.png";
 import cardIMG8 from "../../images/card-relatedness.png";
 import cardIMG9 from "../../images/card-status.png";
 
+import dragnone from "../../images/dragnone.png";
+
 const uuidList = (length) =>
   Array(length)
     .fill()
@@ -78,6 +80,18 @@ const MMBColumn = (props) => {
   };
 
   const handleDragStart = (event, targetValue) => {
+    // console.log(event);
+    // console.log(event.target.getBoundingClientRect());
+    const targetBox = event.target.getBoundingClientRect();
+    const img = new Image();
+    img.src = dragnone;
+    event.dataTransfer.setDragImage(
+      img,
+      0,
+      -10
+      // event.clientX - targetBox.x,
+      // event.clientY - targetBox.y
+    );
     event.stopPropagation();
     props.setDragTarget({
       value: targetValue,
