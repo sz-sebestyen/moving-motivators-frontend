@@ -1,5 +1,5 @@
 import "./style.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import cardIMG0 from "../../images/card-acceptance.png";
@@ -30,19 +30,6 @@ const cardMap = [
   cardIMG8,
   cardIMG9,
 ];
-
-/* [
-  "#001122",
-  "#112233",
-  "#223344",
-  "#334455",
-  "#445566",
-  "#556677",
-  "#667788",
-  "#778899",
-  "#8899aa",
-  "#99aabb",
-]; */
 
 const getCards = () => {
   return Array(10)
@@ -84,16 +71,10 @@ const MMBColumn = (props) => {
       props.changeCardsOrder(props.dragTarget.index, props.index, targetValue);
     }
 
-    if (isDrop)
-      props.setDragTarget({
-        value: undefined,
-        index: undefined,
-      });
-    else
-      props.setDragTarget({
-        value: targetValue,
-        index: props.index,
-      });
+    props.setDragTarget({
+      value: isDrop ? undefined : targetValue,
+      index: isDrop ? undefined : props.index,
+    });
   };
 
   const handleDragStart = (event, targetValue) => {
