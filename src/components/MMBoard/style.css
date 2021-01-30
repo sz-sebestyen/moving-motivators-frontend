@@ -23,6 +23,7 @@
   position: absolute;
   width: 120px;
   height: 120px;
+  cursor: grab;
 }
 .MMCard.nice {
   transition: top 250ms ease, left 250ms ease;
