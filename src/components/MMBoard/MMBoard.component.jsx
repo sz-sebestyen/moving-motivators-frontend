@@ -1,5 +1,5 @@
 import "./style.css";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import cardIMG0 from "../../images/card-acceptance.png";
@@ -58,9 +58,7 @@ const MMCard = (props) => {
   );
 };
 
-let mmb;
-
-const getDropCoords = (event) => {
+const getDropCoords = (event, mmb) => {
   const box = mmb.getBoundingClientRect();
 
   const dropIndex = Math.floor((event.clientX - box.x) / 120);
@@ -71,9 +69,7 @@ const getDropCoords = (event) => {
 const MMBCKeys = uuidList(10);
 
 const MMBoard = (props) => {
-  useEffect(() => {
-    mmb = document.querySelector(".mmb");
-  });
+  const mmb = useRef(null);
 
   const [cards, setCards] = useState(getCards());
 
@@ -124,7 +120,7 @@ const MMBoard = (props) => {
     event.stopPropagation();
     event.preventDefault();
 
-    const [dropIndex, dropValue] = getDropCoords(event);
+    const [dropIndex, dropValue] = getDropCoords(event, mmb.current);
 
     if (dragTarget.value !== undefined && dragTarget.index !== undefined) {
       changeCardsOrder(dragTarget.index, dropIndex, dropValue);
@@ -138,11 +134,12 @@ const MMBoard = (props) => {
 
   return (
     <div
+      ref={mmb}
       className="mmb"
       onDragStart={(event) => event.preventDefault()}
       onDragOver={(event) => {
         event.preventDefault();
-        const [dropIndex, dropValue] = getDropCoords(event);
+        const [dropIndex, dropValue] = getDropCoords(event, mmb.current);
         if (
           dragOverTarget.value !== dropValue ||
           dragOverTarget.index !== dropIndex
