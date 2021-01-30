@@ -49,6 +49,11 @@ const MMCard = (props) => {
       onDragStart={(event) => {
         event.stopPropagation();
         props.setDragTarget(props.card.index);
+        const box = event.target.getBoundingClientRect();
+        props.setDragOffset({
+          x: event.clientX - box.x,
+          y: event.clientY - box.y,
+        });
       }}
       onDragEnd={() => props.setDragTarget()}
       style={{
@@ -62,10 +67,14 @@ const MMCard = (props) => {
   );
 };
 
-const getDropCoords = (event, mmb) => {
+const getDropCoords = (event, mmb, dragOffset) => {
   const box = mmb.getBoundingClientRect();
-  const index = Math.floor((event.clientX - box.x) / TILE_SIZE);
-  const value = Math.floor((event.clientY - box.y) / TILE_SIZE);
+  const index = Math.floor(
+    (event.clientX + CARD_SIZE / 2 - dragOffset.x - box.x) / TILE_SIZE
+  );
+  const value = Math.floor(
+    (event.clientY + CARD_SIZE / 2 - dragOffset.y - box.y) / TILE_SIZE
+  );
   return [index, value];
 };
 
@@ -75,6 +84,7 @@ const MMBoard = (props) => {
   const mmb = useRef(null);
   const [cards, setCards] = useState(getCards());
   const [dragTarget, setDragTarget] = useState();
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragOverTarget, setDragOverTarget] = useState({});
 
   const changeCardsOrder = (startIndex, endIndex, value) => {
@@ -97,7 +107,7 @@ const MMBoard = (props) => {
 
   const handleDragOver = (event) => {
     event.preventDefault();
-    const [index, value] = getDropCoords(event, mmb.current);
+    const [index, value] = getDropCoords(event, mmb.current, dragOffset);
     if (
       (dragOverTarget.value !== value || dragOverTarget.index !== index) &&
       Number.isInteger(dragTarget)
@@ -123,6 +133,7 @@ const MMBoard = (props) => {
             card={cards[type]}
             key={MMBCardKeys[type]}
             setDragTarget={setDragTarget}
+            setDragOffset={setDragOffset}
             isDragged={dragTarget === cards[type].index}
           />
         ))}

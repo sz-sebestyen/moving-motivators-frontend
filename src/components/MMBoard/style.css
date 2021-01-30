@@ -25,5 +25,5 @@
   height: 120px;
 }
 .MMCard.nice {
-  transition: top 200ms ease, left 200ms ease;
+  transition: top 250ms ease, left 250ms ease;
 }
