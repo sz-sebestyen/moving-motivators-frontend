@@ -3,6 +3,9 @@
   grid-template-columns: repeat(10, 1fr);
   background-color: #3e3e3e;
   width: 1200px;
+  height: 360px;
+
+  position: relative;
 }
 
 .MMBColumn {
@@ -17,4 +20,6 @@
 }
 
 .MMCard {
+  position: absolute;
+  width: 100px;
 }

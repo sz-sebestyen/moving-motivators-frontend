@@ -46,91 +46,31 @@ const MMCard = (props) => {
     <img
       className="MMCard"
       draggable
-      onDragStart={(event) => props.handleDragStart(event, props.value)}
+      onDragStart={(event) => {
+        event.stopPropagation();
+        props.handleDragStart(event, props.card.value, props.index);
+      }}
       src={cardMap[props.card.type]}
       alt="card"
       style={{
-        width: "100%",
-        objectFit: "contain",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        top: props.card.value * 120 + "px",
+        left: props.index * 120 + "px",
       }}
     />
   );
 };
 
-const MMBTKeys = uuidList(3);
+const getDropCoords = (event) => {
+  const box = document.querySelector(".mmb").getBoundingClientRect();
+  // console.log(event.clientX, event.clientY, box.x, box.y);
 
-const MMBColumn = (props) => {
-  // console.log("render MMBColumn");
+  const abs = { x: event.clientX - box.x, y: event.clientY - box.y };
+  // console.log(abs);
 
-  const updateCards = (event, targetValue, isDrop = true) => {
-    event.stopPropagation();
-    event.preventDefault();
-
-    if (props.dragTarget.value !== undefined) {
-      props.changeCardsOrder(props.dragTarget.index, props.index, targetValue);
-    }
-
-    props.setDragTarget({
-      value: isDrop ? undefined : targetValue,
-      index: isDrop ? undefined : props.index,
-    });
-  };
-
-  const handleDragStart = (event, targetValue) => {
-    // console.log(event);
-    // console.log(event.target.getBoundingClientRect());
-    const targetBox = event.target.getBoundingClientRect();
-    const img = new Image();
-    img.src = dragnone;
-    event.dataTransfer.setDragImage(
-      img,
-      0,
-      -10
-      // event.clientX - targetBox.x,
-      // event.clientY - targetBox.y
-    );
-    event.stopPropagation();
-    props.setDragTarget({
-      value: targetValue,
-      index: props.index,
-    });
-  };
-
-  return (
-    <div className="MMBColumn">
-      {Array(3)
-        .fill()
-        .map((_, value) => (
-          <div
-            className="mmbTile"
-            key={MMBTKeys[value]}
-            onDrop={(event) => updateCards(event, value)}
-            onDragEnter={(event) => {
-              if (
-                props.dragEnterTarget.value !== value ||
-                props.dragEnterTarget.index !== props.index
-              ) {
-                props.setDragEnterTarget({ value, index: props.index });
-                updateCards(event, value, false);
-              }
-            }}
-            onDragOver={(event) => event.preventDefault()}
-            onDragStart={(event) => event.preventDefault()}
-          >
-            {value === props.card.value && (
-              <MMCard
-                value={value}
-                card={props.card}
-                handleDragStart={handleDragStart}
-              ></MMCard>
-            )}
-          </div>
-        ))}
-    </div>
-  );
+  const dropIndex = Math.floor(abs.x / 120);
+  const dropValue = Math.floor(abs.y / 120);
+  // console.log("dropcoords", dropIndex, dropValue);
+  return [dropIndex, dropValue];
 };
 
 const MMBCKeys = uuidList(10);
@@ -141,6 +81,8 @@ const MMBoard = (props) => {
   const [cards, setCards] = useState(getCards());
 
   const changeCardsOrder = (startIndex, endIndex, value) => {
+    console.log("changeorder");
+
     setCards((prevState) => {
       const movedCardType = prevState[startIndex].type;
 
@@ -164,26 +106,75 @@ const MMBoard = (props) => {
     index: undefined,
   });
 
-  const [dragEnterTarget, setDragEnterTarget] = useState({
+  const [dragOverTarget, setDragOverTarget] = useState({
     value: undefined,
     index: undefined,
   });
 
+  // from column
+  const handleDragStart = (event, value, index) => {
+    console.log(index, value);
+    // console.log(event);
+    // console.log(event.target.getBoundingClientRect());
+    const targetBox = event.target.getBoundingClientRect();
+    const img = new Image();
+    img.src = dragnone;
+    event.dataTransfer.setDragImage(
+      img,
+      0,
+      -10
+      // event.clientX - targetBox.x,
+      // event.clientY - targetBox.y
+    );
+
+    event.stopPropagation();
+    setDragTarget({
+      value,
+      index,
+    });
+  };
+
+  const updateCards = (event, isDrop = true) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    const [dropIndex, dropValue] = getDropCoords(event);
+
+    if (dragTarget.value !== undefined && dragTarget.index !== undefined) {
+      changeCardsOrder(dragTarget.index, dropIndex, dropValue);
+    }
+
+    setDragTarget({
+      value: isDrop ? undefined : dropValue,
+      index: isDrop ? undefined : dropIndex,
+    });
+  };
+
   return (
-    <div className="mmb">
+    <div
+      className="mmb"
+      onDragStart={(event) => event.preventDefault()}
+      onDragOver={(event) => {
+        event.preventDefault();
+        const [dropIndex, dropValue] = getDropCoords(event);
+        if (
+          dragOverTarget.value !== dropValue ||
+          dragOverTarget.index !== dropIndex
+        ) {
+          setDragOverTarget({ value: dropValue, index: dropIndex });
+          updateCards(event, false);
+        }
+      }}
+      onDrop={(event) => updateCards(event)}
+    >
       {Array(10)
         .fill()
         .map((_, index) => (
-          <MMBColumn
-            key={MMBCKeys[index]}
-            index={index}
+          <MMCard
             card={cards[index]}
-            changeCardsOrder={changeCardsOrder}
-            onDragStart={(event) => event.preventDefault()}
-            dragTarget={dragTarget}
-            setDragTarget={setDragTarget}
-            dragEnterTarget={dragEnterTarget}
-            setDragEnterTarget={setDragEnterTarget}
+            key={MMBCKeys[index]}
+            handleDragStart={handleDragStart}
+            index={index}
           />
         ))}
     </div>
