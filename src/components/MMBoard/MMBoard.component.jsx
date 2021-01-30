@@ -1,5 +1,5 @@
 import "./style.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import cardIMG0 from "../../images/card-acceptance.png";
@@ -12,8 +12,6 @@ import cardIMG6 from "../../images/card-order.png";
 import cardIMG7 from "../../images/card-power.png";
 import cardIMG8 from "../../images/card-relatedness.png";
 import cardIMG9 from "../../images/card-status.png";
-
-import dragnone from "../../images/dragnone.png";
 
 const uuidList = (length) =>
   Array(length)
@@ -40,49 +38,46 @@ const getCards = () => {
 };
 
 const MMCard = (props) => {
-  // console.log("render MMCard");
-
   return (
     <img
-      className="MMCard"
+      className={`MMCard ${props.isDragged ? "" : "nice"}`}
       draggable
       onDragStart={(event) => {
         event.stopPropagation();
         props.handleDragStart(event, props.card.value, props.card.index);
       }}
+      onDragEnd={props.handleDragEnd}
       src={cardMap[props.type]}
       alt="card"
       style={{
         top: props.card.value * 120 + "px",
         left: props.card.index * 120 + "px",
+        opacity: props.isDragged ? 0 : 1,
       }}
     />
   );
 };
 
+let mmb;
+
 const getDropCoords = (event) => {
-  const box = document.querySelector(".mmb").getBoundingClientRect();
-  // console.log(event.clientX, event.clientY, box.x, box.y);
+  const box = mmb.getBoundingClientRect();
 
-  const abs = { x: event.clientX - box.x, y: event.clientY - box.y };
-  // console.log(abs);
-
-  const dropIndex = Math.floor(abs.x / 120);
-  const dropValue = Math.floor(abs.y / 120);
-  // console.log("dropcoords", dropIndex, dropValue);
+  const dropIndex = Math.floor((event.clientX - box.x) / 120);
+  const dropValue = Math.floor((event.clientY - box.y) / 120);
   return [dropIndex, dropValue];
 };
 
 const MMBCKeys = uuidList(10);
 
 const MMBoard = (props) => {
-  // console.log("render MMBoard");
+  useEffect(() => {
+    mmb = document.querySelector(".mmb");
+  });
 
   const [cards, setCards] = useState(getCards());
 
   const changeCardsOrder = (startIndex, endIndex, value) => {
-    console.log("changeorder");
-
     setCards((prevState) => {
       const endIndexIsSmaller = Math.min(startIndex, endIndex) === endIndex;
       return prevState.map((card) => {
@@ -110,26 +105,18 @@ const MMBoard = (props) => {
     index: undefined,
   });
 
-  // from column
   const handleDragStart = (event, value, index) => {
-    console.log(index, value);
-    // console.log(event);
-    // console.log(event.target.getBoundingClientRect());
-    const targetBox = event.target.getBoundingClientRect();
-    const img = new Image();
-    img.src = dragnone;
-    event.dataTransfer.setDragImage(
-      img,
-      0,
-      -10
-      // event.clientX - targetBox.x,
-      // event.clientY - targetBox.y
-    );
-
     event.stopPropagation();
     setDragTarget({
       value,
       index,
+    });
+  };
+
+  const handleDragEnd = (event) => {
+    setDragTarget({
+      value: undefined,
+      index: undefined,
     });
   };
 
@@ -174,6 +161,12 @@ const MMBoard = (props) => {
             card={cards[type]}
             key={MMBCKeys[type]}
             handleDragStart={handleDragStart}
+            handleDragEnd={handleDragEnd}
+            dragTarget={dragTarget}
+            isDragged={
+              dragTarget.value === cards[type].value &&
+              dragTarget.index === cards[type].index
+            }
           />
         ))}
     </div>
