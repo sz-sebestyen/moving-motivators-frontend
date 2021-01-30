@@ -36,7 +36,7 @@ const cardMap = [
 const getCards = () => {
   return Array(10)
     .fill()
-    .map((_, index) => ({ type: index, value: 1 }));
+    .map((_, index) => ({ index, value: 1 }));
 };
 
 const MMCard = (props) => {
@@ -48,13 +48,13 @@ const MMCard = (props) => {
       draggable
       onDragStart={(event) => {
         event.stopPropagation();
-        props.handleDragStart(event, props.card.value, props.index);
+        props.handleDragStart(event, props.card.value, props.card.index);
       }}
-      src={cardMap[props.card.type]}
+      src={cardMap[props.type]}
       alt="card"
       style={{
         top: props.card.value * 120 + "px",
-        left: props.index * 120 + "px",
+        left: props.card.index * 120 + "px",
       }}
     />
   );
@@ -84,20 +84,19 @@ const MMBoard = (props) => {
     console.log("changeorder");
 
     setCards((prevState) => {
-      const movedCardType = prevState[startIndex].type;
-
       const endIndexIsSmaller = Math.min(startIndex, endIndex) === endIndex;
-      const newState = [];
-      prevState.forEach((card, index) => {
-        if (endIndexIsSmaller && index === endIndex)
-          newState.push({ type: movedCardType, value });
-        if (index !== startIndex)
-          newState.push({ type: card.type, value: card.value });
-        if (!endIndexIsSmaller && index === endIndex)
-          newState.push({ type: movedCardType, value });
+      return prevState.map((card) => {
+        if (card.index === startIndex) return { value, index: endIndex };
+        else if (
+          endIndexIsSmaller &&
+          card.index < startIndex &&
+          card.index >= endIndex
+        )
+          return { value: card.value, index: card.index + 1 };
+        else if (card.index > startIndex && card.index <= endIndex)
+          return { value: card.value, index: card.index - 1 };
+        else return card;
       });
-
-      return newState;
     });
   };
 
@@ -169,12 +168,12 @@ const MMBoard = (props) => {
     >
       {Array(10)
         .fill()
-        .map((_, index) => (
+        .map((_, type) => (
           <MMCard
-            card={cards[index]}
-            key={MMBCKeys[index]}
+            type={type}
+            card={cards[type]}
+            key={MMBCKeys[type]}
             handleDragStart={handleDragStart}
-            index={index}
           />
         ))}
     </div>

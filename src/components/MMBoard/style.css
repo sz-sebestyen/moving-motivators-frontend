@@ -22,4 +22,5 @@
 .MMCard {
   position: absolute;
   width: 100px;
+  transition: top 200ms ease, left 200ms ease;
 }
