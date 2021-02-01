@@ -70,12 +70,16 @@ const MMCard = (props) => {
 
 const getDropCoords = (event, mmb, dragOffset) => {
   const box = mmb.getBoundingClientRect();
-  const index = Math.floor(
+  let index = Math.floor(
     (event.clientX + CARD_SIZE / 2 - dragOffset.x - box.x) / TILE_SIZE
   );
-  const value = Math.floor(
+  let value = Math.floor(
     (event.clientY + CARD_SIZE / 2 - dragOffset.y - box.y) / TILE_SIZE
   );
+  if (index < 0) index = 0;
+  else if (index > 9) index = 9;
+  if (value < 0) value = 0;
+  else if (value > 2) value = 2;
   return [index, value];
 };
 
