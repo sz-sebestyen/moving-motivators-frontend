@@ -1,23 +1,50 @@
 import MMBoard from "./components/MMBoard/MMBoard.component";
 import ContextForm from "./components/ContextForm/ContextForm";
 import Profile from "./components/Profile/Profile";
+import Timeline from "./components/Timeline/Timeline";
+import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
+import { UserContext, user } from "./components/UserContext/UserContext";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import axios from "axios";
 
 import "./App.css";
 
-import { UserContext, user } from "./components/UserContext/UserContext";
-
-import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
+const testerUser = {
+  name: "Testy Tester",
+  company: "Test Corp.",
+  position: "CEO",
+};
 
 function App() {
   const [userContext, setUserContext] = useState(user);
+  const [resp, setResp] = useState();
+
+  useEffect(() => {
+    const putUser = async () => {
+      try {
+        const res = await axios.put(
+          "https://codecool-moving-motivators.herokuapp.com/",
+          testerUser
+        );
+        return res;
+      } catch (error) {
+        console.log("error: ", error);
+      }
+    };
+    setResp(putUser());
+    console.log("responses: ", resp);
+  }, []);
+
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>
       <Router>
-        <div className="App" onDragStart={(event) => event.preventDefault()}>
+        <div
+          className="App"
+          onDragStart={(event) => event.preventDefault()}
+          onClick={() => console.log(resp)}
+        >
           <Navigation />
 
           <div className="pages">
@@ -33,6 +60,9 @@ function App() {
               </Route>
               <Route path="/profile">
                 <Profile />
+              </Route>
+              <Route path="/timeline">
+                <Timeline />
               </Route>
               <Route path="/">
                 <Home />
@@ -52,6 +82,7 @@ function Navigation(props) {
     <Link to="/">Home</Link>,
     <Link to="/board">Board</Link>,
     <Link to="/groups">My groups</Link>,
+    <Link to="/timeline">Timeline</Link>,
     <Link to="/profile">Profile</Link>,
     <LogInOutLink to="/login" />,
   ];
