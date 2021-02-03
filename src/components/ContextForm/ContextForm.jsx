@@ -1,6 +1,12 @@
 import style from "./ContextForm.module.css";
 
+import React, { useContext } from "react";
+
+import { UserContext } from "../UserContext/UserContext";
+
 const ContextForm = (props) => {
+  const user = useContext(UserContext);
+
   return (
     <form className={style.contextForm}>
       <div className={style.firstName}>
@@ -32,7 +38,9 @@ const ContextForm = (props) => {
         />
       </div>
       <div className={style.submit}>
-        <button type="button">Save</button>
+        <button type="button" onClick={() => user.logIn()}>
+          Save
+        </button>
       </div>
     </form>
   );
