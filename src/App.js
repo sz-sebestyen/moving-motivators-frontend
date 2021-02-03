@@ -3,7 +3,7 @@ import ContextForm from "./components/ContextForm/ContextForm";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import "./App.css";
 
@@ -12,8 +12,9 @@ import { UserContext, user } from "./components/UserContext/UserContext";
 import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
 
 function App() {
+  const [userContext, setUserContext] = useState(user);
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={[userContext, setUserContext]}>
       <Router>
         <div className="App" onDragStart={(event) => event.preventDefault()}>
           <nav>
@@ -28,14 +29,14 @@ function App() {
                 <Link to="/groups">My groups</Link>
               </li>
               <li>
-                <Link to="/form">Form</Link>
+                <LogInOutLink to="/login" />
               </li>
             </ul>
           </nav>
 
           <div className="pages">
             <Switch>
-              <Route path="/form">
+              <Route path="/login">
                 <ContextForm />
               </Route>
               <Route path="/board">
@@ -55,11 +56,31 @@ function App() {
   );
 }
 
-function Home() {
-  const user = useContext(UserContext);
+function LogInOutLink(props) {
+  const [userContext, setUserContext] = useContext(UserContext);
   return (
     <React.Fragment>
-      <p>{user.loggedIn ? "logged in" : "logged out"}</p>
+      {userContext.loggedIn ? (
+        <Link
+          {...props}
+          onClick={(event) =>
+            setUserContext((prev) => ({ ...prev, loggedIn: false }))
+          }
+        >
+          Log out
+        </Link>
+      ) : (
+        <Link {...props}>Log in</Link>
+      )}
+    </React.Fragment>
+  );
+}
+
+function Home() {
+  const [userContext, setUserContext] = useContext(UserContext);
+  return (
+    <React.Fragment>
+      <p>{userContext.loggedIn ? "logged in" : "logged out"}</p>
     </React.Fragment>
   );
 }

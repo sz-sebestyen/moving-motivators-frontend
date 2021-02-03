@@ -7,22 +7,26 @@ import { UserContext } from "../UserContext/UserContext";
 import { Redirect } from "react-router-dom";
 
 const ContextForm = (props) => {
-  const user = useContext(UserContext);
+  const [userContext, setUserContext] = useContext(UserContext);
 
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [company, setCompany] = useState();
   const [position, setPosition] = useState();
 
-  const [redirect, setRedirect] = useState(user.loggedIn);
+  const [redirect, setRedirect] = useState(userContext.loggedIn);
 
   const handleSave = (event) => {
     if (firstName && lastName && company && position) {
-      user.logIn();
-      user.firstName = firstName;
-      user.lastName = lastName;
-      user.company = company;
-      user.position = position;
+      setUserContext((prev) => ({
+        ...prev,
+        loggedIn: true,
+
+        firstName,
+        lastName,
+        company,
+        position,
+      }));
       setRedirect(true);
     }
   };

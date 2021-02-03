@@ -9,11 +9,4 @@ export const user = {
   lastName: "",
   company: "",
   position: "",
-  signIn() {},
-  logIn() {
-    this.loggedIn = true;
-  },
-  logOut() {
-    this.loggedIn = false;
-  },
 };
