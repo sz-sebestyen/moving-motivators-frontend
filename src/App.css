@@ -31,9 +31,13 @@ nav {
 }
 nav ul {
   list-style: none;
+  display: flex;
 }
 nav ul li {
   display: inline;
+}
+nav ul li:last-child {
+  margin-left: auto;
 }
 nav ul li a {
   display: inline-block;
@@ -48,4 +52,7 @@ nav ul li a:active {
 a:not([role="button"]) {
   text-decoration: none;
   color: inherit;
+}
+li.active {
+  background-color: #999;
 }

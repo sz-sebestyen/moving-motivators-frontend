@@ -1,5 +1,6 @@
 import MMBoard from "./components/MMBoard/MMBoard.component";
 import ContextForm from "./components/ContextForm/ContextForm";
+import Profile from "./components/Profile/Profile";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -17,22 +18,7 @@ function App() {
     <UserContext.Provider value={[userContext, setUserContext]}>
       <Router>
         <div className="App" onDragStart={(event) => event.preventDefault()}>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/board">Board</Link>
-              </li>
-              <li>
-                <Link to="/groups">My groups</Link>
-              </li>
-              <li>
-                <LogInOutLink to="/login" />
-              </li>
-            </ul>
-          </nav>
+          <Navigation />
 
           <div className="pages">
             <Switch>
@@ -45,6 +31,9 @@ function App() {
               <Route path="/groups">
                 <QuestionGroups />
               </Route>
+              <Route path="/profile">
+                <Profile />
+              </Route>
               <Route path="/">
                 <Home />
               </Route>
@@ -53,6 +42,35 @@ function App() {
         </div>
       </Router>
     </UserContext.Provider>
+  );
+}
+
+function Navigation(props) {
+  const [active, setActive] = useState(0);
+
+  const links = [
+    <Link to="/">Home</Link>,
+    <Link to="/board">Board</Link>,
+    <Link to="/groups">My groups</Link>,
+    <Link to="/profile">Profile</Link>,
+    <LogInOutLink to="/login" />,
+  ];
+  return (
+    <nav>
+      <ul>
+        {links.map((link, index) => {
+          return (
+            <li
+              key={index}
+              className={index === active ? "active" : ""}
+              onClick={(event) => setActive(index)}
+            >
+              {link}
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }
 

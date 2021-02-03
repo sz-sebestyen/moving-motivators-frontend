@@ -9,4 +9,5 @@ export const user = {
   lastName: "",
   company: "",
   position: "",
+  groups: ["aasd", "dsa"],
 };
