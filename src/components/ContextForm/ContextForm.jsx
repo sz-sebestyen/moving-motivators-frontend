@@ -1,11 +1,35 @@
 import style from "./ContextForm.module.css";
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import { UserContext } from "../UserContext/UserContext";
 
+import { Redirect } from "react-router-dom";
+
 const ContextForm = (props) => {
   const user = useContext(UserContext);
+
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [company, setCompany] = useState();
+  const [position, setPosition] = useState();
+
+  const [redirect, setRedirect] = useState(user.loggedIn);
+
+  const handleSave = (event) => {
+    if (firstName && lastName && company && position) {
+      user.logIn();
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.company = company;
+      user.position = position;
+      setRedirect(true);
+    }
+  };
+
+  if (redirect) {
+    return <Redirect push to="/" />;
+  }
 
   return (
     <form className={style.contextForm}>
@@ -15,6 +39,7 @@ const ContextForm = (props) => {
           type="text"
           name="contextFormFirstName"
           id="contextFormFirstName"
+          onInput={(event) => setFirstName(event.target.value)}
         />
       </div>
       <div className={style.lastName}>
@@ -23,11 +48,17 @@ const ContextForm = (props) => {
           type="text"
           name="contextFormLastName"
           id="contextFormLastName"
+          onInput={(event) => setLastName(event.target.value)}
         />
       </div>
       <div className={style.company}>
         <label htmlFor="contextFormCompany">Company</label>
-        <input type="text" name="contextFormCompany" id="contextFormCompany" />
+        <input
+          type="text"
+          name="contextFormCompany"
+          id="contextFormCompany"
+          onInput={(event) => setCompany(event.target.value)}
+        />
       </div>
       <div className={style.position}>
         <label htmlFor="contextFormPosition">Position</label>
@@ -35,10 +66,11 @@ const ContextForm = (props) => {
           type="text"
           name="contextFormPosition"
           id="contextFormPosition"
+          onInput={(event) => setPosition(event.target.value)}
         />
       </div>
       <div className={style.submit}>
-        <button type="button" onClick={() => user.logIn()}>
+        <button type="button" onClick={handleSave}>
           Save
         </button>
       </div>

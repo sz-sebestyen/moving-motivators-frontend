@@ -9,6 +9,8 @@ import "./App.css";
 
 import { UserContext, user } from "./components/UserContext/UserContext";
 
+import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
+
 function App() {
   return (
     <UserContext.Provider value={user}>
@@ -23,6 +25,9 @@ function App() {
                 <Link to="/board">Board</Link>
               </li>
               <li>
+                <Link to="/groups">My groups</Link>
+              </li>
+              <li>
                 <Link to="/form">Form</Link>
               </li>
             </ul>
@@ -35,6 +40,9 @@ function App() {
               </Route>
               <Route path="/board">
                 <MMBoard />
+              </Route>
+              <Route path="/groups">
+                <QuestionGroups />
               </Route>
               <Route path="/">
                 <Home />
