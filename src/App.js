@@ -25,7 +25,7 @@ function App() {
     const putUser = async () => {
       try {
         const res = await axios.put(
-          "https://codecool-moving-motivators.herokuapp.com/",
+          "https://cors-anywhere-herokuapp.com/https://codecool-moving-motivators.herokuapp.com/",
           testerUser
         );
         return res;
