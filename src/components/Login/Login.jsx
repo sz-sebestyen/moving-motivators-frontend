@@ -21,8 +21,6 @@ const Login = (props) => {
       setUserContext((prev) => ({
         ...prev,
         loggedIn: true,
-        email,
-        password,
       }));
 
       setRedirect(true);

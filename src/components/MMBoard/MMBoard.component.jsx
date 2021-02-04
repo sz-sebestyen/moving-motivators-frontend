@@ -2,6 +2,9 @@ import "./style.css";
 import { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import zoomOut from "../../images/search-minus-solid.svg";
+import zoomIn from "../../images/search-plus-solid.svg";
+
 import cardIMG0 from "../../images/card-acceptance.png";
 import cardIMG1 from "../../images/card-curiosity.png";
 import cardIMG2 from "../../images/card-freedom.png";
@@ -75,8 +78,13 @@ const MMCard = (props) => {
       }
       draggable
     >
-      <div className="zoom" onClick={() => setZoom((prev) => !prev)}></div>
       <img src={cardMap[props.type]} alt="card" />
+      <img
+        src={zoom ? zoomOut : zoomIn}
+        alt="zoom toggle"
+        className="zoom"
+        onClick={() => setZoom((prev) => !prev)}
+      />
     </div>
   );
 };
