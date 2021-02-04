@@ -1,7 +1,12 @@
 .mmb {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  background-image: repeating-linear-gradient(green -300%, white 50%, red 400%);
+  background-image: repeating-linear-gradient(
+    green -300%,
+    white 40%,
+    white 60%,
+    red 400%
+  );
   width: 1200px;
   height: 360px;
 
