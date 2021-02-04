@@ -27,6 +27,22 @@ const ContextForm = (props) => {
   const [redirect, setRedirect] = useState(userContext.loggedIn);
 
   const postData = () => {
+    let token;
+    const getToken = () => token;
+
+    axios.interceptors.request.use(
+      (config) => {
+        if (getToken()) {
+          config.headers.Authorization = "Bearer " + getToken();
+        }
+        config.headers.WithCredentials = true;
+        return config;
+      },
+      (error) => {
+        Promise.reject(error);
+      }
+    );
+
     let config = {
       headers: {
         "Content-Type": "application/json",
@@ -37,10 +53,10 @@ const ContextForm = (props) => {
       email: "string",
       password: "string",
     };
-
+    //
     return axios
       .post(
-        "https://cors-anywhere-herokuapp.com/https://codecool-moving-motivators.herokuapp.com/login/",
+        "http://cors-anywhere-herokuapp.com/http://codecool-moving-motivators.herokuapp.com/login/",
         login,
         config
       )
@@ -76,7 +92,7 @@ const ContextForm = (props) => {
         company,
         position,
       }));
-      postData();
+      // postData();
 
       setRedirect(true);
     }

@@ -11,22 +11,6 @@ import axios from "axios";
 
 import "./App.css";
 
-/* let token;
-const getToken = () => token;
-
-axios.interceptors.request.use(
-  (config) => {
-    if (getToken()) {
-      config.headers.Authorization = "Bearer " + getToken();
-    }
-    config.headers.WithCredentials = true;
-    return config;
-  },
-  (error) => {
-    Promise.reject(error);
-  }
-); */
-
 const test = "test";
 
 const Login = (props) => {
