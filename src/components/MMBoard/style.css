@@ -22,5 +22,20 @@
   cursor: grab;
 }
 .MMCard.nice {
-  transition: top 250ms ease, left 250ms ease;
+  transition: top 250ms ease, left 250ms ease, width 250ms ease,
+    height 250ms ease;
+}
+.MMCard img {
+  width: 100%;
+  object-fit: cover;
+}
+.MMCard .zoom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16%;
+  height: 16%;
+  border: 1px solid black;
+  border-radius: 50%;
+  cursor: pointer;
 }

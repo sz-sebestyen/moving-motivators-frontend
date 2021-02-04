@@ -1,5 +1,6 @@
 import MMBoard from "./components/MMBoard/MMBoard.component";
 import ContextForm from "./components/ContextForm/ContextForm";
+import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Timeline from "./components/Timeline/Timeline";
 import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
@@ -11,54 +12,19 @@ import axios from "axios";
 
 import "./App.css";
 
-const test = "test";
-
-const Login = (props) => {
-  const postData = () => {
-    const login = {
-      username: "test",
-      password: "test",
-    };
-    return axios
-      .post(
-        "https://cors-anywhere-herokuapp.com/https://codecool-moving-motivators.herokuapp.com/login",
-        login
-      )
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((error) => {
-        alert("Wrong password or email!");
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
-  };
-  postData();
-};
-
 function App() {
   const [userContext, setUserContext] = useState(user);
-  const [resp, setResp] = useState();
-
-  useEffect(() => {}, []);
 
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>
       <Router>
-        <div
-          className="App"
-          onDragStart={(event) => event.preventDefault()}
-          onClick={() => console.log(resp)}
-        >
+        <div className="App" onDragStart={(event) => event.preventDefault()}>
           <Navigation />
 
           <div className="pages">
             <Switch>
               <Route path="/login">
-                <ContextForm />
+                <Login />
               </Route>
               <Route path="/board">
                 <MMBoard />

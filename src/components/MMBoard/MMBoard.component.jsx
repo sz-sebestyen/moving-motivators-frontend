@@ -42,10 +42,11 @@ const getCards = () => {
 };
 
 const MMCard = (props) => {
+  const [zoom, setZoom] = useState(false);
+
   return (
-    <img
+    <div
       className={`MMCard ${props.isDragged ? "" : "nice"}`}
-      src={cardMap[props.type]}
       onDragStart={(event) => {
         event.stopPropagation();
         event.dataTransfer.effectAllowed = "move";
@@ -57,14 +58,26 @@ const MMCard = (props) => {
         });
       }}
       onDragEnd={() => props.setDragTarget()}
-      style={{
-        top: props.card.value * CARD_SIZE + "px",
-        left: props.card.index * CARD_SIZE + "px",
-        opacity: props.isDragged ? 0 : 1,
-      }}
-      alt="card"
+      style={
+        zoom
+          ? {
+              top: 0 + "px",
+              left: 420 + "px",
+              width: 360 + "px",
+              height: 360 + "px",
+              zIndex: 999,
+            }
+          : {
+              top: props.card.value * CARD_SIZE + "px",
+              left: props.card.index * CARD_SIZE + "px",
+              opacity: props.isDragged ? 0 : 1,
+            }
+      }
       draggable
-    />
+    >
+      <div className="zoom" onClick={() => setZoom((prev) => !prev)}></div>
+      <img src={cardMap[props.type]} alt="card" />
+    </div>
   );
 };
 
