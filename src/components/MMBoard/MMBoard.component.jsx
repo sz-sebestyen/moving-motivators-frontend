@@ -113,6 +113,8 @@ const MMBoard = (props) => {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragOverTarget, setDragOverTarget] = useState({});
 
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
   const changeCardsOrder = (startIndex, endIndex, value) => {
     setCards((prevState) => {
       const endIndexIsSmaller = Math.min(startIndex, endIndex) === endIndex;
@@ -146,24 +148,34 @@ const MMBoard = (props) => {
   };
 
   return (
-    <div
-      ref={mmb}
-      className="mmb"
-      onDragOver={handleDragOver}
-      onDragStart={(event) => event.preventDefault()}
-    >
-      {Array(NUMBER_OF_CARDS)
-        .fill()
-        .map((_, type) => (
-          <MMCard
-            type={type}
-            card={cards[type]}
-            key={MMBCardKeys[type]}
-            setDragTarget={setDragTarget}
-            setDragOffset={setDragOffset}
-            isDragged={dragTarget === cards[type].index}
-          />
-        ))}
+    <div className="mmbOuter">
+      <div className="direction">
+        <div className="left">Least important</div>
+        <div className="right">Most important</div>
+      </div>
+
+      <div
+        ref={mmb}
+        className="mmb"
+        onDragOver={handleDragOver}
+        onDragStart={(event) => event.preventDefault()}
+      >
+        {Array(NUMBER_OF_CARDS)
+          .fill()
+          .map((_, type) => (
+            <MMCard
+              type={type}
+              card={cards[type]}
+              key={MMBCardKeys[type]}
+              setDragTarget={setDragTarget}
+              setDragOffset={setDragOffset}
+              isDragged={dragTarget === cards[type].index}
+            />
+          ))}
+      </div>
+      <div className="mmbSave">
+        <button type="butotn">Save</button>
+      </div>
     </div>
   );
 };

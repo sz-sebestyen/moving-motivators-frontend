@@ -1,3 +1,22 @@
+.mmbOuter {
+}
+
+.direction {
+  position: relative;
+  display: flex;
+  justify-content: stretch;
+  padding-bottom: 10px;
+  font-size: 1.4em;
+}
+.left {
+  flex-basis: 50%;
+  text-align: left;
+}
+.right {
+  flex-basis: 50%;
+  text-align: right;
+}
+
 .mmb {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -12,6 +31,17 @@
 
   position: relative;
   box-sizing: content-box;
+  border: 1px solid black;
+}
+
+.mmbSave {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+.mmbSave button {
+  padding: 5px 10px;
+  background-color: white;
   border: 1px solid black;
 }
 
