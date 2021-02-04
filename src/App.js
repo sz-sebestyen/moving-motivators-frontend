@@ -11,31 +11,55 @@ import axios from "axios";
 
 import "./App.css";
 
-const testerUser = {
-  name: "Testy Tester",
-  company: "Test Corp.",
-  position: "CEO",
+/* let token;
+const getToken = () => token;
+
+axios.interceptors.request.use(
+  (config) => {
+    if (getToken()) {
+      config.headers.Authorization = "Bearer " + getToken();
+    }
+    config.headers.WithCredentials = true;
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
+  }
+); */
+
+const test = "test";
+
+const Login = (props) => {
+  const postData = () => {
+    const login = {
+      username: "test",
+      password: "test",
+    };
+    return axios
+      .post(
+        "https://cors-anywhere-herokuapp.com/https://codecool-moving-motivators.herokuapp.com/login",
+        login
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        alert("Wrong password or email!");
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  };
+  postData();
 };
 
 function App() {
   const [userContext, setUserContext] = useState(user);
   const [resp, setResp] = useState();
 
-  useEffect(() => {
-    const putUser = async () => {
-      try {
-        const res = await axios.put(
-          "https://cors-anywhere-herokuapp.com/https://codecool-moving-motivators.herokuapp.com/",
-          testerUser
-        );
-        return res;
-      } catch (error) {
-        console.log("error: ", { error });
-      }
-    };
-    setResp(putUser());
-    console.log("responses: ", resp);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>
