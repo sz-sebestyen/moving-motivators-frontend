@@ -1,6 +1,7 @@
 import "./style.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { UserContext } from "../UserContext/UserContext";
 
 import zoomOut from "../../images/search-minus-solid.svg";
 import zoomIn from "../../images/search-plus-solid.svg";
@@ -113,7 +114,7 @@ const MMBoard = (props) => {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragOverTarget, setDragOverTarget] = useState({});
 
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [userContext, setUserContext] = useContext(UserContext);
 
   const changeCardsOrder = (startIndex, endIndex, value) => {
     setCards((prevState) => {
@@ -174,7 +175,17 @@ const MMBoard = (props) => {
           ))}
       </div>
       <div className="mmbSave">
-        <button type="butotn">Save</button>
+        <button
+          type="butotn"
+          onClick={(event) => {
+            setUserContext((prev) => ({
+              ...prev,
+              defaultCards: [cards, ...prev.defaultCards],
+            }));
+          }}
+        >
+          Save
+        </button>
       </div>
     </div>
   );

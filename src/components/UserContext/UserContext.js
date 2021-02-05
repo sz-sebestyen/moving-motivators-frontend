@@ -9,5 +9,6 @@ export const user = {
   lastName: "",
   company: "",
   position: "",
+  defaultCards: [],
   groups: ["aasd", "dsa"],
 };
