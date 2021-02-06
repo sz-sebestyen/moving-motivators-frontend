@@ -42,6 +42,6 @@ a:not([role="button"]) {
   text-decoration: none;
   color: inherit;
 }
-li.active {
+.activeNavLink {
   background-color: #999;
 }
