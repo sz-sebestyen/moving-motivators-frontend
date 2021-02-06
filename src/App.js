@@ -5,7 +5,12 @@ import Timeline from "./components/Timeline/Timeline";
 import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
 import { UserContext, user } from "./components/UserContext/UserContext";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  NavLink,
+} from "react-router-dom";
 import React, { useContext, useState } from "react";
 
 import "./App.css";
@@ -48,29 +53,29 @@ function App() {
 }
 
 function Navigation(props) {
-  const [active, setActive] = useState(0);
-
   const links = [
-    <Link to="/">Home</Link>,
-    <Link to="/board">Board</Link>,
-    <Link to="/groups">My groups</Link>,
-    <Link to="/timeline">Timeline</Link>,
-    <Link to="/profile">Profile</Link>,
-    <LogInOutLink to="/login" />,
+    <NavLink to="/" activeClassName="activeNavLink" exact>
+      Home
+    </NavLink>,
+    <NavLink to="/board" activeClassName="activeNavLink">
+      Board
+    </NavLink>,
+    <NavLink to="/groups" activeClassName="activeNavLink">
+      My groups
+    </NavLink>,
+    <NavLink to="/timeline" activeClassName="activeNavLink">
+      Timeline
+    </NavLink>,
+    <NavLink to="/profile" activeClassName="activeNavLink">
+      Profile
+    </NavLink>,
+    <LogInOutLink to="/login" activeClassName="activeNavLink" />,
   ];
   return (
     <nav>
       <ul>
         {links.map((link, index) => {
-          return (
-            <li
-              key={index}
-              className={index === active ? "active" : ""}
-              onClick={(event) => setActive(index)}
-            >
-              {link}
-            </li>
-          );
+          return <li key={index}>{link}</li>;
         })}
       </ul>
     </nav>
@@ -82,16 +87,16 @@ function LogInOutLink(props) {
   return (
     <>
       {userContext.loggedIn ? (
-        <Link
+        <NavLink
           {...props}
           onClick={(event) =>
             setUserContext((prev) => ({ ...prev, loggedIn: false }))
           }
         >
           Log out
-        </Link>
+        </NavLink>
       ) : (
-        <Link {...props}>Log in</Link>
+        <NavLink {...props}>Log in</NavLink>
       )}
     </>
   );
