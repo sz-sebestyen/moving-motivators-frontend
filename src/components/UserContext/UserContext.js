@@ -10,5 +10,5 @@ export const user = {
   company: "",
   position: "",
   defaultCards: [],
-  groups: ["aasd", "dsa"],
+  groups: [],
 };

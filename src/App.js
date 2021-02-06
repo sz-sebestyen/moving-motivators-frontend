@@ -1,5 +1,4 @@
-import MMBoard from "./components/MMBoard/MMBoard.component";
-import ContextForm from "./components/ContextForm/ContextForm";
+import MMBoard from "./components/MMBoard/MMBoard";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Timeline from "./components/Timeline/Timeline";
@@ -7,8 +6,7 @@ import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
 import { UserContext, user } from "./components/UserContext/UserContext";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import React, { useContext, useState, useEffect } from "react";
-import axios from "axios";
+import React, { useContext, useState } from "react";
 
 import "./App.css";
 
@@ -82,7 +80,7 @@ function Navigation(props) {
 function LogInOutLink(props) {
   const [userContext, setUserContext] = useContext(UserContext);
   return (
-    <React.Fragment>
+    <>
       {userContext.loggedIn ? (
         <Link
           {...props}
@@ -95,17 +93,13 @@ function LogInOutLink(props) {
       ) : (
         <Link {...props}>Log in</Link>
       )}
-    </React.Fragment>
+    </>
   );
 }
 
 function Home() {
-  const [userContext, setUserContext] = useContext(UserContext);
-  return (
-    <React.Fragment>
-      <p>{userContext.loggedIn ? "logged in" : "logged out"}</p>
-    </React.Fragment>
-  );
+  const [userContext] = useContext(UserContext);
+  return <p>{userContext.loggedIn ? "logged in" : "logged out"}</p>;
 }
 
 export default App;

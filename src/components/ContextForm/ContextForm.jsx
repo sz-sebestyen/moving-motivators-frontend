@@ -49,11 +49,12 @@ const ContextForm = (props) => {
         accept: "*/*",
       },
     };
+
     const login = {
       email: "string",
       password: "string",
     };
-    //
+
     return axios
       .post(
         "http://cors-anywhere-herokuapp.com/http://codecool-moving-motivators.herokuapp.com/login/",
@@ -62,14 +63,6 @@ const ContextForm = (props) => {
       )
       .then((res) => {
         console.log(res.data);
-        /* setToken(res.data.token);
-        setLocalStorageSession(res.data.user.id);
-        setLocalStorageUsername(res.data.user.username);
-        setLocalStorageHobbies(res.data.user.fieldsOfInterests);
-        setHobbies(res.data.user.fieldsOfInterests);
-        setUsername(res.data.user.username);
-        setSession(res.data.user.id); */
-        //props.history.push("/");
       })
       .catch((error) => {
         alert("Wrong password or email!");
@@ -92,7 +85,7 @@ const ContextForm = (props) => {
         company,
         position,
       }));
-      // postData();
+      postData();
 
       setRedirect(true);
     }
