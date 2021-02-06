@@ -1,4 +1,4 @@
-import "./style.css";
+import "./MMBoard.css";
 import { useState, useRef, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { UserContext } from "../UserContext/UserContext";
@@ -17,9 +17,22 @@ import cardIMG7 from "../../images/card-power.png";
 import cardIMG8 from "../../images/card-relatedness.png";
 import cardIMG9 from "../../images/card-status.png";
 
+const MIN_VALUE = 0;
+const MAX_VALUE = 2;
+const MIN_INDEX = 0;
+const MAX_INDEX = 9;
+
 const TILE_SIZE = 120;
 const CARD_SIZE = 120;
 const NUMBER_OF_CARDS = 10;
+const DEFAULT_CARD_VALUE = 1;
+
+const ZOOM = 3;
+const ZOOM_TOP = 0;
+const ZOOM_LEFT = 420;
+const ZOOM_Z_INDEX = 999;
+
+const DRAGGED_CARD_OPACITY = 0;
 
 const uuidList = (length) =>
   Array(length)
@@ -42,7 +55,7 @@ const cardMap = [
 const getCards = () => {
   return Array(NUMBER_OF_CARDS)
     .fill()
-    .map((_, index) => ({ index, value: 1 }));
+    .map((_, index) => ({ index, value: DEFAULT_CARD_VALUE }));
 };
 
 const MMCard = (props) => {
@@ -65,16 +78,16 @@ const MMCard = (props) => {
       style={
         zoom
           ? {
-              top: 0 + "px",
-              left: 420 + "px",
-              width: 360 + "px",
-              height: 360 + "px",
-              zIndex: 999,
+              top: ZOOM_TOP + "px",
+              left: ZOOM_LEFT + "px",
+              width: CARD_SIZE * ZOOM + "px",
+              height: CARD_SIZE * ZOOM + "px",
+              zIndex: ZOOM_Z_INDEX,
             }
           : {
               top: props.card.value * CARD_SIZE + "px",
               left: props.card.index * CARD_SIZE + "px",
-              opacity: props.isDragged ? 0 : 1,
+              ...(props.isDragged ? { opacity: DRAGGED_CARD_OPACITY } : {}),
             }
       }
       draggable
@@ -98,10 +111,10 @@ const getDropCoords = (event, mmb, dragOffset) => {
   let value = Math.floor(
     (event.clientY + CARD_SIZE / 2 - dragOffset.y - box.y) / TILE_SIZE
   );
-  if (index < 0) index = 0;
-  else if (index > 9) index = 9;
-  if (value < 0) value = 0;
-  else if (value > 2) value = 2;
+  if (index < MIN_INDEX) index = MIN_INDEX;
+  else if (index > MAX_INDEX) index = MAX_INDEX;
+  if (value < MIN_VALUE) value = MIN_VALUE;
+  else if (value > MAX_VALUE) value = MAX_VALUE;
   return [index, value];
 };
 
@@ -176,7 +189,7 @@ const MMBoard = (props) => {
       </div>
       <div className="mmbSave">
         <button
-          type="butotn"
+          type="button"
           onClick={(event) => {
             setUserContext((prev) => ({
               ...prev,

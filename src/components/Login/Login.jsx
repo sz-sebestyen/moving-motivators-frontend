@@ -6,8 +6,6 @@ import { UserContext } from "../UserContext/UserContext";
 
 import { Redirect } from "react-router-dom";
 
-import axios from "axios";
-
 const Login = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
 

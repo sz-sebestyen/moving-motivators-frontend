@@ -15,25 +15,6 @@ body,
   height: calc(100% - 42px);
 }
 
-a[role="button"] {
-  background-color: red;
-  box-shadow: 0 5px 0 darkred;
-  color: white;
-  padding: 1em 1.5em;
-  position: relative;
-  text-decoration: none;
-}
-
-a[role="button"]:hover {
-  background-color: #ce0606;
-  cursor: pointer;
-}
-
-a[role="button"]:active {
-  box-shadow: none;
-  top: 5px;
-}
-
 nav {
   border-bottom: 1px solid black;
 }
