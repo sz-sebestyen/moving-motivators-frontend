@@ -1,11 +1,12 @@
 import axios from "axios";
 
+const baseUrl = "https://codecool-moving-motivators.herokuapp.com";
+//"https://cors-anywhere.herokuapp.com/https://codecool-moving-motivators.herokuapp.com";
+
 // card-list-controller
 export const getCardList = async (id) => {
   try {
-    const response = await axios.get(
-      `https://codecool-moving-motivators.herokuapp.com/card-list/${id}`
-    );
+    const response = await axios.get(`${baseUrl}/card-list/${id}`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -16,13 +17,11 @@ export const getCardList = async (id) => {
 // login-controller
 export const login = async ({ email, password }) => {
   try {
-    const response = await axios.post(
-      `https://codecool-moving-motivators.herokuapp.com/login/`,
-      { email, password }
-    );
+    const response = await axios.post(`${baseUrl}/login/`, { email, password });
     const data = await response.data;
     return data;
   } catch (error) {
+    console.log(error.response);
     alert("Wrong email or password!");
   }
 };
@@ -31,7 +30,7 @@ export const login = async ({ email, password }) => {
 export const acceptInvite = async (notificationDto) => {
   try {
     const response = await axios.put(
-      `https://codecool-moving-motivators.herokuapp.com/notification/accept`,
+      `${baseUrl}/notification/accept`,
       notificationDto
     );
     const data = await response.data;
@@ -44,7 +43,7 @@ export const acceptInvite = async (notificationDto) => {
 export const declineInvite = async (notificationDto) => {
   try {
     const response = await axios.delete(
-      `https://codecool-moving-motivators.herokuapp.com/notification/decline`,
+      `${baseUrl}/notification/decline`,
       notificationDto
     );
     const data = await response.data;
@@ -57,7 +56,7 @@ export const declineInvite = async (notificationDto) => {
 export const newInvite = async (notificationDto, receiverId) => {
   try {
     const response = await axios.post(
-      `https://codecool-moving-motivators.herokuapp.com/notification/new/${receiverId}`,
+      `${baseUrl}/notification/new/${receiverId}`,
       notificationDto
     );
     const data = await response.data;
@@ -69,9 +68,7 @@ export const newInvite = async (notificationDto, receiverId) => {
 
 export const getReceivedNotifications = async () => {
   try {
-    const response = await axios.get(
-      `https://codecool-moving-motivators.herokuapp.com/notification/received/`
-    );
+    const response = await axios.get(`${baseUrl}/notification/received/`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -81,9 +78,7 @@ export const getReceivedNotifications = async () => {
 
 export const getSentNotifications = async () => {
   try {
-    const response = await axios.get(
-      `https://codecool-moving-motivators.herokuapp.com/notification/sent/`
-    );
+    const response = await axios.get(`${baseUrl}/notification/sent/`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -94,10 +89,7 @@ export const getSentNotifications = async () => {
 // question-controller
 export const createQuestion = async (questionDto) => {
   try {
-    const response = await axios.post(
-      `https://codecool-moving-motivators.herokuapp.com/question/`,
-      questionDto
-    );
+    const response = await axios.post(`${baseUrl}/question/`, questionDto);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -107,9 +99,7 @@ export const createQuestion = async (questionDto) => {
 
 export const getQuestion = async (id) => {
   try {
-    const response = await axios.get(
-      `https://codecool-moving-motivators.herokuapp.com/question/${id}`
-    );
+    const response = await axios.get(`${baseUrl}/question/${id}`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -119,9 +109,7 @@ export const getQuestion = async (id) => {
 
 export const deleteQuestion = async (id) => {
   try {
-    const response = await axios.delete(
-      `https://codecool-moving-motivators.herokuapp.com/question/${id}`
-    );
+    const response = await axios.delete(`${baseUrl}/question/${id}`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -132,7 +120,7 @@ export const deleteQuestion = async (id) => {
 export const setAnswer = async (id, cards) => {
   try {
     const response = await axios.post(
-      `https://codecool-moving-motivators.herokuapp.com/question/${id}/answer`,
+      `${baseUrl}/question/${id}/answer`,
       cards
     );
     const data = await response.data;
@@ -144,9 +132,7 @@ export const setAnswer = async (id, cards) => {
 
 export const closeQuestion = async (id) => {
   try {
-    const response = await axios.put(
-      `https://codecool-moving-motivators.herokuapp.com/question/${id}/close`
-    );
+    const response = await axios.put(`${baseUrl}/question/${id}/close`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -156,10 +142,7 @@ export const closeQuestion = async (id) => {
 
 export const editNote = async (id, note) => {
   try {
-    const response = await axios.put(
-      `https://codecool-moving-motivators.herokuapp.com/question/${id}/note`,
-      note
-    );
+    const response = await axios.put(`${baseUrl}/question/${id}/note`, note);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -170,10 +153,7 @@ export const editNote = async (id, note) => {
 // question-group-controller
 export const createQuestionGroup = async (name) => {
   try {
-    const response = await axios.post(
-      `https://codecool-moving-motivators.herokuapp.com/question-group/`,
-      name
-    );
+    const response = await axios.post(`${baseUrl}/question-group/`, name);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -183,9 +163,7 @@ export const createQuestionGroup = async (name) => {
 
 export const getQuestionGroup = async (id) => {
   try {
-    const response = await axios.get(
-      `https://codecool-moving-motivators.herokuapp.com/question-group/${id}`
-    );
+    const response = await axios.get(`${baseUrl}/question-group/${id}`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -195,10 +173,7 @@ export const getQuestionGroup = async (id) => {
 
 export const editName = async (id, name) => {
   try {
-    const response = await axios.put(
-      `https://codecool-moving-motivators.herokuapp.com/question-group/${id}`,
-      name
-    );
+    const response = await axios.put(`${baseUrl}/question-group/${id}`, name);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -208,9 +183,7 @@ export const editName = async (id, name) => {
 
 export const deleteQuestionGroup = async (id) => {
   try {
-    const response = await axios.delete(
-      `https://codecool-moving-motivators.herokuapp.com/question-group/${id}`
-    );
+    const response = await axios.delete(`${baseUrl}/question-group/${id}`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -220,9 +193,7 @@ export const deleteQuestionGroup = async (id) => {
 
 export const viewInvited = async (id) => {
   try {
-    const response = await axios.get(
-      `https://codecool-moving-motivators.herokuapp.com/question-group/${id}/invited`
-    );
+    const response = await axios.get(`${baseUrl}/question-group/${id}/invited`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -233,10 +204,7 @@ export const viewInvited = async (id) => {
 // register-controller
 export const registerUser = async (user) => {
   try {
-    const response = await axios.post(
-      `https://codecool-moving-motivators.herokuapp.com/register/`,
-      user
-    );
+    const response = await axios.post(`${baseUrl}/register/`, user);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -247,10 +215,7 @@ export const registerUser = async (user) => {
 // user-controller
 export const editUser = async (userDto) => {
   try {
-    const response = await axios.put(
-      `https://codecool-moving-motivators.herokuapp.com/user/`,
-      userDto
-    );
+    const response = await axios.put(`${baseUrl}/user/`, userDto);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -260,9 +225,7 @@ export const editUser = async (userDto) => {
 
 export const getUser = async (id) => {
   try {
-    const response = await axios.get(
-      `https://codecool-moving-motivators.herokuapp.com/user/${id}`
-    );
+    const response = await axios.get(`${baseUrl}/user/${id}`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -272,10 +235,7 @@ export const getUser = async (id) => {
 
 export const saveDefault = async (list) => {
   try {
-    const response = await axios.put(
-      `https://codecool-moving-motivators.herokuapp.com/user/save-default`,
-      list
-    );
+    const response = await axios.put(`${baseUrl}/user/save-default`, list);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -285,10 +245,7 @@ export const saveDefault = async (list) => {
 
 export const searchUser = async (name) => {
   try {
-    const response = await axios.get(
-      `https://codecool-moving-motivators.herokuapp.com/user/search`,
-      name
-    );
+    const response = await axios.get(`${baseUrl}/user/search`, name);
     const data = await response.data;
     return data;
   } catch (error) {
