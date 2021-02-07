@@ -1,4 +1,8 @@
-import { UserContext } from "../UserContext/UserContext";
+import {
+  UserContext,
+  removeToken,
+  removeUserId,
+} from "../UserContext/UserContext";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -32,8 +36,11 @@ export default function Navigation(props) {
             text: "Log out",
             props: {
               to: "/login",
-              onClick: (event) =>
-                setUserContext((prev) => ({ ...prev, loggedIn: false })),
+              onClick: (event) => {
+                setUserContext((prev) => ({ ...prev, loggedIn: false }));
+                removeUserId();
+                removeToken();
+              },
             },
           }
         : {
