@@ -1,25 +1,27 @@
 import style from "./Login.module.css";
-
-import React, { useContext, useState } from "react";
-
-import { UserContext } from "../UserContext/UserContext";
-
 import { Redirect } from "react-router-dom";
+import React, { useContext, useState, useRef } from "react";
+
+import { UserContext, setToken, setUserId } from "../UserContext/UserContext";
 
 const Login = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const emailInput = useRef(null);
+  const passwordInput = useRef(null);
 
   const [redirect, setRedirect] = useState(userContext.loggedIn);
 
   const handleSave = (event) => {
-    if (email && password) {
+    // TODO: login
+    if (emailInput.current.value && passwordInput.current.value) {
       setUserContext((prev) => ({
         ...prev,
         loggedIn: true,
       }));
+
+      setToken("generic user token");
+      setUserId("generic user id");
 
       setRedirect(true);
     }
@@ -34,19 +36,19 @@ const Login = (props) => {
       <div className={style.email}>
         <label htmlFor="loginFormEmail">Email</label>
         <input
+          ref={emailInput}
           type="email"
           name="loginFormEmail"
           id="loginFormEmail"
-          onInput={(event) => setEmail(event.target.value)}
         />
       </div>
       <div className={style.password}>
         <label htmlFor="loginFormPassword">Password</label>
         <input
+          ref={passwordInput}
           type="password"
           name="loginFormPassword"
           id="loginFormPassword"
-          onInput={(event) => setPassword(event.target.value)}
         />
       </div>
       <div className={style.submit}>
