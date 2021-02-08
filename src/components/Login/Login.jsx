@@ -24,12 +24,15 @@ const Login = (props) => {
           setUserContext((prev) => ({
             ...prev,
             loggedIn: true,
+            user: data.user,
+            roles: data.roles,
+            email: emailInput.current.value,
           }));
 
           console.log(data);
 
-          setToken("generic user token");
-          setUserId("generic user id");
+          setToken(data.token);
+          setUserId(data.user.id);
 
           setRedirect(true);
         }
