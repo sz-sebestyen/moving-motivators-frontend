@@ -5,6 +5,7 @@ import Timeline from "./components/Timeline/Timeline";
 import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
 import { UserContext, appContext } from "./components/UserContext/UserContext";
 import Navigation from "./components/Navigation/Navigation";
+import { getToken, getUserId } from "./components/UserContext/UserContext";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
@@ -17,6 +18,15 @@ function App() {
   useEffect(() => {
     console.log("userContext changed ", userContext);
   }, [userContext]);
+
+  useEffect(() => {
+    if (getToken() && getUserId()) {
+      setUserContext((prev) => ({
+        ...prev,
+        loggedIn: true,
+      }));
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>
