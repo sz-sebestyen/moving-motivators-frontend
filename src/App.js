@@ -3,7 +3,7 @@ import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Timeline from "./components/Timeline/Timeline";
 import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
-import { UserContext, user } from "./components/UserContext/UserContext";
+import { UserContext, appContext } from "./components/UserContext/UserContext";
 import Navigation from "./components/Navigation/Navigation";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -12,7 +12,7 @@ import React, { useContext, useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const [userContext, setUserContext] = useState(user);
+  const [userContext, setUserContext] = useState(appContext);
 
   useEffect(() => {
     console.log("userContext changed ", userContext);

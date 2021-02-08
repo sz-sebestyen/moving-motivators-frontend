@@ -26,15 +26,9 @@ export const removeUserId = () => {
   localStorage.removeItem("userId");
 };
 
-export const user = {
+export const appContext = {
   loggedIn: false,
-  token: "",
-  userId: "",
   email: "",
-  firstName: "",
-  lastName: "",
-  company: "",
-  position: "",
-  defaultCards: [],
-  groups: [],
+  user: {},
+  roles: [],
 };
