@@ -107,6 +107,9 @@ export const getQuestion = async (id) => {
   }
 };
 
+// TODO: getQuestions
+export const getQuestions = async (ids) => {};
+
 export const deleteQuestion = async (id) => {
   try {
     const response = await axios.delete(`${baseUrl}/question/${id}`);

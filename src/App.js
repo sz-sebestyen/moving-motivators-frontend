@@ -3,8 +3,9 @@ import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Timeline from "./components/Timeline/Timeline";
 import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
-import { UserContext, appContext } from "./components/UserContext/UserContext";
 import Navigation from "./components/Navigation/Navigation";
+import QuestionGroupPage from "./components/QuestionGroupPage/QuestionGroupPage";
+import { UserContext, appContext } from "./components/UserContext/UserContext";
 import { getToken, getUserId } from "./components/UserContext/UserContext";
 import { getUser } from "./components/requests/requests";
 
@@ -52,6 +53,9 @@ function App() {
               </Route>
               <Route path="/groups">
                 <QuestionGroups />
+              </Route>
+              <Route path="/question-group/:id">
+                <QuestionGroupPage />
               </Route>
               <Route path="/profile">
                 <Profile />

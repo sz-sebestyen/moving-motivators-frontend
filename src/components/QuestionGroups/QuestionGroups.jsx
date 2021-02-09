@@ -48,11 +48,11 @@ const GroupForm = (props) => {
 
 const Group = (props) => {
   return (
-    <div className="group">
-      <Link to="/">
+    <li className="group">
+      <Link to={`/question-group/${props.group.id}`}>
         {`id: ${props.group.id} ownerId: ${props.group.ownerId}`}
       </Link>
-    </div>
+    </li>
   );
 };
 
@@ -74,19 +74,19 @@ const QuestionGroups = (props) => {
   }, [userContext]);
 
   return (
-    <div className="groupsPage">
+    <main className="groupsPage">
       {inCreation && <GroupForm setInCreation={setInCreation} />}
       <div className="questionGroupMenu">
         <button className="createGroup" onClick={() => setInCreation(true)}>
           Add group
         </button>
       </div>
-      <div className="allGroups">
+      <ul className="allGroups">
         {groups.map((group) => (
           <Group key={group.id} group={group}></Group>
         ))}
-      </div>
-    </div>
+      </ul>
+    </main>
   );
 };
 
