@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import axios from "axios";
-import { getToken } from "./components/UserContext/UserContext";
+import { getToken } from "./components/Context/Context";
 
 axios.interceptors.request.use(
   (config) => {

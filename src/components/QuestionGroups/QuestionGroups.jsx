@@ -1,6 +1,5 @@
-import { UserContext } from "../UserContext/UserContext";
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { getToken, getUserId } from "../UserContext/UserContext";
+import { getToken, getUserId, UserContext } from "../Context/Context";
 import { getQuestionGroups, createQuestionGroup } from "../requests/requests";
 import { Link } from "react-router-dom";
 

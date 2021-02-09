@@ -5,8 +5,16 @@ import Timeline from "./components/Timeline/Timeline";
 import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
 import Navigation from "./components/Navigation/Navigation";
 import QuestionGroupPage from "./components/QuestionGroupPage/QuestionGroupPage";
-import { UserContext, appContext } from "./components/UserContext/UserContext";
-import { getToken, getUserId } from "./components/UserContext/UserContext";
+import {
+  UserContext,
+  GroupsContext,
+  QuestionsContext,
+  defaultUser,
+  defaultGroups,
+  defaultQuestions,
+  getToken,
+  getUserId,
+} from "./components/Context/Context";
 import { getUser } from "./components/requests/requests";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -15,7 +23,9 @@ import React, { useContext, useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const [userContext, setUserContext] = useState(appContext);
+  const [userContext, setUserContext] = useState(defaultUser);
+  const [groupsContext, setGroupsContext] = useState(defaultGroups);
+  const [questionsContext, setQuestionsContext] = useState(defaultQuestions);
 
   useEffect(() => {
     console.log("userContext changed ", userContext);
@@ -39,37 +49,46 @@ function App() {
 
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>
-      <Router>
-        <div className="App" onDragStart={(event) => event.preventDefault()}>
-          <Navigation />
+      <GroupsContext.Provider value={[groupsContext, setGroupsContext]}>
+        <QuestionsContext.Provider
+          value={[questionsContext, setQuestionsContext]}
+        >
+          <Router>
+            <div
+              className="App"
+              onDragStart={(event) => event.preventDefault()}
+            >
+              <Navigation />
 
-          <div className="pages">
-            <Switch>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/board">
-                <MMBoard />
-              </Route>
-              <Route path="/groups">
-                <QuestionGroups />
-              </Route>
-              <Route path="/question-group/:id">
-                <QuestionGroupPage />
-              </Route>
-              <Route path="/profile">
-                <Profile />
-              </Route>
-              <Route path="/timeline">
-                <Timeline />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
-          </div>
-        </div>
-      </Router>
+              <div className="pages">
+                <Switch>
+                  <Route path="/login">
+                    <Login />
+                  </Route>
+                  <Route path="/board">
+                    <MMBoard />
+                  </Route>
+                  <Route path="/groups">
+                    <QuestionGroups />
+                  </Route>
+                  <Route path="/question-group/:id">
+                    <QuestionGroupPage />
+                  </Route>
+                  <Route path="/profile">
+                    <Profile />
+                  </Route>
+                  <Route path="/timeline">
+                    <Timeline />
+                  </Route>
+                  <Route path="/">
+                    <Home />
+                  </Route>
+                </Switch>
+              </div>
+            </div>
+          </Router>
+        </QuestionsContext.Provider>
+      </GroupsContext.Provider>
     </UserContext.Provider>
   );
 }

@@ -2,7 +2,7 @@ import style from "./Login.module.css";
 import { Redirect } from "react-router-dom";
 import React, { useContext, useState, useRef } from "react";
 
-import { UserContext, setToken, setUserId } from "../UserContext/UserContext";
+import { UserContext, setToken, setUserId } from "../Context/Context";
 import { login, getUser } from "../requests/requests";
 
 const Login = (props) => {

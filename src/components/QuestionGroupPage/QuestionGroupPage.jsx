@@ -2,7 +2,7 @@ import QuestionGroups from "../QuestionGroups/QuestionGroups";
 import { getQuestions } from "../requests/requests";
 import { useParams } from "react-router-dom";
 import { useState, useContext, useRef } from "react";
-import { UserContext } from "../UserContext/UserContext";
+import { UserContext } from "../Context/Context";
 import { Link } from "react-router-dom";
 
 const QuestionForm = (props) => {

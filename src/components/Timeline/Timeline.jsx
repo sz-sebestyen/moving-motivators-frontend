@@ -1,5 +1,5 @@
 import { useState, useRef, useContext } from "react";
-import { UserContext } from "../UserContext/UserContext";
+import { UserContext } from "../Context/Context";
 
 const Timeline = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
