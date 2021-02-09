@@ -1,4 +1,6 @@
 .mmbOuter {
+  width: 1200px;
+  margin: 180px auto;
 }
 
 .direction {
@@ -18,15 +20,13 @@
 }
 
 .mmb {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
   background-image: repeating-linear-gradient(
     green -300%,
     white 40%,
     white 60%,
     red 400%
   );
-  width: 1200px;
+  width: 100%;
   height: 360px;
 
   position: relative;

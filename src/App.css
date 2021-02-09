@@ -9,10 +9,7 @@ body,
 }
 
 .pages {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100% - 42px);
+  min-height: calc(100% - 42px);
 }
 
 nav {

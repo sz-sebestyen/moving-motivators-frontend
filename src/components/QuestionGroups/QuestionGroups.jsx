@@ -2,6 +2,7 @@ import { UserContext } from "../UserContext/UserContext";
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { getToken, getUserId } from "../UserContext/UserContext";
 import { getQuestionGroups, createQuestionGroup } from "../requests/requests";
+import { Link } from "react-router-dom";
 
 import "./QuestionGroups.css";
 
@@ -47,7 +48,11 @@ const GroupForm = (props) => {
 
 const Group = (props) => {
   return (
-    <div className="group">{`id: ${props.group.id} ownerId: ${props.group.ownerId}`}</div>
+    <div className="group">
+      <Link to="/">
+        {`id: ${props.group.id} ownerId: ${props.group.ownerId}`}
+      </Link>
+    </div>
   );
 };
 
@@ -64,6 +69,8 @@ const QuestionGroups = (props) => {
         setGroups(newGroups);
       });
     }
+
+    // TODO: cancel requests before unmounting
   }, [userContext]);
 
   return (

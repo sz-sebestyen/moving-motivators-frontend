@@ -5,7 +5,7 @@ const Timeline = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
   return (
     <div className="timeline">
-      {userContext.defaultCards.map((cards) => (
+      {/* userContext.defaultCards.map((cards) => (
         <div>
           {cards.map((card, index) => (
             <div>
@@ -14,7 +14,7 @@ const Timeline = (props) => {
           ))}
           <div>--------------------------------</div>
         </div>
-      ))}
+      )) */}
     </div>
   );
 };
