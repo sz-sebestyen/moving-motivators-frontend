@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import React, { useContext, useState, useRef } from "react";
 
 import { UserContext, setToken, setUserId } from "../UserContext/UserContext";
-import { login } from "../requests/requests";
+import { login, getUser } from "../requests/requests";
 
 const Login = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
@@ -11,10 +11,7 @@ const Login = (props) => {
   const emailInput = useRef(null);
   const passwordInput = useRef(null);
 
-  const [redirect, setRedirect] = useState(userContext.loggedIn);
-
   const handleSave = (event) => {
-    // TODO: login
     if (emailInput.current.value && passwordInput.current.value) {
       login({
         email: emailInput.current.value,
@@ -29,18 +26,22 @@ const Login = (props) => {
             email: emailInput.current.value,
           }));
 
-          console.log(data);
-
           setToken(data.token);
           setUserId(data.user.id);
 
-          setRedirect(true);
+          console.log(data);
+          //temp
+          getUser(data.user.id).then((data) => {
+            if (data) {
+              console.log(data);
+            }
+          });
         }
       });
     }
   };
 
-  if (redirect) {
+  if (userContext.loggedIn) {
     return <Redirect push to="/" />;
   }
 

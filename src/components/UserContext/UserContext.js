@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { getUser } from "../requests/requests";
 
 export const UserContext = React.createContext();
 
@@ -25,6 +26,20 @@ export const getUserId = () => {
 export const removeUserId = () => {
   localStorage.removeItem("userId");
 };
+
+/* export const UpdateAppContext = () => {
+  const [userContext, setUserContext] = useContext(UserContext);
+
+  const user = getUser(getUserId());
+
+  if (user) {
+    setUserContext((prev) => ({
+      ...prev,
+      user,
+    }));
+  }
+  return user;
+}; */
 
 export const appContext = {
   loggedIn: false,

@@ -6,6 +6,7 @@ import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
 import { UserContext, appContext } from "./components/UserContext/UserContext";
 import Navigation from "./components/Navigation/Navigation";
 import { getToken, getUserId } from "./components/UserContext/UserContext";
+import { getUser } from "./components/requests/requests";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
@@ -21,10 +22,17 @@ function App() {
 
   useEffect(() => {
     if (getToken() && getUserId()) {
-      setUserContext((prev) => ({
-        ...prev,
-        loggedIn: true,
-      }));
+      getUser(getUserId()).then((user) => {
+        if (user) {
+          console.log(user);
+          setUserContext((prev) => ({
+            ...prev,
+            loggedIn: true,
+            user: user,
+            roles: user.roles,
+          }));
+        }
+      });
     }
   }, []);
 

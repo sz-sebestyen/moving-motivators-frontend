@@ -171,9 +171,20 @@ export const getQuestionGroup = async (id) => {
   }
 };
 
+export const getQuestionGroups = async (ids) => {
+  const allResponses = await Promise.allSettled(
+    ids.map((id) => axios.get(`${baseUrl}/question-group/${id}`))
+  );
+  return allResponses
+    .filter((res) => res.status === "fulfilled")
+    .map((res) => res.value.data);
+};
+
 export const editName = async (id, name) => {
   try {
-    const response = await axios.put(`${baseUrl}/question-group/${id}`, name);
+    const response = await axios.put(`${baseUrl}/question-group/${id}`, {
+      name,
+    });
     const data = await response.data;
     return data;
   } catch (error) {
@@ -245,7 +256,7 @@ export const saveDefault = async (list) => {
 
 export const searchUser = async (name) => {
   try {
-    const response = await axios.get(`${baseUrl}/user/search`, name);
+    const response = await axios.get(`${baseUrl}/user/search`, { name });
     const data = await response.data;
     return data;
   } catch (error) {
