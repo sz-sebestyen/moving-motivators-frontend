@@ -1,7 +1,8 @@
 import "./MMBoard.css";
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { UserContext } from "../UserContext/UserContext";
+import { getCardList, saveDefault } from "../requests/requests";
 
 import zoomOut from "../../images/search-minus-solid.svg";
 import zoomIn from "../../images/search-plus-solid.svg";
@@ -51,6 +52,40 @@ const cardMap = [
   cardIMG8,
   cardIMG9,
 ];
+
+const stringToNumCard = {
+  ACCEPTANCE: 0,
+  CURIOSITY: 1,
+  FREEDOM: 2,
+  GOAL: 3,
+  HONOR: 4,
+  MASTERY: 5,
+  ORDER: 6,
+  POWER: 7,
+  RELATEDNESS: 8,
+  STATUS: 9,
+};
+
+const numToStringCard = [
+  "ACCEPTANCE",
+  "CURIOSITY",
+  "FREEDOM",
+  "GOAL",
+  "HONOR",
+  "MASTERY",
+  "ORDER",
+  "POWER",
+  "RELATEDNESS",
+  "STATUS",
+];
+
+const stringToNumValue = {
+  POSITIVE: 0,
+  NEUTRAL: 1,
+  NEGATIVE: 2,
+};
+
+const numToStringValue = ["POSITIVE", "NEUTRAL", "NEGATIVE"];
 
 const getCards = () => {
   return Array(NUMBER_OF_CARDS)
@@ -129,6 +164,25 @@ const MMBoard = (props) => {
 
   const [userContext, setUserContext] = useContext(UserContext);
 
+  useEffect(() => {
+    if (userContext.user.defaultCardListId) {
+      getCardList(userContext.user.defaultCardListId).then((data) => {
+        console.log(data);
+        // TODO: set cards
+        if (data) {
+          const inList = Array(10).fill();
+          data.forEach((card) => {
+            inList[stringToNumCard[card.type]] = {
+              value: stringToNumValue[card.value],
+              index: card.position,
+            };
+          });
+          //setCards(inList);
+        }
+      });
+    }
+  }, [userContext]);
+
   const changeCardsOrder = (startIndex, endIndex, value) => {
     setCards((prevState) => {
       const endIndexIsSmaller = Math.min(startIndex, endIndex) === endIndex;
@@ -191,10 +245,17 @@ const MMBoard = (props) => {
         <button
           type="button"
           onClick={(event) => {
-            setUserContext((prev) => ({
-              ...prev,
-              defaultCards: [cards, ...prev.defaultCards],
+            const outList = cards.map((card, type) => ({
+              position: card.index,
+              type: numToStringCard[type],
+              value: numToStringValue[card.value],
             }));
+            console.log(outList);
+            saveDefault(outList).then((data) => {
+              if (data) {
+                console.log(data);
+              }
+            });
           }}
         >
           Save
