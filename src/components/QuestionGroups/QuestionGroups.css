@@ -43,6 +43,5 @@
 .group {
   flex-basis: 100%;
   border: 1px solid black;
-  border-radius: 99em;
   padding: 6px 10px;
 }
