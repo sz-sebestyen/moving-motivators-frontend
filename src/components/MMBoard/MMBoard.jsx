@@ -1,7 +1,7 @@
 import "./MMBoard.css";
 import { useState, useRef, useContext, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { UserContext } from "../UserContext/UserContext";
+import { UserContext } from "../Context/Context";
 import { getCardList, saveDefault } from "../requests/requests";
 
 import zoomOut from "../../images/search-minus-solid.svg";

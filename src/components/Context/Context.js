@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
-import { getUser } from "../requests/requests";
+import React from "react";
 
 export const UserContext = React.createContext();
+export const GroupsContext = React.createContext();
+export const QuestionsContext = React.createContext();
 
 export const setToken = (token) => {
   return localStorage.setItem("token", token);
@@ -27,23 +28,11 @@ export const removeUserId = () => {
   localStorage.removeItem("userId");
 };
 
-/* export const UpdateAppContext = () => {
-  const [userContext, setUserContext] = useContext(UserContext);
-
-  const user = getUser(getUserId());
-
-  if (user) {
-    setUserContext((prev) => ({
-      ...prev,
-      user,
-    }));
-  }
-  return user;
-}; */
-
-export const appContext = {
+export const defaultUser = {
   loggedIn: false,
-  email: "",
   user: {},
-  roles: [],
 };
+
+export const defaultGroups = { invites: [], ownGroups: [], otherGroups: {} };
+
+export const defaultQuestions = {};

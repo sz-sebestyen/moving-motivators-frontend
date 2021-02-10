@@ -1,32 +1,41 @@
-import { UserContext } from "../UserContext/UserContext";
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { getToken, getUserId } from "../UserContext/UserContext";
-import { getQuestionGroups, createQuestionGroup } from "../requests/requests";
+import {
+  getToken,
+  getUserId,
+  UserContext,
+  GroupsContext,
+} from "../Context/Context";
+import { createQuestionGroup } from "../requests/requests";
 import { Link } from "react-router-dom";
 
 import "./QuestionGroups.css";
 
 const GroupForm = (props) => {
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [groupsContext, setGroupsContext] = useContext(GroupsContext);
   const input = useRef(null);
 
   return (
     <div className="groupFormWrap">
       <form
         className="groupForm"
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
           props.setInCreation(false);
-          createQuestionGroup(input.current.value).then((data) => {
-            console.log(data);
-            setUserContext((prev) => ({
+          const newGroup = await createQuestionGroup(input.current.value);
+          if (newGroup) {
+            console.log(newGroup);
+            setGroupsContext((prev) => ({
               ...prev,
-              user: {
-                ...prev.user,
-                groupIds: [...prev.user.groupIds, data.id],
-              },
+              ownGroups: [...prev.ownGroups, newGroup],
             }));
-          });
+          }
+          /* createQuestionGroup(input.current.value).then((data) => {
+            console.log(data);
+            setGroupsContext((prev) => ({
+              ...prev,
+              ownGroups: [...prev.ownGroups, data],
+            }));
+          }); */
         }}
       >
         <input
@@ -50,28 +59,20 @@ const Group = (props) => {
   return (
     <li className="group">
       <Link to={`/question-group/${props.group.id}`}>
-        {`id: ${props.group.id} ownerId: ${props.group.ownerId}`}
+        {`id: ${props.group.id} ownerId: ${props.group.ownerId} name: ${props.group.value} questions: ${props.group.questionIds.length}`}
       </Link>
     </li>
   );
 };
 
 const QuestionGroups = (props) => {
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [groupsContext, setGroupsContext] = useContext(GroupsContext);
   const [inCreation, setInCreation] = useState(false);
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    if (userContext.user.groupIds) {
-      getQuestionGroups(userContext.user.groupIds).then((newGroups) => {
-        console.log(newGroups);
-        // TODO: format newGroups into list by ownerIds
-        setGroups(newGroups);
-      });
-    }
-
-    // TODO: cancel requests before unmounting
-  }, [userContext]);
+    setGroups((prev) => groupsContext.ownGroups);
+  }, [groupsContext]);
 
   return (
     <main className="groupsPage">

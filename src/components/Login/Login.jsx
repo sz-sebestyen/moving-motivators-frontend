@@ -2,7 +2,7 @@ import style from "./Login.module.css";
 import { Redirect } from "react-router-dom";
 import React, { useContext, useState, useRef } from "react";
 
-import { UserContext, setToken, setUserId } from "../UserContext/UserContext";
+import { UserContext, setToken, setUserId } from "../Context/Context";
 import { login, getUser } from "../requests/requests";
 
 const Login = (props) => {
@@ -22,8 +22,6 @@ const Login = (props) => {
             ...prev,
             loggedIn: true,
             user: data.user,
-            roles: data.roles,
-            email: emailInput.current.value,
           }));
 
           setToken(data.token);

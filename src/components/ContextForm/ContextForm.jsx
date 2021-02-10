@@ -2,7 +2,7 @@ import style from "./ContextForm.module.css";
 
 import React, { useContext, useState } from "react";
 
-import { UserContext } from "../UserContext/UserContext";
+import { UserContext } from "../Context/Context";
 
 import { Redirect } from "react-router-dom";
 
