@@ -1,10 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import {
-  getToken,
-  getUserId,
-  UserContext,
-  GroupsContext,
-} from "../Context/Context";
+import { GroupsContext } from "../Context/Context";
 import { createQuestionGroup } from "../requests/requests";
 import { Link } from "react-router-dom";
 
@@ -22,20 +17,13 @@ const GroupForm = (props) => {
           event.preventDefault();
           props.setInCreation(false);
           const newGroup = await createQuestionGroup(input.current.value);
+          console.log("newGroup: ", newGroup);
           if (newGroup) {
-            console.log(newGroup);
             setGroupsContext((prev) => ({
               ...prev,
               ownGroups: [...prev.ownGroups, newGroup],
             }));
           }
-          /* createQuestionGroup(input.current.value).then((data) => {
-            console.log(data);
-            setGroupsContext((prev) => ({
-              ...prev,
-              ownGroups: [...prev.ownGroups, data],
-            }));
-          }); */
         }}
       >
         <input
@@ -59,7 +47,7 @@ const Group = (props) => {
   return (
     <li className="group">
       <Link to={`/question-group/${props.group.id}`}>
-        {`id: ${props.group.id} ownerId: ${props.group.ownerId} name: ${props.group.value} questions: ${props.group.questionIds.length}`}
+        {`id: ${props.group.id} ownerId: ${props.group.ownerId} name: ${props.group.value}`}
       </Link>
     </li>
   );
@@ -77,11 +65,13 @@ const QuestionGroups = (props) => {
   return (
     <main className="groupsPage">
       {inCreation && <GroupForm setInCreation={setInCreation} />}
+
       <div className="questionGroupMenu">
         <button className="createGroup" onClick={() => setInCreation(true)}>
           Add group
         </button>
       </div>
+
       <ul className="allGroups">
         {groups.map((group) => (
           <Group key={group.id} group={group}></Group>

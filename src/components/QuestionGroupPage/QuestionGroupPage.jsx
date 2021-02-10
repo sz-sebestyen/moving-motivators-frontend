@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import "./QuestionGroupPage.css";
 
 const QuestionForm = (props) => {
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
   const input = useRef(null);
 
   return (
@@ -21,15 +21,18 @@ const QuestionForm = (props) => {
         onSubmit={async (event) => {
           event.preventDefault();
           props.setInCreation(false);
-          const sendData = {
+          const newQuestion = await createQuestion({
             groupId: props.groupId,
             value: input.current.value,
-          };
-          const newQuestion = await createQuestion(sendData);
+          });
           console.log(newQuestion);
-          /* if (newQuestion) {
+          if (newQuestion) {
             // TODO: set questions
-          } */
+            setQuestionsContext((prev) => ({
+              ...prev,
+              [props.groupId]: [...(prev[props.groupId] || []), newQuestion],
+            }));
+          }
         }}
       >
         <input

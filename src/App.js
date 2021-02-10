@@ -39,10 +39,9 @@ function App() {
     const newQuestions = await getAllQuestions(newGroups);
     console.log("new questions: ", newQuestions);
 
-    const byGroupId = newQuestions.map((questions) => ({
-      ...(questions[0] ? { [questions[0].groupId]: questions } : {}),
-    }));
-    // TODO: set questions
+    const byGroupId = newQuestions.map((questions) =>
+      questions[0] ? { [questions[0].groupId]: questions } : {}
+    );
     console.log("byGroupId: ", byGroupId);
     setQuestionsContext((prev) => {
       const nextQContext = Object.assign({}, ...byGroupId);

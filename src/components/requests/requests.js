@@ -106,7 +106,6 @@ export const getQuestion = async (id) => {
   }
 };
 
-// TODO: getQuestions
 export const getQuestions = async (ids) => {
   const allResponses = await Promise.allSettled(
     ids.map((id) => axios.get(`${baseUrl}/question/${id}`))
@@ -116,12 +115,10 @@ export const getQuestions = async (ids) => {
     .map((res) => res.value.data);
 };
 
-// TODO: getAllQuestions
 export const getAllQuestions = async (groups) => {
   const everyGroupsResponse = await Promise.allSettled(
     groups.map((group) => getQuestions(group.questionIds))
   );
-  console.log(everyGroupsResponse);
   return everyGroupsResponse
     .filter((res) => res.status === "fulfilled")
     .map((res) => res.value);
