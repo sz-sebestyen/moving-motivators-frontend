@@ -64,7 +64,7 @@ const QuestionGroupPage = (props) => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    setQuestions((prev) => questionsContext[id]);
+    setQuestions((prev) => questionsContext[id] || []);
   }, [questionsContext, id]);
 
   return (
