@@ -28,10 +28,6 @@ const AnswerPage = (props) => {
 
   console.log("group:", questionsContext[groupId]);
 
-  console.log(
-    questionsContext[groupId].find((que) => que.id.toString() === questionId)
-      .value
-  );
   /* 		questionsContext[groupId].find((question) => question.id === questionId)
 			.value */
 
@@ -65,7 +61,11 @@ const AnswerPage = (props) => {
         </button>
         <button type="button">Finalize</button>
       </div>
+
+      <h1 className="title">{question.value || ""}</h1>
+
       <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
+
       <div className="note">
         <textarea placeholder="save a note"></textarea>
       </div>
