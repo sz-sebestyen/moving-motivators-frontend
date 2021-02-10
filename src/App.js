@@ -1,4 +1,4 @@
-import MMBoard from "./components/MMBoard/MMBoard";
+import BoardPage from "./components/BoardPage/BoardPage";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Timeline from "./components/Timeline/Timeline";
@@ -104,7 +104,7 @@ function App() {
                     <Login />
                   </Route>
                   <Route path="/board">
-                    <MMBoard />
+                    <BoardPage />
                   </Route>
                   <Route path="/groups">
                     <QuestionGroups />

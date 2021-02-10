@@ -1,6 +1,6 @@
 .mmbOuter {
   width: 1200px;
-  margin: 180px auto;
+  margin: 0 auto;
 }
 
 .direction {
@@ -21,10 +21,10 @@
 
 .mmb {
   background-image: repeating-linear-gradient(
-    green -300%,
-    white 40%,
-    white 60%,
-    red 400%
+    green -200%,
+    lightgray 40%,
+    lightgray 60%,
+    red 300%
   );
   width: 100%;
   height: 360px;
@@ -58,6 +58,7 @@
 }
 .MMCard img {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 .MMCard .zoom {

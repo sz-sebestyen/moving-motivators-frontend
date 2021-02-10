@@ -1,7 +1,5 @@
 import "./MMBoard.css";
 import { useState, useRef, useContext, useEffect } from "react";
-import { UserContext } from "../Context/Context";
-import { getCardList, saveDefault } from "../requests/requests";
 
 import zoomOut from "../../images/search-minus-solid.svg";
 import zoomIn from "../../images/search-plus-solid.svg";
@@ -104,30 +102,18 @@ const MMBoard = (props) => {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragOverTarget, setDragOverTarget] = useState({});
 
-  const [userContext, setUserContext] = useContext(UserContext);
-
-  const loadCardList = async () => {
-    if (userContext.user.defaultCardListId) {
-      const cardList = await getCardList(userContext.user.defaultCardListId);
-      console.log("got card list: ", cardList);
-
-      // TODO: set cards
-      if (cardList) {
-        const inList = Array(10).fill();
-        cardList.forEach((card) => {
-          inList[stringToNumCard[card.type]] = {
-            value: stringToNumValue[card.value],
-            index: card.position,
-          };
-        });
-        //setCards(inList);
-      }
-    }
-  };
-
   useEffect(() => {
-    loadCardList();
-  }, []);
+    if (props.starterCards) {
+      const cardList = Array(10).fill();
+      props.starterCards.forEach((card) => {
+        cardList[stringToNumCard[card.type]] = {
+          value: stringToNumValue[card.value],
+          index: card.position,
+        };
+      });
+      setCards(cardList);
+    }
+  }, [props]);
 
   const changeCardsOrder = (startIndex, endIndex, value) => {
     setCards((prevState) => {
@@ -145,6 +131,16 @@ const MMBoard = (props) => {
         else return card;
       });
     });
+
+    //set parent state
+    const saveList = cards.map((card, type) => ({
+      position: card.index,
+      type: numToStringCard[type],
+      value: numToStringValue[card.value],
+    }));
+
+    console.log("cards updated: ", saveList);
+    props.setSaveCards(saveList);
   };
 
   const handleDragOver = (event) => {
@@ -174,39 +170,19 @@ const MMBoard = (props) => {
         onDragOver={handleDragOver}
         onDragStart={(event) => event.preventDefault()}
       >
-        {Array(NUMBER_OF_CARDS)
-          .fill()
-          .map((_, type) => (
-            <MMCard
-              type={type}
-              card={cards[type]}
-              key={type}
-              setDragTarget={setDragTarget}
-              setDragOffset={setDragOffset}
-              isDragged={dragTarget === cards[type].index}
-            />
-          ))}
-      </div>
-      <div className="mmbSave">
-        <button
-          type="button"
-          onClick={async () => {
-            const outList = cards.map((card, type) => ({
-              position: card.index,
-              type: numToStringCard[type],
-              value: numToStringValue[card.value],
-            }));
-
-            console.log("cards to be saved: ", outList);
-
-            const data = await saveDefault(outList);
-            if (data) {
-              console.log(data);
-            }
-          }}
-        >
-          Save
-        </button>
+        {cards &&
+          Array(NUMBER_OF_CARDS)
+            .fill()
+            .map((_, type) => (
+              <MMCard
+                type={type}
+                card={cards[type]}
+                key={type}
+                setDragTarget={setDragTarget}
+                setDragOffset={setDragOffset}
+                isDragged={dragTarget === cards[type].index}
+              />
+            ))}
       </div>
     </div>
   );
