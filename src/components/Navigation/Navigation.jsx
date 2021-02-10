@@ -1,6 +1,7 @@
 import { UserContext, removeToken, removeUserId } from "../Context/Context";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import "./Navigation.scss";
 
 export default function Navigation(props) {
   const [userContext, setUserContext] = useContext(UserContext);

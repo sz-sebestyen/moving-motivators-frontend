@@ -3,7 +3,7 @@ import { GroupsContext } from "../Context/Context";
 import { createQuestionGroup } from "../requests/requests";
 import { Link } from "react-router-dom";
 
-import "./QuestionGroups.css";
+import "./QuestionGroups.scss";
 
 const GroupForm = (props) => {
   const [groupsContext, setGroupsContext] = useContext(GroupsContext);

@@ -8,7 +8,7 @@ import {
 } from "../Context/Context";
 import { Link } from "react-router-dom";
 
-import "./QuestionGroupPage.css";
+import "./QuestionGroupPage.scss";
 
 const QuestionForm = (props) => {
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);

@@ -1,4 +1,4 @@
-import style from "./Login.module.css";
+import style from "./Login.module.scss";
 import { Redirect } from "react-router-dom";
 import React, { useContext, useState, useRef } from "react";
 

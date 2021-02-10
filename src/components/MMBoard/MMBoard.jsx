@@ -1,4 +1,4 @@
-import "./MMBoard.css";
+import "./MMBoard.scss";
 import { useState, useRef, useContext, useEffect } from "react";
 
 import zoomOut from "../../images/search-minus-solid.svg";
