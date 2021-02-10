@@ -1,6 +1,5 @@
 import "./MMBoard.css";
 import { useState, useRef, useContext, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { UserContext } from "../Context/Context";
 import { getCardList, saveDefault } from "../requests/requests";
 
@@ -31,11 +30,6 @@ const ZOOM_LEFT = 420;
 const ZOOM_Z_INDEX = 999;
 
 const DRAGGED_CARD_OPACITY = 0;
-
-const uuidList = (length) =>
-  Array(length)
-    .fill()
-    .map(() => uuidv4());
 
 const getCards = () => {
   return Array(NUMBER_OF_CARDS)
@@ -102,8 +96,6 @@ const getDropCoords = (event, mmb, dragOffset) => {
   else if (value > MAX_VALUE) value = MAX_VALUE;
   return [index, value];
 };
-
-const MMBCardKeys = uuidList(NUMBER_OF_CARDS);
 
 const MMBoard = (props) => {
   const mmb = useRef(null);
@@ -188,7 +180,7 @@ const MMBoard = (props) => {
             <MMCard
               type={type}
               card={cards[type]}
-              key={MMBCardKeys[type]}
+              key={type}
               setDragTarget={setDragTarget}
               setDragOffset={setDragOffset}
               isDragged={dragTarget === cards[type].index}
