@@ -22,8 +22,6 @@ const Login = (props) => {
             ...prev,
             loggedIn: true,
             user: data.user,
-            roles: data.roles,
-            email: emailInput.current.value,
           }));
 
           setToken(data.token);

@@ -30,9 +30,7 @@ export const removeUserId = () => {
 
 export const defaultUser = {
   loggedIn: false,
-  email: "",
   user: {},
-  roles: [],
 };
 
 export const defaultGroups = { invites: [], ownGroups: [], otherGroups: {} };

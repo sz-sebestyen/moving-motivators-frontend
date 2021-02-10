@@ -15,7 +15,11 @@ import {
   getToken,
   getUserId,
 } from "./components/Context/Context";
-import { getUser } from "./components/requests/requests";
+import {
+  getUser,
+  getQuestionGroups,
+  getAllQuestions,
+} from "./components/requests/requests";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
@@ -31,20 +35,53 @@ function App() {
     console.log("userContext changed ", userContext);
   }, [userContext]);
 
-  useEffect(() => {
-    if (getToken() && getUserId()) {
-      getUser(getUserId()).then((user) => {
-        if (user) {
-          console.log(user);
-          setUserContext((prev) => ({
-            ...prev,
-            loggedIn: true,
-            user: user,
-            roles: user.roles,
-          }));
-        }
-      });
+  const updateQuestions = async (newGroups) => {
+    const newQuestions = await getAllQuestions(newGroups);
+    console.log("new questions: ", newQuestions);
+
+    const byGroupId = newQuestions.map((questions) => ({
+      ...(questions[0] ? { [questions[0].groupId]: questions } : {}),
+    }));
+    // TODO: set questions
+    console.log("byGroupId: ", byGroupId);
+    setQuestionsContext((prev) => {
+      const nextQContext = Object.assign({}, ...byGroupId);
+      console.log("nextQContext: ", nextQContext);
+      return nextQContext;
+    });
+  };
+
+  const updateGroups = async (user) => {
+    const newGroups = await getQuestionGroups(user.groupIds);
+    console.log("groups: ", newGroups);
+    // TODO: format newGroups into list by ownerIds
+    if (newGroups) {
+      setGroupsContext((prev) => ({
+        ...prev,
+        ownGroups: newGroups,
+      }));
+      updateQuestions(newGroups);
     }
+  };
+
+  const updateUser = async () => {
+    if (getToken() && getUserId()) {
+      const user = await getUser(getUserId());
+      console.log(user);
+      if (user) {
+        setUserContext((prev) => ({
+          ...prev,
+          loggedIn: true,
+          user: user,
+        }));
+
+        updateGroups(user);
+      }
+    }
+  };
+
+  useEffect(() => {
+    updateUser();
   }, []);
 
   return (
