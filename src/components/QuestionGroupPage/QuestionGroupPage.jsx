@@ -25,9 +25,8 @@ const QuestionForm = (props) => {
             groupId: props.groupId,
             value: input.current.value,
           });
-          console.log(newQuestion);
+          console.log("newQuestion: ", newQuestion);
           if (newQuestion) {
-            // TODO: set questions
             setQuestionsContext((prev) => ({
               ...prev,
               [props.groupId]: [...(prev[props.groupId] || []), newQuestion],
@@ -71,7 +70,7 @@ const QuestionGroupPage = (props) => {
   }, [questionsContext, id]);
 
   return (
-    <main className="questionGroupPage">
+    <main className="questionsPage">
       {inCreation && (
         <QuestionForm setInCreation={setInCreation} groupId={id} />
       )}

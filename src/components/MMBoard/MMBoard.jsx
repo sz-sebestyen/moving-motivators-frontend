@@ -7,16 +7,14 @@ import { getCardList, saveDefault } from "../requests/requests";
 import zoomOut from "../../images/search-minus-solid.svg";
 import zoomIn from "../../images/search-plus-solid.svg";
 
-import cardIMG0 from "../../images/card-acceptance.png";
-import cardIMG1 from "../../images/card-curiosity.png";
-import cardIMG2 from "../../images/card-freedom.png";
-import cardIMG3 from "../../images/card-goal.png";
-import cardIMG4 from "../../images/card-honor.png";
-import cardIMG5 from "../../images/card-mastery.png";
-import cardIMG6 from "../../images/card-order.png";
-import cardIMG7 from "../../images/card-power.png";
-import cardIMG8 from "../../images/card-relatedness.png";
-import cardIMG9 from "../../images/card-status.png";
+import {
+  cardMap,
+  NUMBER_OF_CARDS,
+  stringToNumCard,
+  numToStringCard,
+  stringToNumValue,
+  numToStringValue,
+} from "../CardLib/CardLib";
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 2;
@@ -25,7 +23,6 @@ const MAX_INDEX = 9;
 
 const TILE_SIZE = 120;
 const CARD_SIZE = 120;
-const NUMBER_OF_CARDS = 10;
 const DEFAULT_CARD_VALUE = 1;
 
 const ZOOM = 3;
@@ -39,53 +36,6 @@ const uuidList = (length) =>
   Array(length)
     .fill()
     .map(() => uuidv4());
-
-const cardMap = [
-  cardIMG0,
-  cardIMG1,
-  cardIMG2,
-  cardIMG3,
-  cardIMG4,
-  cardIMG5,
-  cardIMG6,
-  cardIMG7,
-  cardIMG8,
-  cardIMG9,
-];
-
-const stringToNumCard = {
-  ACCEPTANCE: 0,
-  CURIOSITY: 1,
-  FREEDOM: 2,
-  GOAL: 3,
-  HONOR: 4,
-  MASTERY: 5,
-  ORDER: 6,
-  POWER: 7,
-  RELATEDNESS: 8,
-  STATUS: 9,
-};
-
-const numToStringCard = [
-  "ACCEPTANCE",
-  "CURIOSITY",
-  "FREEDOM",
-  "GOAL",
-  "HONOR",
-  "MASTERY",
-  "ORDER",
-  "POWER",
-  "RELATEDNESS",
-  "STATUS",
-];
-
-const stringToNumValue = {
-  POSITIVE: 0,
-  NEUTRAL: 1,
-  NEGATIVE: 2,
-};
-
-const numToStringValue = ["POSITIVE", "NEUTRAL", "NEGATIVE"];
 
 const getCards = () => {
   return Array(NUMBER_OF_CARDS)

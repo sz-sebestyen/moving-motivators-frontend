@@ -17,7 +17,9 @@ const GroupForm = (props) => {
           event.preventDefault();
           props.setInCreation(false);
           const newGroup = await createQuestionGroup(input.current.value);
+
           console.log("newGroup: ", newGroup);
+
           if (newGroup) {
             setGroupsContext((prev) => ({
               ...prev,
