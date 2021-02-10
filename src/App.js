@@ -78,12 +78,16 @@ function App() {
 
         updateGroups(user);
       }
+      console.log("updating");
+      setUserContext((prev) => ({ ...prev, dataLoaded: true }));
     }
   };
 
   useEffect(() => {
-    updateUser();
-  }, []);
+    if (!userContext.dataLoaded) {
+      updateUser();
+    }
+  });
 
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>

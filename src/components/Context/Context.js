@@ -30,6 +30,7 @@ export const removeUserId = () => {
 
 export const defaultUser = {
   loggedIn: false,
+  dataLoaded: false,
   user: {},
 };
 

@@ -1,14 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { QuestionsContext, UserContext } from "../Context/Context";
+import MMBoard from "../MMBoard/MMBoard";
 import {
   getCardList,
   setAnswer,
   closeQuestion,
   editNote,
 } from "../requests/requests";
-
-import MMBoard from "../MMBoard/MMBoard";
 
 const AnswerPage = (props) => {
   const { groupId, questionId } = useParams();
@@ -67,7 +66,9 @@ const AnswerPage = (props) => {
         <button type="button">Finalize</button>
       </div>
       <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
-      <textarea placeholder="save a note"></textarea>
+      <div className="note">
+        <textarea placeholder="save a note"></textarea>
+      </div>
     </main>
   );
 };

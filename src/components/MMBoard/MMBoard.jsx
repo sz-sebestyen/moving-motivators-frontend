@@ -132,7 +132,7 @@ const MMBoard = (props) => {
       });
     });
 
-    //set parent state
+    //update parent state
     const saveList = cards.map((card, type) => ({
       position: card.index,
       type: numToStringCard[type],

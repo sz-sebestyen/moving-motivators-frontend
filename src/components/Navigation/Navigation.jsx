@@ -33,7 +33,11 @@ export default function Navigation(props) {
             props: {
               to: "/login",
               onClick: (event) => {
-                setUserContext((prev) => ({ ...prev, loggedIn: false }));
+                setUserContext((prev) => ({
+                  ...prev,
+                  loggedIn: false,
+                  dataLoaded: false,
+                }));
                 removeUserId();
                 removeToken();
               },
