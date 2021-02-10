@@ -75,6 +75,7 @@ const QuestionGroups = (props) => {
       </div>
 
       <ul className="allGroups">
+        {/* TODO: format groups into list by ownerIds */}
         {groups.map((group) => (
           <Group key={group.id} group={group}></Group>
         ))}

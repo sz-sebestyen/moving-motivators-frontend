@@ -53,7 +53,7 @@ function App() {
   const updateGroups = async (user) => {
     const newGroups = await getQuestionGroups(user.groupIds);
     console.log("groups: ", newGroups);
-    // TODO: format newGroups into list by ownerIds
+
     if (newGroups) {
       setGroupsContext((prev) => ({
         ...prev,
