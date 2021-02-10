@@ -114,24 +114,28 @@ const MMBoard = (props) => {
 
   const [userContext, setUserContext] = useContext(UserContext);
 
-  useEffect(() => {
+  const loadCardList = async () => {
     if (userContext.user.defaultCardListId) {
-      getCardList(userContext.user.defaultCardListId).then((data) => {
-        console.log(data);
-        // TODO: set cards
-        if (data) {
-          const inList = Array(10).fill();
-          data.forEach((card) => {
-            inList[stringToNumCard[card.type]] = {
-              value: stringToNumValue[card.value],
-              index: card.position,
-            };
-          });
-          //setCards(inList);
-        }
-      });
+      const cardList = await getCardList(userContext.user.defaultCardListId);
+      console.log("got card list: ", cardList);
+
+      // TODO: set cards
+      if (cardList) {
+        const inList = Array(10).fill();
+        cardList.forEach((card) => {
+          inList[stringToNumCard[card.type]] = {
+            value: stringToNumValue[card.value],
+            index: card.position,
+          };
+        });
+        //setCards(inList);
+      }
     }
-  }, [userContext]);
+  };
+
+  useEffect(() => {
+    loadCardList();
+  }, []);
 
   const changeCardsOrder = (startIndex, endIndex, value) => {
     setCards((prevState) => {
@@ -194,18 +198,19 @@ const MMBoard = (props) => {
       <div className="mmbSave">
         <button
           type="button"
-          onClick={(event) => {
+          onClick={async () => {
             const outList = cards.map((card, type) => ({
               position: card.index,
               type: numToStringCard[type],
               value: numToStringValue[card.value],
             }));
-            console.log(outList);
-            saveDefault(outList).then((data) => {
-              if (data) {
-                console.log(data);
-              }
-            });
+
+            console.log("cards to be saved: ", outList);
+
+            const data = await saveDefault(outList);
+            if (data) {
+              console.log(data);
+            }
           }}
         >
           Save
