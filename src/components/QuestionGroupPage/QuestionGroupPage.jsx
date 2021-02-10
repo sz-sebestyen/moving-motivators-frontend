@@ -54,7 +54,9 @@ const QuestionForm = (props) => {
 const Question = (props) => {
   return (
     <li className="question">
-      <Link to={`/question/${props.question.id}`}>{props.question.value}</Link>
+      <Link to={`/question/${props.groupId}/${props.question.id}`}>
+        {props.question.value}
+      </Link>
     </li>
   );
 };
@@ -83,7 +85,11 @@ const QuestionGroupPage = (props) => {
       </div>
       <ul className="allQuestions">
         {questions.map((question) => (
-          <Question key={question.id} question={question}></Question>
+          <Question
+            key={question.id}
+            question={question}
+            groupId={id}
+          ></Question>
         ))}
       </ul>
     </main>

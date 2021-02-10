@@ -5,6 +5,8 @@ import Timeline from "./components/Timeline/Timeline";
 import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
 import Navigation from "./components/Navigation/Navigation";
 import QuestionGroupPage from "./components/QuestionGroupPage/QuestionGroupPage";
+import AnswerPage from "./components/AnswerPage/AnswerPage";
+
 import {
   UserContext,
   GroupsContext,
@@ -109,6 +111,9 @@ function App() {
                   </Route>
                   <Route path="/question-group/:id">
                     <QuestionGroupPage />
+                  </Route>
+                  <Route path="/question/:groupId/:questionId">
+                    <AnswerPage />
                   </Route>
                   <Route path="/profile">
                     <Profile />
