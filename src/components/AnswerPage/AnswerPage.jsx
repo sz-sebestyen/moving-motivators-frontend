@@ -86,16 +86,17 @@ const AnswerPage = (props) => {
       {starterCards && (
         <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
       )}
-
-      <div className="note">
-        <textarea
-          ref={note}
-          defaultValue={question.note}
-          placeholder="save a note"
-          disabled={question.closed}
-          style={{ resize: "none" }}
-        ></textarea>
-      </div>
+      {starterCards && (
+        <div className="note">
+          <textarea
+            ref={note}
+            defaultValue={question.note}
+            placeholder="save a note"
+            disabled={question.closed}
+            style={{ resize: "none" }}
+          ></textarea>
+        </div>
+      )}
     </main>
   );
 };
