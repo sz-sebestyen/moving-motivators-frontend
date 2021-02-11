@@ -45,7 +45,11 @@ const GroupForm = (props) => {
 const Notification = (props) => {
   return (
     <li className="notification">
-      {`id: ${props.data.id} ownerId: ${props.data.ownerId} group: ${props.data.groupId}`}
+      <span>
+        {`id: ${props.data.id} ownerId: ${props.data.ownerId} group: ${props.data.groupId}`}
+      </span>
+      <button type="button">Accept</button>
+      <button type="button">Decline</button>
     </li>
   );
 };
@@ -80,21 +84,37 @@ const QuestionGroups = (props) => {
         </button>
       </div>
 
-      <div className="notifications">
+      <section className="notifications">
         <h2 className="notificationsTitle">Notifications</h2>
         <ul>
           {userContext.received.map((notif) => (
             <Notification key={notif.id} data={notif} />
           ))}
         </ul>
-      </div>
+      </section>
 
-      <ul className="allGroups">
-        {/* TODO: format groups into list by ownerIds */}
-        {groups.map((group) => (
-          <Group key={group.id} group={group}></Group>
-        ))}
-      </ul>
+      <section className="ownGroups">
+        <h2 className="ownGroupsTitle">My own groups</h2>
+        <ul>
+          {groups
+            .filter((group) => group.ownerId === userContext.user.id)
+            .map((group) => (
+              <Group key={group.id} group={group}></Group>
+            ))}
+        </ul>
+      </section>
+
+      <section className="otherGroups">
+        <h2 className="otherGroupsTitle">Other groups</h2>
+        <ul className="allGroups">
+          {/* TODO: format groups into list by ownerIds */}
+          {groups
+            .filter((group) => group.ownerId !== userContext.user.id)
+            .map((group) => (
+              <Group key={group.id} group={group}></Group>
+            ))}
+        </ul>
+      </section>
     </main>
   );
 };
