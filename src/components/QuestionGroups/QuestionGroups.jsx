@@ -4,6 +4,8 @@ import {
   createQuestionGroup,
   acceptInvite,
   declineInvite,
+  getUser,
+  getQuestionGroup,
 } from "../requests/requests";
 import { Link } from "react-router-dom";
 
@@ -50,13 +52,31 @@ const Notification = (props) => {
   const [answered, setAnswered] = useState(false);
   const [userContext, setUserContext] = useContext(UserContext);
 
-  // TODO: update notification on answered
+  const [origin, setOrigin] = useState();
+
   console.log(props.data);
+
+  const loadNotiData = async () => {
+    const inviter = await getUser(props.data.senderId);
+    console.log("inviter", inviter);
+
+    // forbidden 403 can not access others groups
+    /*     const theGroup = await getQuestionGroup(props.data.groupId);
+    console.log("theGroup:", theGroup); */
+
+    setOrigin(() => ({ inviter }));
+  };
+
+  useEffect(() => {
+    loadNotiData();
+  }, []);
 
   return (
     <li className="notification">
       <span>
-        {`id: ${props.data.id} senderId: ${props.data.senderId} group: ${props.data.groupId}`}
+        {origin
+          ? `${origin.inviter.name} invited you to a group (${props.data.groupId})!`
+          : ""}
       </span>
       <button
         type="button"
@@ -65,6 +85,7 @@ const Notification = (props) => {
           const acceptAns = await acceptInvite(props.data);
           console.log("acceptAns:", acceptAns);
           if (acceptAns) setAnswered(true);
+          setUserContext((prev) => ({ ...prev, dataLoaded: false }));
         }}
       >
         Accept
@@ -75,7 +96,8 @@ const Notification = (props) => {
         onClick={async () => {
           const declineAns = await declineInvite(props.data);
           console.log("declineAns:", declineAns);
-          if (declineAns) setAnswered(true);
+          setAnswered(true);
+          setUserContext((prev) => ({ ...prev, dataLoaded: false }));
         }}
       >
         Decline
@@ -88,7 +110,7 @@ const Group = (props) => {
   return (
     <li className="group">
       <Link to={`/question-group/${props.group.id}`}>
-        {`id: ${props.group.id} ownerId: ${props.group.ownerId} name: ${props.group.value}`}
+        {`${props.group.id} ${props.group.value}`}
       </Link>
     </li>
   );

@@ -97,23 +97,19 @@ const getDropCoords = (event, mmb, dragOffset) => {
 
 const MMBoard = (props) => {
   const mmb = useRef(null);
-  const [cards, setCards] = useState(getCards());
+
+  const cardList = Array(10).fill();
+  props.starterCards.forEach((card) => {
+    cardList[stringToNumCard[card.type]] = {
+      value: stringToNumValue[card.value],
+      index: card.position,
+    };
+  });
+
+  const [cards, setCards] = useState(cardList);
   const [dragTarget, setDragTarget] = useState();
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragOverTarget, setDragOverTarget] = useState({});
-
-  useEffect(() => {
-    if (props.starterCards) {
-      const cardList = Array(10).fill();
-      props.starterCards.forEach((card) => {
-        cardList[stringToNumCard[card.type]] = {
-          value: stringToNumValue[card.value],
-          index: card.position,
-        };
-      });
-      setCards(cardList);
-    }
-  }, [props]);
 
   const changeCardsOrder = (startIndex, endIndex, value) => {
     setCards((prevState) => {
@@ -131,7 +127,9 @@ const MMBoard = (props) => {
         else return card;
       });
     });
+  };
 
+  useEffect(() => {
     //update parent state
     const saveList = cards.map((card, type) => ({
       position: card.index,
@@ -141,7 +139,7 @@ const MMBoard = (props) => {
 
     console.log("cards updated: ", saveList);
     props.setSaveCards(saveList);
-  };
+  }, [cards]);
 
   const handleDragOver = (event) => {
     event.preventDefault();

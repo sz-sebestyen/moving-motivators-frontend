@@ -1,20 +1,42 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { UserContext } from "../Context/Context";
+
+import { getCardLists } from "../requests/requests";
 
 const Timeline = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
+
+  const [olderLists, setOlderLists] = useState();
+
+  const loadLists = async () => {
+    const gotList = await getCardLists(
+      userContext.user.olderCardListsIds.sort((a, b) => b - a)
+    );
+    console.log("older carsLists:", gotList);
+    setOlderLists(() => gotList);
+  };
+
+  useEffect(() => {
+    if (userContext.user.olderCardListsIds) {
+      loadLists();
+    }
+  }, []);
+
   return (
     <div className="timeline">
-      {/* userContext.defaultCards.map((cards) => (
-        <div>
-          {cards.map((card, index) => (
-            <div>
-              {`type: ${index}, position: ${card.index}, value: ${card.value}`}
-            </div>
-          ))}
-          <div>--------------------------------</div>
-        </div>
-      )) */}
+      {olderLists &&
+        olderLists.map((cards, index) => (
+          <div key={index}>
+            {cards
+              .sort((a, b) => a.position - b.position)
+              .map((card) => (
+                <span
+                  key={card.position}
+                >{`${card.type} | `}</span>
+              ))}
+            <div>--------------------------------</div>
+          </div>
+        ))}
     </div>
   );
 };

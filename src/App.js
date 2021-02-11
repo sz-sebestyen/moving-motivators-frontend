@@ -57,7 +57,7 @@ function App() {
     const invited = await getInvited();
     console.log("inviAns:", invited);
 
-    const allGroups = [...newGroups, ...invited];
+    const allGroups = [...newGroups, ...invited].sort((a, b) => b.id - a.id);
 
     if (allGroups) {
       setGroupsContext(() => allGroups);
