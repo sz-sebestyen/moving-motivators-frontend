@@ -25,8 +25,6 @@ const AnswerPage = (props) => {
     if (userContext.user.defaultCardListId) {
       const cardList = await getCardList(userContext.user.defaultCardListId);
       console.log("got card list: ", cardList);
-
-      // TODO: set starterCards
       setStarterCards(cardList);
     }
   };
