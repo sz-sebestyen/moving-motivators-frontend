@@ -49,11 +49,15 @@ const QuestionForm = (props) => {
 };
 
 const Question = (props) => {
+  const date = new Date(props.question.date);
   return (
     <li className="question">
       <Link to={`/question/${props.groupId}/${props.question.id}`}>
         {props.question.value}
       </Link>
+      <span className="questionDate">{`${date.getFullYear()}/${
+        date.getMonth() + 1
+      }/${date.getDate()}`}</span>
     </li>
   );
 };
