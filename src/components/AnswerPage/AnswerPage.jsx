@@ -30,6 +30,13 @@ const AnswerPage = (props) => {
     }
   };
 
+  const loadPrevAnswer = async (que) => {
+    const cardList = await getCardList(que.answerId);
+    console.log("prevAnswerCardList: ", cardList);
+    // todo: set cards
+    setStarterCards(cardList);
+  };
+
   useEffect(() => {
     const que = questionsContext.find(
       (que) => que.id.toString() === questionId
@@ -37,8 +44,9 @@ const AnswerPage = (props) => {
     setQuestion(que);
 
     // todo: load question.answerId if not null, default if null
-    if (que.answerId !== null) {
+    if (que && que.answerId !== null) {
       // load answer
+      loadPrevAnswer(que);
     } else {
       loadDefault();
     }
@@ -52,8 +60,10 @@ const AnswerPage = (props) => {
       console.log("setAnswer answer:", setAnsAnswer);
     }
 
-    const noteAnswer = await editNote(question.id, note.current.value);
-    console.log("noteAnswer:", noteAnswer);
+    if (note.current.value !== "") {
+      const noteAnswer = await editNote(question.id, note.current.value);
+      console.log("noteAnswer:", noteAnswer);
+    }
     setUserContext((prev) => ({ ...prev, dataLoaded: false }));
   };
 
