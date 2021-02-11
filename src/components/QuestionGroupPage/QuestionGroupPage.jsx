@@ -8,7 +8,7 @@ import {
 } from "../Context/Context";
 import { Link } from "react-router-dom";
 
-import "./QuestionGroupPage.css";
+import "./QuestionGroupPage.scss";
 
 const QuestionForm = (props) => {
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
@@ -27,10 +27,7 @@ const QuestionForm = (props) => {
           });
           console.log("newQuestion: ", newQuestion);
           if (newQuestion) {
-            setQuestionsContext((prev) => ({
-              ...prev,
-              [props.groupId]: [...(prev[props.groupId] || []), newQuestion],
-            }));
+            setQuestionsContext((prev) => [...prev, newQuestion]);
           }
         }}
       >
@@ -54,7 +51,9 @@ const QuestionForm = (props) => {
 const Question = (props) => {
   return (
     <li className="question">
-      <Link to={`/question/${props.question.id}`}>{props.question.value}</Link>
+      <Link to={`/question/${props.groupId}/${props.question.id}`}>
+        {props.question.value}
+      </Link>
     </li>
   );
 };
@@ -66,7 +65,9 @@ const QuestionGroupPage = (props) => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    setQuestions((prev) => questionsContext[id] || []);
+    setQuestions(() =>
+      questionsContext.filter((que) => que.groupId.toString() === id)
+    );
   }, [questionsContext, id]);
 
   return (
@@ -83,7 +84,11 @@ const QuestionGroupPage = (props) => {
       </div>
       <ul className="allQuestions">
         {questions.map((question) => (
-          <Question key={question.id} question={question}></Question>
+          <Question
+            key={question.id}
+            question={question}
+            groupId={id}
+          ></Question>
         ))}
       </ul>
     </main>

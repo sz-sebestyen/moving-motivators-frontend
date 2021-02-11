@@ -1,10 +1,13 @@
-import MMBoard from "./components/MMBoard/MMBoard";
+import BoardPage from "./components/BoardPage/BoardPage";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Timeline from "./components/Timeline/Timeline";
 import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
 import Navigation from "./components/Navigation/Navigation";
 import QuestionGroupPage from "./components/QuestionGroupPage/QuestionGroupPage";
+import AnswerPage from "./components/AnswerPage/AnswerPage";
+import Registration from "./components/Registration/Registration";
+
 import {
   UserContext,
   GroupsContext,
@@ -36,18 +39,12 @@ function App() {
   }, [userContext]);
 
   const updateQuestions = async (newGroups) => {
-    const newQuestions = await getAllQuestions(newGroups);
-    console.log("new questions: ", newQuestions);
+    const newQuestionRows = await getAllQuestions(newGroups);
+    console.log("new questions: ", newQuestionRows);
 
-    const byGroupId = newQuestions.map((questions) =>
-      questions[0] ? { [questions[0].groupId]: questions } : {}
-    );
-    console.log("byGroupId: ", byGroupId);
-    setQuestionsContext((prev) => {
-      const nextQContext = Object.assign({}, ...byGroupId);
-      console.log("nextQContext: ", nextQContext);
-      return nextQContext;
-    });
+    const merged = [].concat.apply([], newQuestionRows);
+    console.log("nextQContext: ", merged);
+    setQuestionsContext(() => merged);
   };
 
   const updateGroups = async (user) => {
@@ -55,10 +52,7 @@ function App() {
     console.log("groups: ", newGroups);
 
     if (newGroups) {
-      setGroupsContext((prev) => ({
-        ...prev,
-        ownGroups: newGroups,
-      }));
+      setGroupsContext(() => newGroups);
       updateQuestions(newGroups);
     }
   };
@@ -76,12 +70,16 @@ function App() {
 
         updateGroups(user);
       }
+      console.log("updating");
+      setUserContext((prev) => ({ ...prev, dataLoaded: true }));
     }
   };
 
   useEffect(() => {
-    updateUser();
-  }, []);
+    if (!userContext.dataLoaded) {
+      updateUser();
+    }
+  });
 
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>
@@ -101,14 +99,20 @@ function App() {
                   <Route path="/login">
                     <Login />
                   </Route>
+                  <Route path="/register">
+                    <Registration />
+                  </Route>
                   <Route path="/board">
-                    <MMBoard />
+                    <BoardPage />
                   </Route>
                   <Route path="/groups">
                     <QuestionGroups />
                   </Route>
                   <Route path="/question-group/:id">
                     <QuestionGroupPage />
+                  </Route>
+                  <Route path="/question/:groupId/:questionId">
+                    <AnswerPage />
                   </Route>
                   <Route path="/profile">
                     <Profile />

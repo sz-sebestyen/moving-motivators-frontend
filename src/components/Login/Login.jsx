@@ -1,4 +1,4 @@
-import style from "./Login.module.css";
+import style from "./Login.module.scss";
 import { Redirect } from "react-router-dom";
 import React, { useContext, useState, useRef } from "react";
 
@@ -18,14 +18,14 @@ const Login = (props) => {
         password: passwordInput.current.value,
       }).then((data) => {
         if (data) {
+          setToken(data.token);
+          setUserId(data.user.id);
+
           setUserContext((prev) => ({
             ...prev,
             loggedIn: true,
             user: data.user,
           }));
-
-          setToken(data.token);
-          setUserId(data.user.id);
 
           console.log(data);
           //temp

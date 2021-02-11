@@ -3,7 +3,7 @@ import { GroupsContext } from "../Context/Context";
 import { createQuestionGroup } from "../requests/requests";
 import { Link } from "react-router-dom";
 
-import "./QuestionGroups.css";
+import "./QuestionGroups.scss";
 
 const GroupForm = (props) => {
   const [groupsContext, setGroupsContext] = useContext(GroupsContext);
@@ -21,10 +21,7 @@ const GroupForm = (props) => {
           console.log("newGroup: ", newGroup);
 
           if (newGroup) {
-            setGroupsContext((prev) => ({
-              ...prev,
-              ownGroups: [...prev.ownGroups, newGroup],
-            }));
+            setGroupsContext((prev) => [...prev, newGroup]);
           }
         }}
       >
@@ -61,7 +58,7 @@ const QuestionGroups = (props) => {
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    setGroups((prev) => groupsContext.ownGroups);
+    setGroups((prev) => groupsContext);
   }, [groupsContext]);
 
   return (

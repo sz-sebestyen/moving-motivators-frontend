@@ -30,9 +30,10 @@ export const removeUserId = () => {
 
 export const defaultUser = {
   loggedIn: false,
+  dataLoaded: false,
   user: {},
 };
 
-export const defaultGroups = { invites: [], ownGroups: [], otherGroups: {} };
+export const defaultGroups = [];
 
-export const defaultQuestions = {};
+export const defaultQuestions = [];
