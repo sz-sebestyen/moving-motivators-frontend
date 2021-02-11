@@ -1,6 +1,8 @@
 import React from "react";
 
 export const UserContext = React.createContext();
+export const GroupsContext = React.createContext();
+export const QuestionsContext = React.createContext();
 
 export const setToken = (token) => {
   return localStorage.setItem("token", token);
@@ -26,9 +28,12 @@ export const removeUserId = () => {
   localStorage.removeItem("userId");
 };
 
-export const appContext = {
+export const defaultUser = {
   loggedIn: false,
-  email: "",
+  dataLoaded: false,
   user: {},
-  roles: [],
 };
+
+export const defaultGroups = [];
+
+export const defaultQuestions = [];

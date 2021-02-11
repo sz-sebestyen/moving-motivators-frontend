@@ -1,21 +1,17 @@
-import "./MMBoard.css";
-import { useState, useRef, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { UserContext } from "../UserContext/UserContext";
+import "./MMBoard.scss";
+import { useState, useRef, useContext, useEffect } from "react";
 
 import zoomOut from "../../images/search-minus-solid.svg";
 import zoomIn from "../../images/search-plus-solid.svg";
 
-import cardIMG0 from "../../images/card-acceptance.png";
-import cardIMG1 from "../../images/card-curiosity.png";
-import cardIMG2 from "../../images/card-freedom.png";
-import cardIMG3 from "../../images/card-goal.png";
-import cardIMG4 from "../../images/card-honor.png";
-import cardIMG5 from "../../images/card-mastery.png";
-import cardIMG6 from "../../images/card-order.png";
-import cardIMG7 from "../../images/card-power.png";
-import cardIMG8 from "../../images/card-relatedness.png";
-import cardIMG9 from "../../images/card-status.png";
+import {
+  cardMap,
+  NUMBER_OF_CARDS,
+  stringToNumCard,
+  numToStringCard,
+  stringToNumValue,
+  numToStringValue,
+} from "../CardLib/CardLib";
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 2;
@@ -24,7 +20,6 @@ const MAX_INDEX = 9;
 
 const TILE_SIZE = 120;
 const CARD_SIZE = 120;
-const NUMBER_OF_CARDS = 10;
 const DEFAULT_CARD_VALUE = 1;
 
 const ZOOM = 3;
@@ -33,24 +28,6 @@ const ZOOM_LEFT = 420;
 const ZOOM_Z_INDEX = 999;
 
 const DRAGGED_CARD_OPACITY = 0;
-
-const uuidList = (length) =>
-  Array(length)
-    .fill()
-    .map(() => uuidv4());
-
-const cardMap = [
-  cardIMG0,
-  cardIMG1,
-  cardIMG2,
-  cardIMG3,
-  cardIMG4,
-  cardIMG5,
-  cardIMG6,
-  cardIMG7,
-  cardIMG8,
-  cardIMG9,
-];
 
 const getCards = () => {
   return Array(NUMBER_OF_CARDS)
@@ -118,8 +95,6 @@ const getDropCoords = (event, mmb, dragOffset) => {
   return [index, value];
 };
 
-const MMBCardKeys = uuidList(NUMBER_OF_CARDS);
-
 const MMBoard = (props) => {
   const mmb = useRef(null);
   const [cards, setCards] = useState(getCards());
@@ -127,7 +102,18 @@ const MMBoard = (props) => {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragOverTarget, setDragOverTarget] = useState({});
 
-  const [userContext, setUserContext] = useContext(UserContext);
+  useEffect(() => {
+    if (props.starterCards) {
+      const cardList = Array(10).fill();
+      props.starterCards.forEach((card) => {
+        cardList[stringToNumCard[card.type]] = {
+          value: stringToNumValue[card.value],
+          index: card.position,
+        };
+      });
+      setCards(cardList);
+    }
+  }, [props]);
 
   const changeCardsOrder = (startIndex, endIndex, value) => {
     setCards((prevState) => {
@@ -145,6 +131,16 @@ const MMBoard = (props) => {
         else return card;
       });
     });
+
+    //update parent state
+    const saveList = cards.map((card, type) => ({
+      position: card.index,
+      type: numToStringCard[type],
+      value: numToStringValue[card.value],
+    }));
+
+    console.log("cards updated: ", saveList);
+    props.setSaveCards(saveList);
   };
 
   const handleDragOver = (event) => {
@@ -174,31 +170,19 @@ const MMBoard = (props) => {
         onDragOver={handleDragOver}
         onDragStart={(event) => event.preventDefault()}
       >
-        {Array(NUMBER_OF_CARDS)
-          .fill()
-          .map((_, type) => (
-            <MMCard
-              type={type}
-              card={cards[type]}
-              key={MMBCardKeys[type]}
-              setDragTarget={setDragTarget}
-              setDragOffset={setDragOffset}
-              isDragged={dragTarget === cards[type].index}
-            />
-          ))}
-      </div>
-      <div className="mmbSave">
-        <button
-          type="button"
-          onClick={(event) => {
-            setUserContext((prev) => ({
-              ...prev,
-              defaultCards: [cards, ...prev.defaultCards],
-            }));
-          }}
-        >
-          Save
-        </button>
+        {cards &&
+          Array(NUMBER_OF_CARDS)
+            .fill()
+            .map((_, type) => (
+              <MMCard
+                type={type}
+                card={cards[type]}
+                key={type}
+                setDragTarget={setDragTarget}
+                setDragOffset={setDragOffset}
+                isDragged={dragTarget === cards[type].index}
+              />
+            ))}
       </div>
     </div>
   );

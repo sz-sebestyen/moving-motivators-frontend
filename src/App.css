@@ -9,39 +9,5 @@ body,
 }
 
 .pages {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100% - 42px);
-}
-
-nav {
-  border-bottom: 1px solid black;
-}
-nav ul {
-  list-style: none;
-  display: flex;
-}
-nav ul li {
-  display: inline;
-}
-nav ul li:last-child {
-  margin-left: auto;
-}
-nav ul li a {
-  display: inline-block;
-  padding: 10px;
-}
-nav ul li a:hover {
-  background-color: #eee;
-}
-nav ul li a:active {
-  background-color: #333;
-}
-a:not([role="button"]) {
-  text-decoration: none;
-  color: inherit;
-}
-.activeNavLink {
-  background-color: #999;
+  min-height: calc(100% - 42px);
 }
