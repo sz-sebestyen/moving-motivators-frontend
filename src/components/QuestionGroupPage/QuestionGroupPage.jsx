@@ -10,6 +10,28 @@ import { Link } from "react-router-dom";
 
 import "./QuestionGroupPage.scss";
 
+const InvitationPopUp = (props) => {
+  return (
+    <div className="invitationPopUpWrap">
+      <div className="invitationPopUp">
+        <div className="search">
+          <input
+            type="text"
+            name="invitationName"
+            id="invitationName"
+            placeholder="full name"
+          />
+          <button type="button">Search</button>
+          <button type="button" onClick={() => props.setInInvitation(false)}>
+            Cancel
+          </button>
+        </div>
+        <div className="searchResults"></div>
+      </div>
+    </div>
+  );
+};
+
 const QuestionForm = (props) => {
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
   const input = useRef(null);
@@ -66,6 +88,7 @@ const QuestionGroupPage = (props) => {
   const { id } = useParams();
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
   const [inCreation, setInCreation] = useState(false);
+  const [inInvitation, setInInvitation] = useState(false);
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -79,12 +102,19 @@ const QuestionGroupPage = (props) => {
       {inCreation && (
         <QuestionForm setInCreation={setInCreation} groupId={id} />
       )}
+      {inInvitation && <InvitationPopUp setInInvitation={setInInvitation} />}
       <div className="questionsMenu">
-        <button className="createQuestion" onClick={() => setInCreation(true)}>
+        <button
+          type="button"
+          className="createQuestion"
+          onClick={() => setInCreation(true)}
+        >
           Add question
         </button>
-        <button>Invite member</button>
-        <button>Delete group</button>
+        <button type="button" onClick={() => setInInvitation(true)}>
+          Invite member
+        </button>
+        <button type="button">Delete group</button>
       </div>
       <ul className="allQuestions">
         {questions.map((question) => (
