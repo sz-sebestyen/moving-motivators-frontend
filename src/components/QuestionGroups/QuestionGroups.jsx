@@ -1,6 +1,10 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { GroupsContext, UserContext } from "../Context/Context";
-import { createQuestionGroup } from "../requests/requests";
+import {
+  createQuestionGroup,
+  acceptInvite,
+  declineInvite,
+} from "../requests/requests";
 import { Link } from "react-router-dom";
 
 import "./QuestionGroups.scss";
@@ -43,13 +47,45 @@ const GroupForm = (props) => {
 };
 
 const Notification = (props) => {
+  const [answered, setAnswered] = useState(false);
+  const [userContext, setUserContext] = useContext(UserContext);
+
+  // TODO: update notification on answered
+  console.log(props.data);
+
   return (
     <li className="notification">
       <span>
         {`id: ${props.data.id} ownerId: ${props.data.ownerId} group: ${props.data.groupId}`}
       </span>
-      <button type="button">Accept</button>
-      <button type="button">Decline</button>
+      <button
+        type="button"
+        disabled={answered}
+        onClick={async () => {
+          const acceptAns = await acceptInvite({
+            ...props.data,
+            senderId: userContext.user.id, // probably not needed
+          });
+          console.log("acceptAns:", acceptAns);
+          setAnswered(true);
+        }}
+      >
+        Accept
+      </button>
+      <button
+        type="button"
+        disabled={answered}
+        onClick={async () => {
+          const declineAns = await declineInvite({
+            ...props.data,
+            senderId: userContext.user.id, // probably wrong
+          });
+          console.log("declineAns:", declineAns);
+          setAnswered(true);
+        }}
+      >
+        Decline
+      </button>
     </li>
   );
 };
@@ -107,7 +143,7 @@ const QuestionGroups = (props) => {
       <section className="otherGroups">
         <h2 className="otherGroupsTitle">Other groups</h2>
         <ul className="allGroups">
-          {/* TODO: format groups into list by ownerIds */}
+          {/* TODO: format groups into lists by ownerIds */}
           {groups
             .filter((group) => group.ownerId !== userContext.user.id)
             .map((group) => (
