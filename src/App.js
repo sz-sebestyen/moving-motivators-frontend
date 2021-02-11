@@ -22,6 +22,9 @@ import {
   getUser,
   getQuestionGroups,
   getAllQuestions,
+  getSentNotifications,
+  getReceivedNotifications,
+  getInvited,
 } from "./components/requests/requests";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -51,9 +54,14 @@ function App() {
     const newGroups = await getQuestionGroups(user.groupIds);
     console.log("groups: ", newGroups);
 
-    if (newGroups) {
-      setGroupsContext(() => newGroups);
-      updateQuestions(newGroups);
+    const invited = await getInvited();
+    console.log("inviAns:", invited);
+
+    const allGroups = [...newGroups, ...invited];
+
+    if (allGroups) {
+      setGroupsContext(() => allGroups);
+      updateQuestions(allGroups);
     }
   };
 
@@ -61,11 +69,20 @@ function App() {
     if (getToken() && getUserId()) {
       const user = await getUser(getUserId());
       console.log(user);
+
+      const sentNoties = await getSentNotifications();
+      console.log("sent notifications", sentNoties);
+
+      const receivedNoties = await getReceivedNotifications();
+      console.log("received notifications", receivedNoties);
+
       if (user) {
         setUserContext((prev) => ({
           ...prev,
           loggedIn: true,
           user: user,
+          received: receivedNoties,
+          sent: sentNoties,
         }));
 
         updateGroups(user);
@@ -135,7 +152,12 @@ function App() {
 
 function Home() {
   const [userContext] = useContext(UserContext);
-  return <p>{userContext.loggedIn ? "logged in" : "logged out"}</p>;
+  return (
+    <>
+      <p>{userContext.loggedIn ? "logged in with:" : "logged out"}</p>
+      <p>{userContext.user.name}</p>
+    </>
+  );
 }
 
 export default App;

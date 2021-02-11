@@ -39,12 +39,21 @@ export const acceptInvite = async (notificationDto) => {
   }
 };
 
+// delete syntax
+/* {
+  headers: {
+    Authorization: authorizationToken
+  },
+  data: {
+    source: source
+  }
+} */
+
 export const declineInvite = async (notificationDto) => {
   try {
-    const response = await axios.delete(
-      `${baseUrl}/notification/decline`,
-      notificationDto
-    );
+    const response = await axios.delete(`${baseUrl}/notification/decline`, {
+      data: notificationDto,
+    });
     const data = await response.data;
     return data;
   } catch (error) {
@@ -52,11 +61,11 @@ export const declineInvite = async (notificationDto) => {
   }
 };
 
-export const newInvite = async (notificationDto, receiverId) => {
+export const newInvite = async (questionGroupDto, receiverId) => {
   try {
     const response = await axios.post(
       `${baseUrl}/notification/new/${receiverId}`,
-      notificationDto
+      questionGroupDto
     );
     const data = await response.data;
     return data;
@@ -159,7 +168,9 @@ export const closeQuestion = async (id) => {
 
 export const editNote = async (id, note) => {
   try {
-    const response = await axios.put(`${baseUrl}/question/${id}/note`, note);
+    const response = await axios.put(`${baseUrl}/question/${id}/note`, note, {
+      headers: { "Content-Type": "text/plain" },
+    });
     const data = await response.data;
     return data;
   } catch (error) {
@@ -275,10 +286,20 @@ export const saveDefault = async (list) => {
 
 export const searchUser = async (name) => {
   try {
-    const response = await axios.get(`${baseUrl}/user/search?search=${name}`);
+    const response = await axios.get(`${baseUrl}/user/search?name=${name}`);
     const data = await response.data;
     return data;
   } catch (error) {
     alert("Failed to search for user!");
+  }
+};
+
+export const getInvited = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/user/invited`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    alert("Failed to get groups!");
   }
 };

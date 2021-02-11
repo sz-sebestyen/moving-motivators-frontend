@@ -8,13 +8,13 @@ main.groupsPage {
     padding: 10px;
   }
 
-  ul.allGroups {
+  ul {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     list-style: none;
 
-    li.group {
+    li {
       flex-basis: 100%;
       border: 1px solid black;
       padding: 6px 10px;

@@ -32,6 +32,8 @@ export const defaultUser = {
   loggedIn: false,
   dataLoaded: false,
   user: {},
+  sent: [],
+  received: [],
 };
 
 export const defaultGroups = [];
