@@ -123,6 +123,7 @@ const QuestionGroupPage = (props) => {
   const { id } = useParams();
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
   const [groupsContext, setGroupsContext] = useContext(GroupsContext);
+  const [userContext, setUserContext] = useContext(UserContext);
   const [inCreation, setInCreation] = useState(false);
   const [inInvitation, setInInvitation] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -166,20 +167,22 @@ const QuestionGroupPage = (props) => {
         />
       )}
 
-      {/* TODO: only visible for owner */}
-      <div className="questionsMenu">
-        <button
-          type="button"
-          className="createQuestion"
-          onClick={() => setInCreation(true)}
-        >
-          Add question
-        </button>
-        <button type="button" onClick={() => setInInvitation(true)}>
-          Invite member
-        </button>
-        <button type="button">Delete group</button>
-      </div>
+      {/* only visible for owner */}
+      {currentGroup && currentGroup.ownerId === userContext.user.id && (
+        <div className="questionsMenu">
+          <button
+            type="button"
+            className="createQuestion"
+            onClick={() => setInCreation(true)}
+          >
+            Add question
+          </button>
+          <button type="button" onClick={() => setInInvitation(true)}>
+            Invite member
+          </button>
+          <button type="button">Delete group</button>
+        </div>
+      )}
 
       <h1 className="groupTitle">{currentGroup && currentGroup.value}</h1>
 
