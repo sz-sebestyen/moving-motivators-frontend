@@ -26,14 +26,14 @@ const AnswerPage = (props) => {
       const cardList = await getCardList(userContext.user.defaultCardListId);
       console.log("got card list: ", cardList);
 
-      // TODO: set starterCards
+      // TODO: set starterCards  BLOCKED
+      //setStarterCards(cardList);
     }
   };
 
   const loadPrevAnswer = async (que) => {
     const cardList = await getCardList(que.answerId);
     console.log("prevAnswerCardList: ", cardList);
-    // todo: set cards
     setStarterCards(cardList);
   };
 
@@ -43,9 +43,7 @@ const AnswerPage = (props) => {
     );
     setQuestion(que);
 
-    // todo: load question.answerId if not null, default if null
     if (que && que.answerId !== null) {
-      // load answer
       loadPrevAnswer(que);
     } else {
       loadDefault();
