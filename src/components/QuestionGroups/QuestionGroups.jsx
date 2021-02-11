@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { GroupsContext } from "../Context/Context";
+import { GroupsContext, UserContext } from "../Context/Context";
 import { createQuestionGroup } from "../requests/requests";
 import { Link } from "react-router-dom";
 
@@ -42,6 +42,14 @@ const GroupForm = (props) => {
   );
 };
 
+const Notification = (props) => {
+  return (
+    <li className="notification">
+      {`id: ${props.data.id} ownerId: ${props.data.ownerId} group: ${props.data.groupId}`}
+    </li>
+  );
+};
+
 const Group = (props) => {
   return (
     <li className="group">
@@ -54,6 +62,7 @@ const Group = (props) => {
 
 const QuestionGroups = (props) => {
   const [groupsContext, setGroupsContext] = useContext(GroupsContext);
+  const [userContext, setUserContext] = useContext(UserContext);
   const [inCreation, setInCreation] = useState(false);
   const [groups, setGroups] = useState([]);
 
@@ -69,6 +78,15 @@ const QuestionGroups = (props) => {
         <button className="createGroup" onClick={() => setInCreation(true)}>
           Add group
         </button>
+      </div>
+
+      <div className="notifications">
+        <h2 className="notificationsTitle">Notifications</h2>
+        <ul>
+          {userContext.received.map((notif) => (
+            <Notification key={notif.id} data={notif} />
+          ))}
+        </ul>
       </div>
 
       <ul className="allGroups">
