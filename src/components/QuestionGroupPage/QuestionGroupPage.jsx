@@ -87,6 +87,7 @@ const Question = (props) => {
 const QuestionGroupPage = (props) => {
   const { id } = useParams();
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
+  const [groupsContext, setGroupsContext] = useContext(GroupsContext);
   const [inCreation, setInCreation] = useState(false);
   const [inInvitation, setInInvitation] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -116,6 +117,9 @@ const QuestionGroupPage = (props) => {
         </button>
         <button type="button">Delete group</button>
       </div>
+      <h1 className="groupTitle">
+        {groupsContext.find((group) => group.id.toString() === id).value}
+      </h1>
       <ul className="allQuestions">
         {questions.map((question) => (
           <Question
