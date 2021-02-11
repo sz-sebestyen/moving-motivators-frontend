@@ -22,6 +22,8 @@ import {
   getUser,
   getQuestionGroups,
   getAllQuestions,
+  getSentNotifications,
+  getReceivedNotifications,
 } from "./components/requests/requests";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -61,6 +63,13 @@ function App() {
     if (getToken() && getUserId()) {
       const user = await getUser(getUserId());
       console.log(user);
+
+      const sentNoties = await getSentNotifications();
+      console.log("sent notifications", sentNoties);
+
+      const receivedNoties = await getReceivedNotifications();
+      console.log("received notifications", receivedNoties);
+
       if (user) {
         setUserContext((prev) => ({
           ...prev,

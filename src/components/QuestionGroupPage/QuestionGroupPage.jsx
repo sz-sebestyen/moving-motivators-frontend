@@ -139,12 +139,10 @@ const QuestionGroupPage = (props) => {
 
   const printInvited = async () => {
     /*     if (currentGroup) {
-      // doesnt work
       const answ = await viewInvited(currentGroup.id);
       console.log("invited:", answ);
     } */
 
-    // these work
     const sentNoties = await getSentNotifications();
     console.log("sent notifications", sentNoties);
 
