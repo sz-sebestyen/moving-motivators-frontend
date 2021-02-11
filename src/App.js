@@ -38,18 +38,12 @@ function App() {
   }, [userContext]);
 
   const updateQuestions = async (newGroups) => {
-    const newQuestions = await getAllQuestions(newGroups);
-    console.log("new questions: ", newQuestions);
+    const newQuestionRows = await getAllQuestions(newGroups);
+    console.log("new questions: ", newQuestionRows);
 
-    const byGroupId = newQuestions.map((questions) =>
-      questions[0] ? { [questions[0].groupId]: questions } : {}
-    );
-    console.log("byGroupId: ", byGroupId);
-    setQuestionsContext((prev) => {
-      const nextQContext = Object.assign({}, ...byGroupId);
-      console.log("nextQContext: ", nextQContext);
-      return nextQContext;
-    });
+    const merged = [].concat.apply([], newQuestionRows);
+    console.log("nextQContext: ", merged);
+    setQuestionsContext(() => merged);
   };
 
   const updateGroups = async (user) => {
@@ -57,10 +51,7 @@ function App() {
     console.log("groups: ", newGroups);
 
     if (newGroups) {
-      setGroupsContext((prev) => ({
-        ...prev,
-        ownGroups: newGroups,
-      }));
+      setGroupsContext(() => newGroups);
       updateQuestions(newGroups);
     }
   };

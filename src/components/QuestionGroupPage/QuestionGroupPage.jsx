@@ -27,10 +27,7 @@ const QuestionForm = (props) => {
           });
           console.log("newQuestion: ", newQuestion);
           if (newQuestion) {
-            setQuestionsContext((prev) => ({
-              ...prev,
-              [props.groupId]: [...(prev[props.groupId] || []), newQuestion],
-            }));
+            setQuestionsContext((prev) => [...prev, newQuestion]);
           }
         }}
       >
@@ -68,7 +65,9 @@ const QuestionGroupPage = (props) => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    setQuestions((prev) => questionsContext[id] || []);
+    setQuestions(() =>
+      questionsContext.filter((que) => que.groupId.toString() === id)
+    );
   }, [questionsContext, id]);
 
   return (

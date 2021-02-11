@@ -22,11 +22,9 @@ const AnswerPage = (props) => {
 
   useEffect(() => {
     setQuestion(
-      questionsContext[groupId].find((que) => que.id.toString() === questionId)
+      questionsContext.find((que) => que.id.toString() === questionId)
     );
   }, [questionsContext, groupId, questionId]);
-
-  console.log("group:", questionsContext[groupId]);
 
   /* 		questionsContext[groupId].find((question) => question.id === questionId)
 			.value */
