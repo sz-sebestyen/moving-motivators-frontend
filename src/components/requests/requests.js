@@ -159,7 +159,9 @@ export const closeQuestion = async (id) => {
 
 export const editNote = async (id, note) => {
   try {
-    const response = await axios.put(`${baseUrl}/question/${id}/note`, note);
+    const response = await axios.put(`${baseUrl}/question/${id}/note`, note, {
+      headers: { "Content-Type": "text/plain" },
+    });
     const data = await response.data;
     return data;
   } catch (error) {
