@@ -1,4 +1,11 @@
-import { createQuestion, searchUser } from "../requests/requests";
+import {
+  createQuestion,
+  searchUser,
+  newInvite,
+  viewInvited,
+  getSentNotifications,
+  getReceivedNotifications,
+} from "../requests/requests";
 import { useParams } from "react-router-dom";
 import { useState, useContext, useRef, useEffect } from "react";
 import {
@@ -23,6 +30,8 @@ const InvitationPopUp = (props) => {
 
   const handleInvite = async (user) => {
     // TODO: invite user
+    const inviteAnswer = await newInvite(props.currentGroup, user.id);
+    console.log("inviteAnswer", inviteAnswer);
   };
 
   return (
@@ -124,12 +133,42 @@ const QuestionGroupPage = (props) => {
     );
   }, [questionsContext, id]);
 
+  const currentGroup = groupsContext.find(
+    (group) => group.id.toString() === id
+  );
+
+  const printInvited = async () => {
+    /*     if (currentGroup) {
+      // doesnt work
+      const answ = await viewInvited(currentGroup.id);
+      console.log("invited:", answ);
+    } */
+
+    // these work
+    const sentNoties = await getSentNotifications();
+    console.log("sent notifications", sentNoties);
+
+    const receivedNoties = await getReceivedNotifications();
+    console.log("received notifications", receivedNoties);
+  };
+
+  useEffect(() => {
+    printInvited();
+  });
+
   return (
     <main className="questionsPage">
       {inCreation && (
         <QuestionForm setInCreation={setInCreation} groupId={id} />
       )}
-      {inInvitation && <InvitationPopUp setInInvitation={setInInvitation} />}
+      {inInvitation && (
+        <InvitationPopUp
+          setInInvitation={setInInvitation}
+          currentGroup={currentGroup}
+        />
+      )}
+
+      {/* TODO: only visible for owner */}
       <div className="questionsMenu">
         <button
           type="button"
@@ -143,9 +182,10 @@ const QuestionGroupPage = (props) => {
         </button>
         <button type="button">Delete group</button>
       </div>
-      <h1 className="groupTitle">
-        {groupsContext.find((group) => group.id.toString() === id).value}
-      </h1>
+
+      <h1 className="groupTitle">{currentGroup && currentGroup.value}</h1>
+
+      {/* TODO: arrange by id, decreaseing */}
       <ul className="allQuestions">
         {questions.map((question) => (
           <Question

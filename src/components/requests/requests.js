@@ -52,11 +52,11 @@ export const declineInvite = async (notificationDto) => {
   }
 };
 
-export const newInvite = async (notificationDto, receiverId) => {
+export const newInvite = async (questionGroupDto, receiverId) => {
   try {
     const response = await axios.post(
       `${baseUrl}/notification/new/${receiverId}`,
-      notificationDto
+      questionGroupDto
     );
     const data = await response.data;
     return data;

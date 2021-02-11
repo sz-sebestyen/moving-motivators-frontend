@@ -135,7 +135,12 @@ function App() {
 
 function Home() {
   const [userContext] = useContext(UserContext);
-  return <p>{userContext.loggedIn ? "logged in" : "logged out"}</p>;
+  return (
+    <>
+      <p>{userContext.loggedIn ? "logged in with:" : "logged out"}</p>
+      <p>{userContext.user.name}</p>
+    </>
+  );
 }
 
 export default App;
