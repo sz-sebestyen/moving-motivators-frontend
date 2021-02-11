@@ -20,16 +20,7 @@ const AnswerPage = (props) => {
 
   useEffect(() => console.log("question: ", question));
 
-  useEffect(() => {
-    setQuestion(
-      questionsContext.find((que) => que.id.toString() === questionId)
-    );
-  }, [questionsContext, groupId, questionId]);
-
-  /* 		questionsContext[groupId].find((question) => question.id === questionId)
-			.value */
-
-  const loadCardList = async () => {
+  const loadDefault = async () => {
     if (userContext.user.defaultCardListId) {
       const cardList = await getCardList(userContext.user.defaultCardListId);
       console.log("got card list: ", cardList);
@@ -39,14 +30,24 @@ const AnswerPage = (props) => {
   };
 
   useEffect(() => {
-    loadCardList();
-  }, [userContext]);
+    const que = questionsContext.find(
+      (que) => que.id.toString() === questionId
+    );
+    setQuestion(que);
+
+    // todo: load question.answerId if not null, default if null
+    if (que.answerId !== null) {
+      // load answer
+    } else {
+      loadDefault();
+    }
+  }, [userContext, questionsContext, groupId, questionId]);
 
   const Save = async () => {
-    if (saveCards) {
-      /* 					console.log("cards to be saved:", saveCards);
-					const data = await saveDefault(saveCards); // not default
-					console.log("saveDefaultCards answer:", data); */
+    if (saveCards && question.id) {
+      console.log("cards to be saved:", saveCards);
+      const data = await setAnswer(question.id, saveCards);
+      console.log("setAnswer answer:", data);
     }
     // TODO: save note as well
   };
@@ -65,7 +66,11 @@ const AnswerPage = (props) => {
       <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
 
       <div className="note">
-        <textarea placeholder="save a note"></textarea>
+        <textarea
+          placeholder="save a note"
+          disabled={question.closed}
+          style={{ resize: "none" }}
+        ></textarea>
       </div>
     </main>
   );
