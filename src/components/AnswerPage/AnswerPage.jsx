@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { QuestionsContext, UserContext } from "../Context/Context";
 import MMBoard from "../MMBoard/MMBoard";
 import {
@@ -14,6 +14,7 @@ const AnswerPage = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
   const [question, setQuestion] = useState({});
+  const note = useRef(null);
 
   const [starterCards, setStarterCards] = useState();
   const [saveCards, setSaveCards] = useState();
@@ -44,21 +45,34 @@ const AnswerPage = (props) => {
   }, [userContext, questionsContext, groupId, questionId]);
 
   const Save = async () => {
-    if (saveCards && question.id) {
+    if (!question) return;
+    if (saveCards) {
       console.log("cards to be saved:", saveCards);
-      const data = await setAnswer(question.id, saveCards);
-      console.log("setAnswer answer:", data);
+      const setAnsAnswer = await setAnswer(question.id, saveCards);
+      console.log("setAnswer answer:", setAnsAnswer);
     }
-    // TODO: save note as well
+
+    const noteAnswer = await editNote(question.id, note.current.value);
+    console.log("noteAnswer:", noteAnswer);
+    setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+  };
+
+  const Close = async () => {
+    if (!question) return;
+    const closeAnswre = await closeQuestion(question.id);
+    console.log("closeAnswer:", closeAnswre);
+    setUserContext((prev) => ({ ...prev, dataLoaded: false }));
   };
 
   return (
     <main className="answerPage">
       <div className="answerMenu">
-        <button type="button" onClick={Save}>
+        <button type="button" onClick={Save} disabled={question.closed}>
           Save
         </button>
-        <button type="button">Finalize</button>
+        <button type="button" onClick={Close} disabled={question.closed}>
+          Finalize
+        </button>
       </div>
 
       <h1 className="title">{question.value || ""}</h1>
@@ -67,6 +81,8 @@ const AnswerPage = (props) => {
 
       <div className="note">
         <textarea
+          ref={note}
+          defaultValue={question.note}
           placeholder="save a note"
           disabled={question.closed}
           style={{ resize: "none" }}
