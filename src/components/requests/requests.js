@@ -39,12 +39,21 @@ export const acceptInvite = async (notificationDto) => {
   }
 };
 
+// delete syntax
+/* {
+  headers: {
+    Authorization: authorizationToken
+  },
+  data: {
+    source: source
+  }
+} */
+
 export const declineInvite = async (notificationDto) => {
   try {
-    const response = await axios.delete(
-      `${baseUrl}/notification/decline`,
-      notificationDto
-    );
+    const response = await axios.delete(`${baseUrl}/notification/decline`, {
+      data: notificationDto,
+    });
     const data = await response.data;
     return data;
   } catch (error) {
@@ -282,5 +291,15 @@ export const searchUser = async (name) => {
     return data;
   } catch (error) {
     alert("Failed to search for user!");
+  }
+};
+
+export const getInvited = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/user/invited`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    alert("Failed to get groups!");
   }
 };

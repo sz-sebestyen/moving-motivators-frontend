@@ -24,6 +24,7 @@ import {
   getAllQuestions,
   getSentNotifications,
   getReceivedNotifications,
+  getInvited,
 } from "./components/requests/requests";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -53,9 +54,14 @@ function App() {
     const newGroups = await getQuestionGroups(user.groupIds);
     console.log("groups: ", newGroups);
 
-    if (newGroups) {
-      setGroupsContext(() => newGroups);
-      updateQuestions(newGroups);
+    const invited = await getInvited();
+    console.log("inviAns:", invited);
+
+    const allGroups = [...newGroups, ...invited];
+
+    if (allGroups) {
+      setGroupsContext(() => allGroups);
+      updateQuestions(allGroups);
     }
   };
 

@@ -56,18 +56,15 @@ const Notification = (props) => {
   return (
     <li className="notification">
       <span>
-        {`id: ${props.data.id} ownerId: ${props.data.ownerId} group: ${props.data.groupId}`}
+        {`id: ${props.data.id} senderId: ${props.data.senderId} group: ${props.data.groupId}`}
       </span>
       <button
         type="button"
         disabled={answered}
         onClick={async () => {
-          const acceptAns = await acceptInvite({
-            ...props.data,
-            senderId: userContext.user.id, // probably not needed
-          });
+          const acceptAns = await acceptInvite(props.data);
           console.log("acceptAns:", acceptAns);
-          setAnswered(true);
+          if (acceptAns) setAnswered(true);
         }}
       >
         Accept
@@ -76,12 +73,9 @@ const Notification = (props) => {
         type="button"
         disabled={answered}
         onClick={async () => {
-          const declineAns = await declineInvite({
-            ...props.data,
-            senderId: userContext.user.id, // probably wrong
-          });
+          const declineAns = await declineInvite(props.data);
           console.log("declineAns:", declineAns);
-          setAnswered(true);
+          if (declineAns) setAnswered(true);
         }}
       >
         Decline
