@@ -75,7 +75,7 @@ const Notification = (props) => {
         onClick={async () => {
           const declineAns = await declineInvite(props.data);
           console.log("declineAns:", declineAns);
-          if (declineAns) setAnswered(true);
+          setAnswered(true);
         }}
       >
         Decline

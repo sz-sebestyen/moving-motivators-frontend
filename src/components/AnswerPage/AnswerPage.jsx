@@ -26,8 +26,8 @@ const AnswerPage = (props) => {
       const cardList = await getCardList(userContext.user.defaultCardListId);
       console.log("got card list: ", cardList);
 
-      // TODO: set starterCards  BLOCKED
-      //setStarterCards(cardList);
+      // TODO: set starterCards
+      setStarterCards(cardList);
     }
   };
 
@@ -85,7 +85,9 @@ const AnswerPage = (props) => {
 
       <h1 className="title">{question.value || ""}</h1>
 
-      <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
+      {starterCards && (
+        <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
+      )}
 
       <div className="note">
         <textarea

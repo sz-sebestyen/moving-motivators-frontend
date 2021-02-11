@@ -14,6 +14,7 @@ const BoardPage = (props) => {
       console.log("got card list: ", cardList);
 
       // TODO: set starterCards
+      setStarterCards(cardList);
     }
   };
 
@@ -26,6 +27,7 @@ const BoardPage = (props) => {
       console.log("cards to be saved:", saveCards);
       const data = await saveDefault(saveCards);
       console.log("saveDefaultCards answer:", data);
+      setUserContext((prev) => ({ ...prev, dataLoaded: false }));
     }
   };
 
@@ -36,7 +38,9 @@ const BoardPage = (props) => {
           Save as default
         </button>
       </div>
-      <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
+      {starterCards && (
+        <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
+      )}
     </main>
   );
 };
