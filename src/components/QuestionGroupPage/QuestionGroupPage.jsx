@@ -1,4 +1,4 @@
-import { createQuestion } from "../requests/requests";
+import { createQuestion, searchUser } from "../requests/requests";
 import { useParams } from "react-router-dom";
 import { useState, useContext, useRef, useEffect } from "react";
 import {
@@ -11,22 +11,48 @@ import { Link } from "react-router-dom";
 import "./QuestionGroupPage.scss";
 
 const InvitationPopUp = (props) => {
+  const input = useRef(null);
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearch = async (event) => {
+    event.preventDefault();
+    const searchAnswer = await searchUser(input.current.value);
+    console.log("searchAnswer:", searchAnswer);
+    setSearchResults(searchAnswer);
+  };
+
+  const handleInvite = async (user) => {
+    // TODO: invite user
+  };
+
   return (
     <div className="invitationPopUpWrap">
       <div className="invitationPopUp">
-        <div className="search">
+        <form className="search" onSubmit={handleSearch}>
           <input
+            required
+            ref={input}
             type="text"
             name="invitationName"
             id="invitationName"
-            placeholder="full name"
+            placeholder="exact fullname"
           />
-          <button type="button">Search</button>
+          <button type="submit">Search</button>
           <button type="button" onClick={() => props.setInInvitation(false)}>
             Cancel
           </button>
-        </div>
-        <div className="searchResults"></div>
+        </form>
+        <ul className="searchResults">
+          {searchResults.map((user) => (
+            <li key={user.id}>
+              <span className="resultName">{user.name}</span>{" "}
+              <span className="resultCompany">{user.company}</span>
+              <button type="button" onClick={() => handleInvite(user)}>
+                Invite
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

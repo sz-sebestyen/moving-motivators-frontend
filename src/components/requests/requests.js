@@ -277,7 +277,7 @@ export const saveDefault = async (list) => {
 
 export const searchUser = async (name) => {
   try {
-    const response = await axios.get(`${baseUrl}/user/search?search=${name}`);
+    const response = await axios.get(`${baseUrl}/user/search?name=${name}`);
     const data = await response.data;
     return data;
   } catch (error) {
