@@ -6,11 +6,14 @@ import "./Navigation.scss";
 export default function Navigation(props) {
   const [userContext, setUserContext] = useContext(UserContext);
 
-  const navlinks = [
+  const baseNavLinks = [
     {
       text: "Home",
       props: { to: "/", exact: true },
     },
+  ];
+
+  const loggedInNavLinks = [
     {
       text: "Board",
       props: { to: "/board" },
@@ -27,28 +30,37 @@ export default function Navigation(props) {
       text: "Profile",
       props: { to: "/profile" },
     },
-    ...[
-      userContext.loggedIn
-        ? {
-            text: "Log out",
-            props: {
-              to: "/login",
-              onClick: (event) => {
-                setUserContext((prev) => ({
-                  ...prev,
-                  loggedIn: false,
-                  dataLoaded: false,
-                }));
-                removeUserId();
-                removeToken();
-              },
-            },
-          }
-        : {
-            text: "Log in",
-            props: { to: "/login" },
-          },
-    ],
+    {
+      text: "Log out",
+      props: {
+        to: "/login",
+        onClick: (event) => {
+          setUserContext((prev) => ({
+            ...prev,
+            loggedIn: false,
+            dataLoaded: false,
+          }));
+          removeUserId();
+          removeToken();
+        },
+      },
+    },
+  ];
+
+  const loggedOutNavLinks = [
+    {
+      text: "Log in",
+      props: { to: "/login" },
+    },
+    {
+      text: "Register",
+      props: { to: "/register" },
+    },
+  ];
+
+  const navlinks = [
+    ...baseNavLinks,
+    ...(userContext.loggedIn ? loggedInNavLinks : loggedOutNavLinks),
   ];
 
   return (

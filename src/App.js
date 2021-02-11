@@ -6,6 +6,7 @@ import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
 import Navigation from "./components/Navigation/Navigation";
 import QuestionGroupPage from "./components/QuestionGroupPage/QuestionGroupPage";
 import AnswerPage from "./components/AnswerPage/AnswerPage";
+import Registration from "./components/Registration/Registration";
 
 import {
   UserContext,
@@ -97,6 +98,9 @@ function App() {
                 <Switch>
                   <Route path="/login">
                     <Login />
+                  </Route>
+                  <Route path="/register">
+                    <Registration />
                   </Route>
                   <Route path="/board">
                     <BoardPage />
