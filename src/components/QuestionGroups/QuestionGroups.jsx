@@ -65,6 +65,7 @@ const Notification = (props) => {
           const acceptAns = await acceptInvite(props.data);
           console.log("acceptAns:", acceptAns);
           if (acceptAns) setAnswered(true);
+          setUserContext((prev) => ({ ...prev, dataLoaded: false }));
         }}
       >
         Accept
@@ -76,6 +77,7 @@ const Notification = (props) => {
           const declineAns = await declineInvite(props.data);
           console.log("declineAns:", declineAns);
           setAnswered(true);
+          setUserContext((prev) => ({ ...prev, dataLoaded: false }));
         }}
       >
         Decline

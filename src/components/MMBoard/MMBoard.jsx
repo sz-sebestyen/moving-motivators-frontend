@@ -127,6 +127,9 @@ const MMBoard = (props) => {
         else return card;
       });
     });
+  };
+
+  useEffect(() => {
     //update parent state
     const saveList = cards.map((card, type) => ({
       position: card.index,
@@ -136,7 +139,7 @@ const MMBoard = (props) => {
 
     console.log("cards updated: ", saveList);
     props.setSaveCards(saveList);
-  };
+  }, [cards]);
 
   const handleDragOver = (event) => {
     event.preventDefault();

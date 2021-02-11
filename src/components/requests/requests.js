@@ -13,6 +13,15 @@ export const getCardList = async (id) => {
   }
 };
 
+export const getCardLists = async (ids) => {
+  const allResponses = await Promise.allSettled(
+    ids.map((id) => axios.get(`${baseUrl}/card-list/${id}`))
+  );
+  return allResponses
+    .filter((res) => res.status === "fulfilled")
+    .map((res) => res.value.data);
+};
+
 // login-controller
 export const login = async ({ email, password }) => {
   try {
