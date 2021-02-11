@@ -50,7 +50,6 @@ const Notification = (props) => {
   const [answered, setAnswered] = useState(false);
   const [userContext, setUserContext] = useContext(UserContext);
 
-  // TODO: update notification on answered
   console.log(props.data);
 
   return (

@@ -32,7 +32,7 @@ const Timeline = (props) => {
               .map((card) => (
                 <span
                   key={card.position}
-                >{`pos: ${card.position} ${card.type} | `}</span>
+                >{`${card.type} | `}</span>
               ))}
             <div>--------------------------------</div>
           </div>

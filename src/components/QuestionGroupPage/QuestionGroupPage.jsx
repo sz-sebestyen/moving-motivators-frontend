@@ -130,30 +130,15 @@ const QuestionGroupPage = (props) => {
 
   useEffect(() => {
     setQuestions(() =>
-      questionsContext.filter((que) => que.groupId.toString() === id)
+      questionsContext
+        .sort((a, b) => b.id - a.id)
+        .filter((que) => que.groupId.toString() === id)
     );
   }, [questionsContext, id]);
 
   const currentGroup = groupsContext.find(
     (group) => group.id.toString() === id
   );
-
-  const printInvited = async () => {
-    /*     if (currentGroup) {
-      const answ = await viewInvited(currentGroup.id);
-      console.log("invited:", answ);
-    } */
-
-    const sentNoties = await getSentNotifications();
-    console.log("sent notifications", sentNoties);
-
-    const receivedNoties = await getReceivedNotifications();
-    console.log("received notifications", receivedNoties);
-  };
-
-  useEffect(() => {
-    printInvited();
-  });
 
   return (
     <main className="questionsPage">
@@ -186,7 +171,6 @@ const QuestionGroupPage = (props) => {
 
       <h1 className="groupTitle">{currentGroup && currentGroup.value}</h1>
 
-      {/* TODO: arrange by id, decreaseing */}
       <ul className="allQuestions">
         {questions.map((question) => (
           <Question
