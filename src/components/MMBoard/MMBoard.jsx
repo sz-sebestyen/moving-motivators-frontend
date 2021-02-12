@@ -99,12 +99,16 @@ const MMBoard = (props) => {
   const mmb = useRef(null);
 
   const cardList = Array(10).fill();
-  props.starterCards.forEach((card) => {
-    cardList[stringToNumCard[card.type]] = {
-      value: stringToNumValue[card.value],
-      index: card.position,
-    };
-  });
+  if (props.starterCards) {
+    props.starterCards.forEach((card) => {
+      cardList[stringToNumCard[card.type]] = {
+        value: stringToNumValue[card.value],
+        index: card.position,
+      };
+    });
+  } else {
+    cardList = getCards();
+  }
 
   const [cards, setCards] = useState(cardList);
   const [dragTarget, setDragTarget] = useState();

@@ -17,6 +17,8 @@ import {
   defaultQuestions,
   getToken,
   getUserId,
+  removeToken,
+  removeUserId,
 } from "./components/Context/Context";
 import {
   getUser,
@@ -71,13 +73,13 @@ function App() {
       const user = await getUser(getUserId());
       console.log(user);
 
-      const sentNoties = await getSentNotifications();
-      console.log("sent notifications", sentNoties);
-
-      const receivedNoties = await getReceivedNotifications();
-      console.log("received notifications", receivedNoties);
-
       if (user) {
+        const sentNoties = await getSentNotifications();
+        console.log("sent notifications", sentNoties);
+
+        const receivedNoties = await getReceivedNotifications();
+        console.log("received notifications", receivedNoties);
+
         setUserContext((prev) => ({
           ...prev,
           loggedIn: true,
@@ -87,6 +89,9 @@ function App() {
         }));
 
         updateGroups(user);
+      } else {
+        removeUserId();
+        removeToken();
       }
       console.log("updating");
       setUserContext((prev) => ({ ...prev, dataLoaded: true }));

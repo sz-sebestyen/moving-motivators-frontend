@@ -38,9 +38,7 @@ const BoardPage = (props) => {
           Save as default
         </button>
       </div>
-      {starterCards && (
-        <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
-      )}
+      <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
     </main>
   );
 };
