@@ -2,6 +2,8 @@ import React, { useContext, useRef, useState } from "react";
 import { editUser } from "../requests/requests";
 import { UserContext } from "../Context/Context";
 
+import "./Profile.scss";
+
 const Profile = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
   const firstName = useRef(null);
@@ -71,7 +73,9 @@ const Profile = (props) => {
         </div>
 
         <div className="submit formField">
-          <button type="submit">Save</button>
+          <button className="btn btnConfirm" type="submit">
+            Save
+          </button>
         </div>
       </form>
     </div>

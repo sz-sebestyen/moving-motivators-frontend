@@ -31,6 +31,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
 
 import "./App.css";
+import "./App.scss";
 
 function App() {
   const [userContext, setUserContext] = useState(defaultUser);

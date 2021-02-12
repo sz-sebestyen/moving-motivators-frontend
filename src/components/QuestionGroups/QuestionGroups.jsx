@@ -39,8 +39,14 @@ const GroupForm = (props) => {
           placeholder="new group name"
           required
         />
-        <button type="submit">Create</button>
-        <button type="button" onClick={() => props.setInCreation(false)}>
+        <button className="btn btnConfirm" type="submit">
+          Create
+        </button>
+        <button
+          className="btn btnSecondary"
+          type="button"
+          onClick={() => props.setInCreation(false)}
+        >
           Cancel
         </button>
       </form>
@@ -72,13 +78,14 @@ const Notification = (props) => {
   }, []);
 
   return (
-    <li className="notification">
+    <li className="notification paper notify">
       <span>
         {origin
           ? `${origin.inviter.name} invited you to a group (${props.data.groupId})!`
           : ""}
       </span>
       <button
+        className="btn btnConfirm"
         type="button"
         disabled={answered}
         onClick={async () => {
@@ -91,6 +98,7 @@ const Notification = (props) => {
         Accept
       </button>
       <button
+        className="btn btnDelete"
         type="button"
         disabled={answered}
         onClick={async () => {
@@ -108,7 +116,7 @@ const Notification = (props) => {
 
 const Group = (props) => {
   return (
-    <li className="group">
+    <li className="group paper">
       <Link to={`/question-group/${props.group.id}`}>
         {`${props.group.id} ${props.group.value}`}
       </Link>
@@ -131,19 +139,21 @@ const QuestionGroups = (props) => {
       {inCreation && <GroupForm setInCreation={setInCreation} />}
 
       <div className="questionGroupMenu">
-        <button className="createGroup" onClick={() => setInCreation(true)}>
+        <button className="btn" onClick={() => setInCreation(true)}>
           Add group
         </button>
       </div>
 
-      <section className="notifications">
-        <h2 className="notificationsTitle">Notifications</h2>
-        <ul>
-          {userContext.received.map((notif) => (
-            <Notification key={notif.id} data={notif} />
-          ))}
-        </ul>
-      </section>
+      {userContext.received.length && (
+        <section className="notifications">
+          <h2 className="notificationsTitle">Notifications</h2>
+          <ul>
+            {userContext.received.map((notif) => (
+              <Notification key={notif.id} data={notif} />
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section className="ownGroups">
         <h2 className="ownGroupsTitle">My own groups</h2>

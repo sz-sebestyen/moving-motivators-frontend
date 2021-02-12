@@ -99,7 +99,9 @@ const Registration = (props) => {
       </div>
 
       <div className="submit formField">
-        <button type="submit">Register</button>
+        <button className="btn" type="submit">
+          Register
+        </button>
       </div>
     </form>
   );

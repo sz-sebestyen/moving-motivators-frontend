@@ -9,6 +9,8 @@ import {
   editNote,
 } from "../requests/requests";
 
+import "./AnswerPage.scss";
+
 const AnswerPage = (props) => {
   const { groupId, questionId } = useParams();
   const [userContext, setUserContext] = useContext(UserContext);
@@ -73,15 +75,25 @@ const AnswerPage = (props) => {
   return (
     <main className="answerPage">
       <div className="answerMenu">
-        <button type="button" onClick={Save} disabled={question.closed}>
+        <button
+          className="btn btnConfirm"
+          type="button"
+          onClick={Save}
+          disabled={question ? question.closed : question}
+        >
           Save
         </button>
-        <button type="button" onClick={Close} disabled={question.closed}>
+        <button
+          className="btn btnDelete"
+          type="button"
+          onClick={Close}
+          disabled={question ? question.closed : question}
+        >
           Finalize
         </button>
       </div>
 
-      <h1 className="title">{question.value || ""}</h1>
+      <h1 className="title">{question ? question.value : ""}</h1>
 
       {starterCards && (
         <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
@@ -90,9 +102,9 @@ const AnswerPage = (props) => {
         <div className="note">
           <textarea
             ref={note}
-            defaultValue={question.note}
+            defaultValue={question && question.note}
             placeholder="save a note"
-            disabled={question.closed}
+            disabled={question ? question.closed : question}
             style={{ resize: "none" }}
           ></textarea>
         </div>

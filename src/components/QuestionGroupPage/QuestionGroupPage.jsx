@@ -1,11 +1,4 @@
-import {
-  createQuestion,
-  searchUser,
-  newInvite,
-  viewInvited,
-  getSentNotifications,
-  getReceivedNotifications,
-} from "../requests/requests";
+import { createQuestion, searchUser, newInvite } from "../requests/requests";
 import { useParams } from "react-router-dom";
 import { useState, useContext, useRef, useEffect } from "react";
 import {
@@ -46,8 +39,14 @@ const InvitationPopUp = (props) => {
             id="invitationName"
             placeholder="exact fullname"
           />
-          <button type="submit">Search</button>
-          <button type="button" onClick={() => props.setInInvitation(false)}>
+          <button className="btn btnConfirm" type="submit">
+            Search
+          </button>
+          <button
+            className="btn btnSecondary"
+            type="button"
+            onClick={() => props.setInInvitation(false)}
+          >
             Cancel
           </button>
         </form>
@@ -56,7 +55,11 @@ const InvitationPopUp = (props) => {
             <li key={user.id}>
               <span className="resultName">{user.name}</span>{" "}
               <span className="resultCompany">{user.company}</span>
-              <button type="button" onClick={() => handleInvite(user)}>
+              <button
+                className="btn btnConfirm"
+                type="button"
+                onClick={() => handleInvite(user)}
+              >
                 Invite
               </button>
             </li>
@@ -96,8 +99,14 @@ const QuestionForm = (props) => {
           placeholder="new question"
           required
         />
-        <button type="submit">Create</button>
-        <button type="button" onClick={() => props.setInCreation(false)}>
+        <button className="btn" type="submit">
+          Create
+        </button>
+        <button
+          className="btn"
+          type="button"
+          onClick={() => props.setInCreation(false)}
+        >
           Cancel
         </button>
       </form>
@@ -108,7 +117,7 @@ const QuestionForm = (props) => {
 const Question = (props) => {
   const date = new Date(props.question.date);
   return (
-    <li className="question">
+    <li className="question paper">
       <Link to={`/question/${props.groupId}/${props.question.id}`}>
         {props.question.value}
       </Link>
@@ -157,15 +166,21 @@ const QuestionGroupPage = (props) => {
         <div className="questionsMenu">
           <button
             type="button"
-            className="createQuestion"
+            className="btn"
             onClick={() => setInCreation(true)}
           >
             Add question
           </button>
-          <button type="button" onClick={() => setInInvitation(true)}>
+          <button
+            className="btn"
+            type="button"
+            onClick={() => setInInvitation(true)}
+          >
             Invite member
           </button>
-          <button type="button">Delete group</button>
+          <button className="btn btnDelete" type="button">
+            Delete group
+          </button>
         </div>
       )}
 

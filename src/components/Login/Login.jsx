@@ -64,7 +64,7 @@ const Login = (props) => {
         />
       </div>
       <div className={style.submit}>
-        <button type="button" onClick={handleSave}>
+        <button className="btn" type="button" onClick={handleSave}>
           Login
         </button>
       </div>

@@ -3,6 +3,8 @@ import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../Context/Context";
 import { getCardList, saveDefault } from "../requests/requests";
 
+import "./BoardPage.scss";
+
 const BoardPage = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
   const [starterCards, setStarterCards] = useState();
@@ -32,7 +34,7 @@ const BoardPage = (props) => {
   return (
     <main className="boardPage">
       <div className="boardMenu">
-        <button type="button" onClick={Save}>
+        <button className="btn" type="button" onClick={Save}>
           Save as default
         </button>
       </div>

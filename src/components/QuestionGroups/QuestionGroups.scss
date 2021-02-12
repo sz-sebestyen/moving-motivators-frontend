@@ -5,7 +5,14 @@ main.groupsPage {
   padding: 0 10px;
 
   .questionGroupMenu {
-    padding: 10px;
+    margin-top: 20px;
+    padding: 15px 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 20px;
   }
 
   ul {
@@ -16,7 +23,7 @@ main.groupsPage {
 
     li {
       flex-basis: 100%;
-      border: 1px solid black;
+      //border: 1px solid black;
       padding: 6px 10px;
     }
   }
@@ -46,5 +53,16 @@ main.groupsPage {
     button {
       flex-basis: calc(50% - 5px);
     }
+  }
+}
+
+.notification {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+
+  span {
+    margin-right: auto;
+    cursor: default;
   }
 }
