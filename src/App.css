@@ -1,6 +1,13 @@
 .App {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+}
+
+html,
+body,
+#root,
+.App {
+  height: 100%;
+}
+
+.pages {
+  min-height: calc(100% - 42px);
 }

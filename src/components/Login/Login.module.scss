@@ -1,0 +1,39 @@
+form.loginForm {
+  display: grid;
+  grid-template-areas:
+    "email"
+    "pw"
+    "submit";
+  gap: 25px;
+  padding: 25px;
+  border: 1px solid rgb(133, 133, 133);
+  border-radius: 1px;
+  width: 250px;
+  margin: 200px auto;
+
+  .email {
+    grid-area: email;
+  }
+
+  .password {
+    grid-area: pw;
+  }
+
+  .submit {
+    grid-area: submit;
+
+    button {
+      display: block;
+      margin: auto;
+    }
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input {
+    width: 100%;
+  }
+}

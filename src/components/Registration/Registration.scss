@@ -1,0 +1,17 @@
+.formField {
+  label {
+    display: block;
+  }
+}
+
+form.registrationForm {
+  width: 200px;
+  margin: 40px auto 0;
+
+  div {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
