@@ -18,7 +18,7 @@ const GroupForm = (props) => {
   return (
     <div className="groupFormWrap">
       <form
-        className="groupForm"
+        className="groupForm paper"
         onSubmit={async (event) => {
           event.preventDefault();
           props.setInCreation(false);
@@ -118,7 +118,7 @@ const Group = (props) => {
   return (
     <li className="group paper">
       <Link to={`/question-group/${props.group.id}`}>
-        {`${props.group.id} ${props.group.value}`}
+        {`${/* props.group.id */ ""} ${props.group.value}`}
       </Link>
     </li>
   );

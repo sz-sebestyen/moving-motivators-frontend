@@ -44,7 +44,7 @@ const Login = (props) => {
   }
 
   return (
-    <form className={style.loginForm}>
+    <form className={style.loginForm + " paper"}>
       <div className={style.email}>
         <label htmlFor="loginFormEmail">Email</label>
         <input

@@ -35,24 +35,24 @@ main.groupsPage {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.5);
 
   form.groupForm {
     max-width: 300px;
     margin: 200px auto 0;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     gap: 10px;
     padding: 10px;
-    background-color: #777;
 
     input {
       flex-basis: 100%;
     }
 
-    button {
+    /*     button {
       flex-basis: calc(50% - 5px);
-    }
+    } */
   }
 }
 

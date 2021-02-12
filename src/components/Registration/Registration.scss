@@ -5,13 +5,18 @@
 }
 
 form.registrationForm {
-  width: 200px;
+  width: 250px;
   margin: 40px auto 0;
+  padding: 10px;
 
   div {
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    button {
+      align-self: center;
+    }
   }
 }

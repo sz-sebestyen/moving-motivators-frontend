@@ -29,7 +29,7 @@ const InvitationPopUp = (props) => {
 
   return (
     <div className="invitationPopUpWrap">
-      <div className="invitationPopUp">
+      <div className="invitationPopUp paper">
         <form className="search" onSubmit={handleSearch}>
           <input
             required
@@ -52,7 +52,7 @@ const InvitationPopUp = (props) => {
         </form>
         <ul className="searchResults">
           {searchResults.map((user) => (
-            <li key={user.id}>
+            <li key={user.id} className="paper">
               <span className="resultName">{user.name}</span>{" "}
               <span className="resultCompany">{user.company}</span>
               <button
@@ -77,7 +77,7 @@ const QuestionForm = (props) => {
   return (
     <div className="questionFormWrap">
       <form
-        className="questionForm"
+        className="questionForm paper"
         onSubmit={async (event) => {
           event.preventDefault();
           props.setInCreation(false);
@@ -99,11 +99,11 @@ const QuestionForm = (props) => {
           placeholder="new question"
           required
         />
-        <button className="btn" type="submit">
+        <button className="btn btnConfirm" type="submit">
           Create
         </button>
         <button
-          className="btn"
+          className="btn btnSecondary"
           type="button"
           onClick={() => props.setInCreation(false)}
         >

@@ -44,7 +44,7 @@ const Registration = (props) => {
   }
 
   return (
-    <form className="registrationForm" onSubmit={handleSubmit}>
+    <form className="registrationForm paper" onSubmit={handleSubmit}>
       <div className="firstName formField">
         <label htmlFor="FirstName">First name</label>
         <input
