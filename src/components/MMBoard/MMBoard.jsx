@@ -98,7 +98,7 @@ const getDropCoords = (event, mmb, dragOffset) => {
 const MMBoard = (props) => {
   const mmb = useRef(null);
 
-  const cardList = Array(10).fill();
+  let cardList = Array(10).fill();
   if (props.starterCards) {
     props.starterCards.forEach((card) => {
       cardList[stringToNumCard[card.type]] = {
