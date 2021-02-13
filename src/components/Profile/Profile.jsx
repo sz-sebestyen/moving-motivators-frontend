@@ -4,6 +4,12 @@ import { UserContext } from "../Context/Context";
 
 import "./Profile.scss";
 
+/**
+ * Profile isresponsible for rendering a page where the user can
+ * update their user information.
+ *
+ * @param {*} props
+ */
 const Profile = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
   const firstName = useRef(null);

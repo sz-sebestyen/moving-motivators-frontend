@@ -5,11 +5,21 @@ import { getCardList, saveDefault } from "../requests/requests";
 
 import "./BoardPage.scss";
 
+/**
+ * BoardPage component is responsible for rendering a page where the user can
+ * arrange and save a default card order, which will be the starter setup
+ * under questions.
+ *
+ * @param {*} props
+ */
 const BoardPage = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
   const [starterCards, setStarterCards] = useState();
   const [saveCards, setSaveCards] = useState();
 
+  /**
+   * Fetched the previously saved oreder.
+   */
   const loadCardList = async () => {
     if (userContext.user.defaultCardListId) {
       const cardList = await getCardList(userContext.user.defaultCardListId);

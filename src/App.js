@@ -1,9 +1,11 @@
+import Navigation from "./components/Navigation/Navigation";
+
+// pages
 import BoardPage from "./components/BoardPage/BoardPage";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Timeline from "./components/Timeline/Timeline";
 import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
-import Navigation from "./components/Navigation/Navigation";
 import QuestionGroupPage from "./components/QuestionGroupPage/QuestionGroupPage";
 import AnswerPage from "./components/AnswerPage/AnswerPage";
 import Registration from "./components/Registration/Registration";
@@ -20,6 +22,7 @@ import {
   removeToken,
   removeUserId,
 } from "./components/Context/Context";
+
 import {
   getUser,
   getQuestionGroups,
@@ -32,9 +35,12 @@ import {
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
 
-import "./App.css";
 import "./App.scss";
 
+/**
+ * App component is responsible for rendering the navigation bar and routing
+ * the pages. And providing context with the fetched groups and guestions.
+ */
 function App() {
   const [userContext, setUserContext] = useState(defaultUser);
   const [groupsContext, setGroupsContext] = useState(defaultGroups);
@@ -68,17 +74,20 @@ function App() {
     }
   };
 
+  /**
+   * Update userContext with fetched data.
+   */
   const updateUser = async () => {
     if (getToken() && getUserId()) {
       const user = await getUser(getUserId());
-      console.log(user);
+      console.log("user:", user);
 
       if (user) {
         const sentNoties = await getSentNotifications();
-        console.log("sent notifications", sentNoties);
+        console.log("sent notifications:", sentNoties);
 
         const receivedNoties = await getReceivedNotifications();
-        console.log("received notifications", receivedNoties);
+        console.log("received notifications:", receivedNoties);
 
         setUserContext((prev) => ({
           ...prev,
@@ -93,7 +102,7 @@ function App() {
         removeUserId();
         removeToken();
       }
-      console.log("updating");
+
       setUserContext((prev) => ({ ...prev, dataLoaded: true }));
     }
   };

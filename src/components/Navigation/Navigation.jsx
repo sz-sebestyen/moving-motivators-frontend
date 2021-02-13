@@ -3,6 +3,13 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./Navigation.scss";
 
+/**
+ * Navigation component is responsible for rendering the links that
+ * point to the pages.
+ *
+ * @param {*} props
+ */
+
 export default function Navigation(props) {
   const [userContext, setUserContext] = useContext(UserContext);
 

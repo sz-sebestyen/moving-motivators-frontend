@@ -13,6 +13,11 @@ import {
   numToStringValue,
 } from "../CardLib/CardLib";
 
+/**
+ * MMBoard component is responsible for rendering a board where the user can
+ * arrange the moving motivators' cards.
+ */
+
 const MIN_VALUE = 0;
 const MAX_VALUE = 2;
 const MIN_INDEX = 0;
@@ -29,12 +34,19 @@ const ZOOM_Z_INDEX = 999;
 
 const DRAGGED_CARD_OPACITY = 0;
 
+/**
+ * Provides a fallback card arrangement.
+ */
 const getCards = () => {
   return Array(NUMBER_OF_CARDS)
     .fill()
     .map((_, index) => ({ index, value: DEFAULT_CARD_VALUE }));
 };
 
+/**
+ * Renders a card.
+ * @param {*} props
+ */
 const MMCard = (props) => {
   const [zoom, setZoom] = useState(false);
 
@@ -80,6 +92,14 @@ const MMCard = (props) => {
   );
 };
 
+/**
+ * Computes the index and value of the place that is being draged over.
+ *
+ * @param {*} event
+ * @param {*} mmb Reference to the board div.
+ * @param {*} dragOffset the position of the cursor compared to the cards
+ * top left corner when the drag started.
+ */
 const getDropCoords = (event, mmb, dragOffset) => {
   const box = mmb.getBoundingClientRect();
   let index = Math.floor(
@@ -98,6 +118,9 @@ const getDropCoords = (event, mmb, dragOffset) => {
 const MMBoard = (props) => {
   const mmb = useRef(null);
 
+  /**
+   * Transform data into a usable form.
+   */
   let cardList = Array(10).fill();
   if (props.starterCards) {
     props.starterCards.forEach((card) => {
@@ -115,6 +138,13 @@ const MMBoard = (props) => {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragOverTarget, setDragOverTarget] = useState({});
 
+  /**
+   * Sets the new state of the cards.
+   *
+   * @param {*} startIndex Index of the place where the drag started.
+   * @param {*} endIndex Index of the place where the drag ended.
+   * @param {*} value The new value of the dragged card.
+   */
   const changeCardsOrder = (startIndex, endIndex, value) => {
     setCards((prevState) => {
       const endIndexIsSmaller = Math.min(startIndex, endIndex) === endIndex;

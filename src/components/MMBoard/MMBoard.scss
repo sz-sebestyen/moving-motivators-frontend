@@ -6,8 +6,8 @@
     position: relative;
     display: flex;
     justify-content: stretch;
-    padding-bottom: 10px;
     font-size: 1.4em;
+    padding-bottom: 10px;
 
     .left {
       flex-basis: 50%;
@@ -21,18 +21,10 @@
   }
 
   .mmb {
-    /*     background-image: repeating-linear-gradient(
-      green -200%,
-      lightgray 40%,
-      lightgray 60%,
-      red 300%
-    ); */
+    box-sizing: content-box;
+    position: relative;
     width: 100%;
     height: 360px;
-
-    position: relative;
-    box-sizing: content-box;
-    // border: 1px solid black;
     border-top: 5px solid green;
     border-bottom: 5px solid red;
   }

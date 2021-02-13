@@ -1,5 +1,9 @@
 import axios from "axios";
 
+/**
+ * The requests module lists all the axios calls that are used in the project.
+ */
+
 const baseUrl = "https://codecool-moving-motivators.herokuapp.com";
 
 // card-list-controller

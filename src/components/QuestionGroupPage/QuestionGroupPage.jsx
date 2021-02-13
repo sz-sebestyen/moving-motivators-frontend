@@ -10,6 +10,10 @@ import { Link } from "react-router-dom";
 
 import "./QuestionGroupPage.scss";
 
+/**
+ * InvitationPopUP component is responsible for rendering a form and search
+ *  bar where the use can search for other users to invite to the group.
+ */
 const InvitationPopUp = (props) => {
   const input = useRef(null);
   const [searchResults, setSearchResults] = useState([]);
@@ -70,6 +74,12 @@ const InvitationPopUp = (props) => {
   );
 };
 
+/**
+ * QuestionForm component is responsible for rendering a form which the user can
+ * use to add new questions to the group.
+ *
+ * @param {*} props
+ */
 const QuestionForm = (props) => {
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
   const input = useRef(null);
@@ -128,6 +138,13 @@ const Question = (props) => {
   );
 };
 
+/**
+ * QuestionGroupPage is responsible for rendering a page where the user
+ * can view their questions in a question group. They can also delete
+ * the group, and a new question or invite another user to the group.
+ *
+ * @param {*} props
+ */
 const QuestionGroupPage = (props) => {
   const { id } = useParams();
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
