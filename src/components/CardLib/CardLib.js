@@ -9,6 +9,12 @@ import cardIMG7 from "../../images/card-power.png";
 import cardIMG8 from "../../images/card-relatedness.png";
 import cardIMG9 from "../../images/card-status.png";
 
+/**
+ * CardLib module is responsible for transforming the card arrangement data
+ * from they way it is saved on the server, to the way it is used in MMBoard,
+ * and back.
+ */
+
 export const cardMap = [
   cardIMG0,
   cardIMG1,

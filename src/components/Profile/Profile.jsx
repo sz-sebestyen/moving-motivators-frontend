@@ -4,6 +4,12 @@ import { UserContext } from "../Context/Context";
 
 import "./Profile.scss";
 
+/**
+ * Profile isresponsible for rendering a page where the user can
+ * update their user information.
+ *
+ * @param {*} props
+ */
 const Profile = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
   const firstName = useRef(null);
@@ -28,7 +34,7 @@ const Profile = (props) => {
 
   return (
     <div className="profile">
-      <form className="profileForm" onSubmit={handleSubmit}>
+      <form className="profileForm paper" onSubmit={handleSubmit}>
         <div className="firstName formField">
           <label htmlFor="FirstName">First name</label>
           <input

@@ -5,37 +5,34 @@ import React, { useContext, useState, useRef } from "react";
 import { UserContext, setToken, setUserId } from "../Context/Context";
 import { login, getUser } from "../requests/requests";
 
+/**
+ * Logincomponent is responsible for rendering a page where the user can
+ * log in with a from.
+ * @param {*} props
+ */
 const Login = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
 
   const emailInput = useRef(null);
   const passwordInput = useRef(null);
 
-  const handleSave = (event) => {
+  const handleSave = async (event) => {
     if (emailInput.current.value && passwordInput.current.value) {
-      login({
+      const data = await login({
         email: emailInput.current.value,
         password: passwordInput.current.value,
-      }).then((data) => {
-        if (data) {
-          setToken(data.token);
-          setUserId(data.user.id);
-
-          setUserContext((prev) => ({
-            ...prev,
-            loggedIn: true,
-            user: data.user,
-          }));
-
-          console.log(data);
-          //temp
-          getUser(data.user.id).then((data) => {
-            if (data) {
-              console.log(data);
-            }
-          });
-        }
       });
+
+      if (data) {
+        setToken(data.token);
+        setUserId(data.user.id);
+
+        setUserContext((prev) => ({
+          ...prev,
+          loggedIn: true,
+          user: data.user,
+        }));
+      }
     }
   };
 
@@ -44,7 +41,7 @@ const Login = (props) => {
   }
 
   return (
-    <form className={style.loginForm}>
+    <form className={style.loginForm + " paper"}>
       <div className={style.email}>
         <label htmlFor="loginFormEmail">Email</label>
         <input

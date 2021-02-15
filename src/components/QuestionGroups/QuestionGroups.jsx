@@ -11,6 +11,9 @@ import { Link } from "react-router-dom";
 
 import "./QuestionGroups.scss";
 
+/**
+ * GroupFrom component renders a form where the user can create a new group.
+ */
 const GroupForm = (props) => {
   const [groupsContext, setGroupsContext] = useContext(GroupsContext);
   const input = useRef(null);
@@ -18,7 +21,7 @@ const GroupForm = (props) => {
   return (
     <div className="groupFormWrap">
       <form
-        className="groupForm"
+        className="groupForm paper"
         onSubmit={async (event) => {
           event.preventDefault();
           props.setInCreation(false);
@@ -54,6 +57,13 @@ const GroupForm = (props) => {
   );
 };
 
+/**
+ * Notification component renders a list item that whows an invitation to
+ * another group. The user can accept or decline the invitation by two
+ * different buttons.
+ *
+ * @param {*} props
+ */
 const Notification = (props) => {
   const [answered, setAnswered] = useState(false);
   const [userContext, setUserContext] = useContext(UserContext);
@@ -62,6 +72,9 @@ const Notification = (props) => {
 
   console.log(props.data);
 
+  /**
+   * Loads information about the user who sent the invitation.
+   */
   const loadNotiData = async () => {
     const inviter = await getUser(props.data.senderId);
     console.log("inviter", inviter);
@@ -84,6 +97,7 @@ const Notification = (props) => {
           ? `${origin.inviter.name} invited you to a group (${props.data.groupId})!`
           : ""}
       </span>
+
       <button
         className="btn btnConfirm"
         type="button"
@@ -97,6 +111,7 @@ const Notification = (props) => {
       >
         Accept
       </button>
+
       <button
         className="btn btnDelete"
         type="button"
@@ -118,12 +133,18 @@ const Group = (props) => {
   return (
     <li className="group paper">
       <Link to={`/question-group/${props.group.id}`}>
-        {`${props.group.id} ${props.group.value}`}
+        {`${/* props.group.id */ ""} ${props.group.value}`}
       </Link>
     </li>
   );
 };
 
+/**
+ * QuestionGroups component renders the groups which the user is a member of.
+ * TODO: The groups are separated into different sections by owner id.
+ *
+ * @param {*} props
+ */
 const QuestionGroups = (props) => {
   const [groupsContext, setGroupsContext] = useContext(GroupsContext);
   const [userContext, setUserContext] = useContext(UserContext);

@@ -10,6 +10,10 @@ import { Link } from "react-router-dom";
 
 import "./QuestionGroupPage.scss";
 
+/**
+ * InvitationPopUP component is responsible for rendering a form and search
+ *  bar where the use can search for other users to invite to the group.
+ */
 const InvitationPopUp = (props) => {
   const input = useRef(null);
   const [searchResults, setSearchResults] = useState([]);
@@ -29,7 +33,7 @@ const InvitationPopUp = (props) => {
 
   return (
     <div className="invitationPopUpWrap">
-      <div className="invitationPopUp">
+      <div className="invitationPopUp paper">
         <form className="search" onSubmit={handleSearch}>
           <input
             required
@@ -52,7 +56,7 @@ const InvitationPopUp = (props) => {
         </form>
         <ul className="searchResults">
           {searchResults.map((user) => (
-            <li key={user.id}>
+            <li key={user.id} className="paper">
               <span className="resultName">{user.name}</span>{" "}
               <span className="resultCompany">{user.company}</span>
               <button
@@ -70,6 +74,12 @@ const InvitationPopUp = (props) => {
   );
 };
 
+/**
+ * QuestionForm component is responsible for rendering a form which the user can
+ * use to add new questions to the group.
+ *
+ * @param {*} props
+ */
 const QuestionForm = (props) => {
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
   const input = useRef(null);
@@ -77,7 +87,7 @@ const QuestionForm = (props) => {
   return (
     <div className="questionFormWrap">
       <form
-        className="questionForm"
+        className="questionForm paper"
         onSubmit={async (event) => {
           event.preventDefault();
           props.setInCreation(false);
@@ -99,11 +109,11 @@ const QuestionForm = (props) => {
           placeholder="new question"
           required
         />
-        <button className="btn" type="submit">
+        <button className="btn btnConfirm" type="submit">
           Create
         </button>
         <button
-          className="btn"
+          className="btn btnSecondary"
           type="button"
           onClick={() => props.setInCreation(false)}
         >
@@ -128,6 +138,13 @@ const Question = (props) => {
   );
 };
 
+/**
+ * QuestionGroupPage is responsible for rendering a page where the user
+ * can view their questions in a question group. They can also delete
+ * the group, and a new question or invite another user to the group.
+ *
+ * @param {*} props
+ */
 const QuestionGroupPage = (props) => {
   const { id } = useParams();
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);

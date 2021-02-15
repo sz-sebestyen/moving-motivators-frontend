@@ -5,12 +5,12 @@ main.questionsPage {
   padding: 0 10px;
 
   .questionsMenu {
-    margin-top: 20px;
-    margin-bottom: 40px;
-    padding: 15px 0;
-    gap: 10px;
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
+    padding: 15px 0;
+    margin-top: 20px;
+    margin-bottom: 40px;
   }
 
   h1 {
@@ -19,22 +19,22 @@ main.questionsPage {
   }
 
   ul.allQuestions {
+    list-style: none;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    list-style: none;
 
     li.question {
-      flex-basis: 100%;
-      //border: 1px solid black;
-      padding: 6px 10px;
-      cursor: default;
       display: flex;
       justify-content: space-between;
+      flex-basis: 100%;
+      cursor: default;
+      padding: 6px 10px;
     }
   }
 }
 
+.invitationPopUpWrap,
 .questionFormWrap {
   position: absolute;
   top: 0;
@@ -43,21 +43,46 @@ main.questionsPage {
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.3);
 
-  form.questionForm {
-    max-width: 300px;
-    margin: 200px auto 0;
+  .search {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     gap: 10px;
     padding: 10px;
-    background-color: #777;
+  }
 
-    .input {
+  .invitationPopUp,
+  form.questionForm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    max-width: 300px;
+    gap: 10px;
+    padding: 10px;
+    margin: 200px auto 0;
+
+    ul {
+      list-style: none;
       flex-basis: 100%;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 2px 5px;
+
+        .resultCompany {
+          color: lightgray;
+        }
+
+        span:first-child {
+          margin-right: auto;
+        }
+      }
     }
 
-    .button {
-      flex-basis: calc(50% - 5px);
+    input {
+      flex-basis: 100%;
     }
   }
 }

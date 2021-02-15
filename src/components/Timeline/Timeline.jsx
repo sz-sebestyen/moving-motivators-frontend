@@ -3,6 +3,13 @@ import { UserContext } from "../Context/Context";
 
 import { getCardLists } from "../requests/requests";
 
+/**
+ * Timeline component is responsible for rendering a page where
+ * the user can view their previously saved default card
+ * arangements. Starting with the most recent.
+ *
+ * @param {*} props
+ */
 const Timeline = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
 
@@ -30,9 +37,7 @@ const Timeline = (props) => {
             {cards
               .sort((a, b) => a.position - b.position)
               .map((card) => (
-                <span
-                  key={card.position}
-                >{`${card.type} | `}</span>
+                <span key={card.position}>{`${card.type} | `}</span>
               ))}
             <div>--------------------------------</div>
           </div>

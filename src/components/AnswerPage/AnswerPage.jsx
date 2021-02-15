@@ -11,6 +11,12 @@ import {
 
 import "./AnswerPage.scss";
 
+/**
+ * AnswerPage component is responsible for redering a page where the user can
+ * arrange their cards and set a note to a question in a question group.
+ *
+ * @param {*} props
+ */
 const AnswerPage = (props) => {
   const { groupId, questionId } = useParams();
   const [userContext, setUserContext] = useContext(UserContext);
@@ -23,6 +29,9 @@ const AnswerPage = (props) => {
 
   useEffect(() => console.log("question: ", question));
 
+  /**
+   * Fetches the defalut card order previously save by the user.
+   */
   const loadDefault = async () => {
     if (userContext.user.defaultCardListId) {
       const cardList = await getCardList(userContext.user.defaultCardListId);
@@ -31,12 +40,19 @@ const AnswerPage = (props) => {
     }
   };
 
+  /**
+   * Fetches an already saved answer.
+   * @param {*} que
+   */
   const loadPrevAnswer = async (que) => {
     const cardList = await getCardList(que.answerId);
     console.log("prevAnswerCardList: ", cardList);
     setStarterCards(cardList);
   };
 
+  /**
+   * Sets the question to be displayed.
+   */
   useEffect(() => {
     const que = questionsContext.find(
       (que) => que.id.toString() === questionId
@@ -65,6 +81,9 @@ const AnswerPage = (props) => {
     setUserContext((prev) => ({ ...prev, dataLoaded: false }));
   };
 
+  /**
+   * Finalize the answer to the question. It will no longer be editable.
+   */
   const Close = async () => {
     if (!question) return;
     const closeAnswre = await closeQuestion(question.id);
@@ -83,6 +102,7 @@ const AnswerPage = (props) => {
         >
           Save
         </button>
+
         <button
           className="btn btnDelete"
           type="button"
@@ -98,6 +118,7 @@ const AnswerPage = (props) => {
       {starterCards && (
         <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
       )}
+
       {starterCards && (
         <div className="note">
           <textarea

@@ -5,6 +5,13 @@ import { registerUser } from "../requests/requests";
 
 import "./Registration.scss";
 
+/**
+ * Registration component renders a page where the user can register.
+ * After successful registration the user is redirected to the login
+ * page.
+ *
+ * @param {*} props
+ */
 const Registration = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
 
@@ -44,7 +51,7 @@ const Registration = (props) => {
   }
 
   return (
-    <form className="registrationForm" onSubmit={handleSubmit}>
+    <form className="registrationForm paper" onSubmit={handleSubmit}>
       <div className="firstName formField">
         <label htmlFor="FirstName">First name</label>
         <input

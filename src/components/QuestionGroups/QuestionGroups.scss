@@ -1,14 +1,14 @@
 main.groupsPage {
   position: relative;
   max-width: 1020px;
-  margin: 0 auto;
   padding: 0 10px;
+  margin: 0 auto;
 
   .questionGroupMenu {
-    margin-top: 20px;
-    padding: 15px 0;
     display: flex;
     justify-content: flex-end;
+    padding: 15px 0;
+    margin-top: 20px;
   }
   h2 {
     margin-top: 30px;
@@ -16,14 +16,13 @@ main.groupsPage {
   }
 
   ul {
+    list-style: none;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    list-style: none;
 
     li {
       flex-basis: 100%;
-      //border: 1px solid black;
       padding: 6px 10px;
     }
   }
@@ -35,23 +34,19 @@ main.groupsPage {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.5);
 
   form.groupForm {
     max-width: 300px;
     margin: 200px auto 0;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     gap: 10px;
     padding: 10px;
-    background-color: #777;
 
     input {
       flex-basis: 100%;
-    }
-
-    button {
-      flex-basis: calc(50% - 5px);
     }
   }
 }
@@ -62,7 +57,7 @@ main.groupsPage {
   align-items: center;
 
   span {
-    margin-right: auto;
     cursor: default;
+    margin-right: auto;
   }
 }
