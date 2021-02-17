@@ -165,7 +165,7 @@ const QuestionGroups = (props) => {
         </button>
       </div>
 
-      {userContext.received.length && (
+      {userContext.received.length !== 0 && (
         <section className="notifications">
           <h2 className="notificationsTitle">Notifications</h2>
           <ul>
