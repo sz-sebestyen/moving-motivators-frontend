@@ -96,8 +96,8 @@ function App() {
           ...prev,
           loggedIn: true,
           user: user,
-          received: receivedNoties,
-          sent: sentNoties,
+          received: receivedNoties || [],
+          sent: sentNoties || [],
         }));
 
         updateGroups(user);
