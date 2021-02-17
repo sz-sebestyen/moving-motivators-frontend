@@ -2,11 +2,11 @@ html,
 body,
 #root,
 .App {
-  height: 100%;
+  min-height: 100vh;
 }
 
 .pages {
-  min-height: calc(100% - 42px);
+  //min-height: calc(100% - 42px);
 }
 
 button {

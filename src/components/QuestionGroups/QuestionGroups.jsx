@@ -41,6 +41,7 @@ const GroupForm = (props) => {
           id="newGroupName"
           placeholder="new group name"
           required
+          autoFocus
         />
         <button className="btn btnConfirm" type="submit">
           Create

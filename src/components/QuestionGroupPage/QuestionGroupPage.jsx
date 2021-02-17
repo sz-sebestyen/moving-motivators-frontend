@@ -42,6 +42,7 @@ const InvitationPopUp = (props) => {
             name="invitationName"
             id="invitationName"
             placeholder="exact fullname"
+            autoFocus
           />
           <button className="btn btnConfirm" type="submit">
             Search
@@ -108,6 +109,7 @@ const QuestionForm = (props) => {
           id="newQuestionName"
           placeholder="new question"
           required
+          autoFocus
         />
         <button className="btn btnConfirm" type="submit">
           Create
