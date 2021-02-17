@@ -34,7 +34,7 @@ const Profile = (props) => {
 
   return (
     <div className="profile">
-      <form className="profileForm paper" onSubmit={handleSubmit}>
+      <form className="profileForm form" onSubmit={handleSubmit}>
         <div className="firstName formField">
           <label htmlFor="FirstName">First name</label>
           <input

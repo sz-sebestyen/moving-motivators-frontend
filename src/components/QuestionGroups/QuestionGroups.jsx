@@ -21,7 +21,7 @@ const GroupForm = (props) => {
   return (
     <div className="groupFormWrap">
       <form
-        className="groupForm paper"
+        className="groupForm form"
         onSubmit={async (event) => {
           event.preventDefault();
           props.setInCreation(false);

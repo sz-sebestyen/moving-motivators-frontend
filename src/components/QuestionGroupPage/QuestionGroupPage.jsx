@@ -33,7 +33,7 @@ const InvitationPopUp = (props) => {
 
   return (
     <div className="invitationPopUpWrap">
-      <div className="invitationPopUp paper">
+      <div className="invitationPopUp form">
         <form className="search" onSubmit={handleSearch}>
           <input
             required
@@ -87,7 +87,7 @@ const QuestionForm = (props) => {
   return (
     <div className="questionFormWrap">
       <form
-        className="questionForm paper"
+        className="questionForm form"
         onSubmit={async (event) => {
           event.preventDefault();
           props.setInCreation(false);
