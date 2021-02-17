@@ -54,6 +54,7 @@ function App() {
     const newQuestionRows = await getAllQuestions(newGroups);
     console.log("new questions: ", newQuestionRows);
 
+    /* Merge array of arrays into one array */
     const merged = [].concat.apply([], newQuestionRows);
     console.log("nextQContext: ", merged);
     setQuestionsContext(() => merged);
@@ -64,9 +65,11 @@ function App() {
     console.log("groups: ", newGroups);
 
     const invited = await getInvited();
-    console.log("inviAns:", invited);
+    console.log("invited Answer:", invited);
 
-    const allGroups = [...newGroups, ...invited].sort((a, b) => b.id - a.id);
+    const allGroups = [...(newGroups || []), ...(invited || [])].sort(
+      (a, b) => b.id - a.id
+    );
 
     if (allGroups) {
       setGroupsContext(() => allGroups);
