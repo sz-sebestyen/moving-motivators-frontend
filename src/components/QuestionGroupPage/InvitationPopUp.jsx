@@ -1,5 +1,5 @@
-import { createQuestion, searchUser, newInvite } from "../requests/requests";
-import { useState, useContext, useRef, useEffect } from "react";
+import { searchUser, newInvite } from "../requests/requests";
+import { useState, useRef } from "react";
 
 /**
  * InvitationPopUP component is responsible for rendering a form and search

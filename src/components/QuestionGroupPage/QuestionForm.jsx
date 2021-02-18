@@ -1,10 +1,6 @@
-import { createQuestion, searchUser, newInvite } from "../requests/requests";
-import { useState, useContext, useRef, useEffect } from "react";
-import {
-  UserContext,
-  GroupsContext,
-  QuestionsContext,
-} from "../Context/Context";
+import { createQuestion } from "../requests/requests";
+import { useContext, useRef } from "react";
+import { QuestionsContext } from "../Context/Context";
 
 /**
  * QuestionForm component is responsible for rendering a form which the user can

@@ -1,6 +1,5 @@
-import { createQuestion, searchUser, newInvite } from "../requests/requests";
 import { useParams } from "react-router-dom";
-import { useState, useContext, useRef, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import {
   UserContext,
   GroupsContext,
