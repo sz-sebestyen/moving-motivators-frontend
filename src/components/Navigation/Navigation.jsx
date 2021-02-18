@@ -1,7 +1,8 @@
 import { UserContext, removeToken, removeUserId } from "../Context/Context";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import "./Navigation.scss";
+// import "./Navigation.scss";
+import styled from "styled-components";
 
 /**
  * Navigation component is responsible for rendering the links that
@@ -71,18 +72,56 @@ export default function Navigation(props) {
   ];
 
   return (
-    <nav>
+    <Nav>
       <ul>
         {navlinks.map((navlink, index) => {
           return (
             <li key={index}>
-              <NavLink {...navlink.props} activeClassName="activeNavLink">
-                {navlink.text}
-              </NavLink>
+              <StyledLink {...navlink.props}>{navlink.text}</StyledLink>
             </li>
           );
         })}
       </ul>
-    </nav>
+    </Nav>
   );
 }
+
+const Nav = styled.nav`
+  border-bottom: 1px solid black;
+
+  ul {
+    list-style: none;
+    display: flex;
+
+    li {
+      display: inline;
+
+      &:last-child {
+        margin-left: auto;
+      }
+
+      a {
+        display: inline-block;
+        padding: 10px;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      a:hover {
+        background-color: #eee;
+      }
+
+      a:active {
+        background-color: #333;
+      }
+    }
+  }
+`;
+
+const activeClassName = "activeNavLink";
+
+const StyledLink = styled(NavLink).attrs({ activeClassName })`
+  &.${activeClassName} {
+    color: red;
+  }
+`;
