@@ -2,6 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../Context/Context";
 import { acceptInvite, declineInvite, getUser } from "../requests/requests";
 
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonDecline from "../styles/buttons/ButtonDecline";
+
 /**
  * Notification component renders a list item that whows an invitation to
  * another group. The user can accept or decline the invitation by two
@@ -43,9 +46,9 @@ const Notification = (props) => {
           : ""}
       </span>
 
-      <button
-        className="btn btnConfirm"
+      <ButtonConfirm
         type="button"
+        title="Accept invitation"
         disabled={answered}
         onClick={async () => {
           const acceptAns = await acceptInvite(props.data);
@@ -55,10 +58,10 @@ const Notification = (props) => {
         }}
       >
         Accept
-      </button>
+      </ButtonConfirm>
 
-      <button
-        className="btn btnDelete"
+      <ButtonDecline
+        title="Decline invitation"
         type="button"
         disabled={answered}
         onClick={async () => {
@@ -69,7 +72,7 @@ const Notification = (props) => {
         }}
       >
         Decline
-      </button>
+      </ButtonDecline>
     </li>
   );
 };

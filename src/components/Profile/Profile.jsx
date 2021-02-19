@@ -4,6 +4,8 @@ import { UserContext } from "../Context/Context";
 
 import "./Profile.scss";
 
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+
 /**
  * Profile isresponsible for rendering a page where the user can
  * update their user information.
@@ -79,9 +81,9 @@ const Profile = (props) => {
         </div>
 
         <div className="submit formField">
-          <button className="btn btnConfirm" type="submit">
+          <ButtonConfirm type="submit" title="Save changes">
             Save
-          </button>
+          </ButtonConfirm>
         </div>
       </form>
     </div>

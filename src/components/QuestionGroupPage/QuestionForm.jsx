@@ -2,6 +2,9 @@ import { createQuestion } from "../requests/requests";
 import { useContext, useRef } from "react";
 import { QuestionsContext } from "../Context/Context";
 
+import ButtonSecondary from "../styles/buttons/ButtonSecondary";
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+
 /**
  * QuestionForm component is responsible for rendering a form which the user can
  * use to add new questions to the group.
@@ -34,20 +37,17 @@ const QuestionForm = (props) => {
           type="text"
           name="newQuestionName"
           id="newQuestionName"
-          placeholder="new question"
+          placeholder="New question"
           required
           autoFocus
         />
-        <button className="btn btnConfirm" type="submit">
-          Create
-        </button>
-        <button
-          className="btn btnSecondary"
+        <ButtonConfirm type="submit">Create</ButtonConfirm>
+        <ButtonSecondary
           type="button"
           onClick={() => props.setInCreation(false)}
         >
           Cancel
-        </button>
+        </ButtonSecondary>
       </form>
     </div>
   );

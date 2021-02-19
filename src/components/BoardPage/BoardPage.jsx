@@ -5,6 +5,8 @@ import { getCardList, saveDefault } from "../requests/requests";
 
 import "./BoardPage.scss";
 
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+
 /**
  * BoardPage component is responsible for rendering a page where the user can
  * arrange and save a default card order, which will be the starter setup
@@ -44,9 +46,9 @@ const BoardPage = (props) => {
   return (
     <main className="boardPage">
       <div className="boardMenu">
-        <button className="btn" type="button" onClick={Save}>
-          Save as default
-        </button>
+        <ButtonConfirm title={"Save as default"} type="button" onClick={Save}>
+          Save
+        </ButtonConfirm>
       </div>
       <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
     </main>

@@ -7,6 +7,8 @@ import GroupForm from "./GroupForm";
 import Notification from "./Notification";
 import Group from "./Group";
 
+import ButtonPrimary from "../styles/buttons/ButtonPrimary";
+
 /**
  * QuestionGroups component renders the groups which the user is a member of.
  * TODO: The groups are separated into different sections by owner id.
@@ -28,9 +30,9 @@ const QuestionGroups = (props) => {
       {inCreation && <GroupForm setInCreation={setInCreation} />}
 
       <div className="questionGroupMenu">
-        <button className="btn" onClick={() => setInCreation(true)}>
+        <ButtonPrimary onClick={() => setInCreation(true)}>
           Add group
-        </button>
+        </ButtonPrimary>
       </div>
 
       {userContext.received.length !== 0 && (

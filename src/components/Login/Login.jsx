@@ -1,9 +1,11 @@
 import style from "./Login.module.scss";
 import { Redirect } from "react-router-dom";
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useRef } from "react";
 
 import { UserContext, setToken, setUserId } from "../Context/Context";
-import { login, getUser } from "../requests/requests";
+import { login } from "../requests/requests";
+
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
 
 /**
  * Logincomponent is responsible for rendering a page where the user can
@@ -61,9 +63,9 @@ const Login = (props) => {
         />
       </div>
       <div className={style.submit}>
-        <button className="btn" type="button" onClick={handleSave}>
+        <ButtonConfirm type="button" onClick={handleSave}>
           Login
-        </button>
+        </ButtonConfirm>
       </div>
     </form>
   );

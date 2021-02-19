@@ -11,6 +11,9 @@ import {
 
 import "./AnswerPage.scss";
 
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonDecline from "../styles/buttons/ButtonDecline";
+
 /**
  * AnswerPage component is responsible for redering a page where the user can
  * arrange their cards and set a note to a question in a question group.
@@ -94,23 +97,21 @@ const AnswerPage = (props) => {
   return (
     <main className="answerPage">
       <div className="answerMenu">
-        <button
-          className="btn btnConfirm"
+        <ButtonConfirm
           type="button"
           onClick={Save}
           disabled={question ? question.closed : question}
         >
           Save
-        </button>
+        </ButtonConfirm>
 
-        <button
-          className="btn btnDelete"
+        <ButtonDecline
           type="button"
           onClick={Close}
           disabled={question ? question.closed : question}
         >
           Finalize
-        </button>
+        </ButtonDecline>
       </div>
 
       <h1 className="title">{question ? question.value : ""}</h1>

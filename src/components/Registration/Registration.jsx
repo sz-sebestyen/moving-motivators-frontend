@@ -5,6 +5,8 @@ import { registerUser } from "../requests/requests";
 
 import "./Registration.scss";
 
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+
 /**
  * Registration component renders a page where the user can register.
  * After successful registration the user is redirected to the login
@@ -106,9 +108,7 @@ const Registration = (props) => {
       </div>
 
       <div className="submit formField">
-        <button className="btn" type="submit">
-          Register
-        </button>
+        <ButtonConfirm type="submit">Register</ButtonConfirm>
       </div>
     </form>
   );
