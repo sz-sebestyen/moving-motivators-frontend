@@ -27,10 +27,10 @@ const InnerButtonConfirm = styled.button`
 `;
 
 const ButtonConfirm = (props) => {
-  const { state, children, ...rest } = props;
+  const { state, onDone, children, ...rest } = props;
   return (
     <InnerButtonConfirm {...rest}>
-      {children}
+      {state !== "done" ? children : onDone}
       {state === "loading" && <Loading />}
     </InnerButtonConfirm>
   );

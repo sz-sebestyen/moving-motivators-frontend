@@ -1,6 +1,6 @@
 import style from "./Login.module.scss";
 import { Redirect } from "react-router-dom";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 
 import { UserContext, setToken, setUserId } from "../Context/Context";
 import { login } from "../requests/requests";
@@ -18,14 +18,20 @@ const Login = (props) => {
   const emailInput = useRef(null);
   const passwordInput = useRef(null);
 
+  const [status, setStatus] = useState();
+
   const handleSave = async (event) => {
     if (emailInput.current.value && passwordInput.current.value) {
+      setStatus("loading");
+
       const data = await login({
         email: emailInput.current.value,
         password: passwordInput.current.value,
       });
 
       if (data) {
+        setStatus("done");
+
         setToken(data.token);
         setUserId(data.user.id);
 
@@ -63,7 +69,13 @@ const Login = (props) => {
         />
       </div>
       <div className={style.submit}>
-        <ButtonConfirm type="button" onClick={handleSave}>
+        <ButtonConfirm
+          type="button"
+          onClick={handleSave}
+          state={status}
+          onDone="success"
+          disabled={status}
+        >
           Login
         </ButtonConfirm>
       </div>

@@ -61,10 +61,16 @@ const QuestionGroupPage = (props) => {
           <ButtonPrimary type="button" onClick={() => setInCreation(true)}>
             Add question
           </ButtonPrimary>
-          <ButtonPrimary type="button" onClick={() => setInInvitation(true)}>
-            Invite member
+          <ButtonPrimary
+            title="Invite member"
+            type="button"
+            onClick={() => setInInvitation(true)}
+          >
+            Invite
           </ButtonPrimary>
-          <ButtonDecline type="button">Delete group</ButtonDecline>
+          <ButtonDecline title="Delete this group" type="button">
+            Delete group
+          </ButtonDecline>
         </div>
       )}
 
