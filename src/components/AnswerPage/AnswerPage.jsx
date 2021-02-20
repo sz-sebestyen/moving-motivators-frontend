@@ -17,10 +17,12 @@ import ButtonDecline from "../styles/buttons/ButtonDecline";
  * @param {*} props
  */
 const AnswerPage = (props) => {
-  const { groupId, questionId } = useParams();
+  const { /* groupId, */ questionId } = useParams();
   const [userContext, setUserContext] = useContext(UserContext);
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
-  const [question, setQuestion] = useState({});
+  const [question, setQuestion] = useState(
+    questionsContext.find((que) => que.id.toString() === questionId)
+  );
   const note = useRef(null);
   const [saveCards, setSaveCards] = useState();
 
@@ -28,16 +30,6 @@ const AnswerPage = (props) => {
   const previousCards = useCards(question && question.answerId);
 
   useEffect(() => console.log("question: ", question));
-
-  /**
-   * Sets the question to be displayed.
-   */
-  useEffect(() => {
-    const que = questionsContext.find(
-      (que) => que.id.toString() === questionId
-    );
-    setQuestion(que);
-  }, [userContext, questionsContext, groupId, questionId]);
 
   const Save = async () => {
     if (!question) return;
