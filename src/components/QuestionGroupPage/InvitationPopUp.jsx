@@ -1,9 +1,13 @@
-import { searchUser, newInvite } from "../requests/requests";
+import { searchUser, newInvite } from "../../requests/requests";
 import { useState, useRef } from "react";
 
+import ButtonPrimary from "../styles/buttons/ButtonPrimary";
+import ButtonSecondary from "../styles/buttons/ButtonSecondary";
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+
 /**
- * InvitationPopUP component is responsible for rendering a form and search
- *  bar where the use can search for other users to invite to the group.
+ * InvitationPopUp component renders a form and searchbar
+ *  where the user can search for other users to invite to the group.
  */
 const InvitationPopUp = (props) => {
   const { currentGroup, setInInvitation } = props;
@@ -18,7 +22,6 @@ const InvitationPopUp = (props) => {
   };
 
   const handleInvite = async (user) => {
-    // TODO: invite user
     const inviteAnswer = await newInvite(currentGroup, user.id);
     console.log("inviteAnswer", inviteAnswer);
   };
@@ -36,29 +39,19 @@ const InvitationPopUp = (props) => {
             placeholder="exact fullname"
             autoFocus
           />
-          <button className="btn btnConfirm" type="submit">
-            Search
-          </button>
-          <button
-            className="btn btnSecondary"
-            type="button"
-            onClick={() => setInInvitation(false)}
-          >
+          <ButtonPrimary type="submit">Search</ButtonPrimary>
+          <ButtonSecondary type="button" onClick={() => setInInvitation(false)}>
             Cancel
-          </button>
+          </ButtonSecondary>
         </form>
         <ul className="searchResults">
           {searchResults.map((user) => (
             <li key={user.id} className="paper">
               <span className="resultName">{user.name}</span>{" "}
               <span className="resultCompany">{user.company}</span>
-              <button
-                className="btn btnConfirm"
-                type="button"
-                onClick={() => handleInvite(user)}
-              >
+              <ButtonConfirm type="button" onClick={() => handleInvite(user)}>
                 Invite
-              </button>
+              </ButtonConfirm>
             </li>
           ))}
         </ul>

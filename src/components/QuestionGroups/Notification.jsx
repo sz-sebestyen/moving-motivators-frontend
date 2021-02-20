@@ -1,6 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../Context/Context";
-import { acceptInvite, declineInvite, getUser } from "../requests/requests";
+import { acceptInvite, declineInvite, getUser } from "../../requests/requests";
+
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonDecline from "../styles/buttons/ButtonDecline";
 
 /**
  * Notification component renders a list item that whows an invitation to
@@ -10,12 +13,13 @@ import { acceptInvite, declineInvite, getUser } from "../requests/requests";
  * @param {*} props
  */
 const Notification = (props) => {
-  const [answered, setAnswered] = useState(false);
   const [userContext, setUserContext] = useContext(UserContext);
 
   const [origin, setOrigin] = useState();
 
-  console.log(props.data);
+  const [status, setStatus] = useState();
+
+  console.log("showing notification", props.data);
 
   /**
    * Loads information about the user who sent the invitation.
@@ -35,6 +39,26 @@ const Notification = (props) => {
     loadNotiData();
   }, []);
 
+  const handleAccept = async () => {
+    setStatus("loading");
+    const acceptAns = await acceptInvite(props.data);
+    console.log("acceptAns:", acceptAns);
+    if (acceptAns) {
+      setStatus("done");
+      setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+    } else {
+      setStatus();
+    }
+  };
+
+  const handleDecline = async () => {
+    setStatus("loading");
+    const declineAns = await declineInvite(props.data);
+    console.log("declineAns:", declineAns);
+    setStatus();
+    setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+  };
+
   return (
     <li className="notification paper notify">
       <span>
@@ -43,33 +67,25 @@ const Notification = (props) => {
           : ""}
       </span>
 
-      <button
-        className="btn btnConfirm"
+      <ButtonConfirm
         type="button"
-        disabled={answered}
-        onClick={async () => {
-          const acceptAns = await acceptInvite(props.data);
-          console.log("acceptAns:", acceptAns);
-          if (acceptAns) setAnswered(true);
-          setUserContext((prev) => ({ ...prev, dataLoaded: false }));
-        }}
+        title="Accept invitation"
+        disabled={status}
+        onClick={handleAccept}
+        state={status}
       >
         Accept
-      </button>
+      </ButtonConfirm>
 
-      <button
-        className="btn btnDelete"
+      <ButtonDecline
+        title="Decline invitation"
         type="button"
-        disabled={answered}
-        onClick={async () => {
-          const declineAns = await declineInvite(props.data);
-          console.log("declineAns:", declineAns);
-          setAnswered(true);
-          setUserContext((prev) => ({ ...prev, dataLoaded: false }));
-        }}
+        disabled={status}
+        onClick={handleDecline}
+        state={status}
       >
         Decline
-      </button>
+      </ButtonDecline>
     </li>
   );
 };

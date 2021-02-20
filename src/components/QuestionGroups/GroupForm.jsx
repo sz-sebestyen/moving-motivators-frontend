@@ -1,11 +1,9 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
-import { GroupsContext, UserContext } from "../Context/Context";
-import {
-  createQuestionGroup,
-  acceptInvite,
-  declineInvite,
-  getUser,
-} from "../requests/requests";
+import React, { useContext, useRef } from "react";
+import { GroupsContext } from "../Context/Context";
+import { createQuestionGroup } from "../../requests/requests";
+
+import ButtonSecondary from "../styles/buttons/ButtonSecondary";
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
 
 /**
  * GroupFrom component renders a form where the user can create a new group.
@@ -39,16 +37,13 @@ const GroupForm = (props) => {
           required
           autoFocus
         />
-        <button className="btn btnConfirm" type="submit">
-          Create
-        </button>
-        <button
-          className="btn btnSecondary"
+        <ButtonConfirm type="submit">Create</ButtonConfirm>
+        <ButtonSecondary
           type="button"
           onClick={() => props.setInCreation(false)}
         >
           Cancel
-        </button>
+        </ButtonSecondary>
       </form>
     </div>
   );

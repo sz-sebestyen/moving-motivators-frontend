@@ -1,7 +1,7 @@
 import { useState, useRef, useContext, useEffect } from "react";
 import { UserContext } from "../Context/Context";
 
-import { getCardLists } from "../requests/requests";
+import { getCardLists } from "../../requests/requests";
 
 /**
  * Timeline component is responsible for rendering a page where

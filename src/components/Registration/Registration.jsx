@@ -1,9 +1,11 @@
 import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../Context/Context";
 import { Redirect } from "react-router-dom";
-import { registerUser } from "../requests/requests";
+import { registerUser } from "../../requests/requests";
 
 import "./Registration.scss";
+
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
 
 /**
  * Registration component renders a page where the user can register.
@@ -17,6 +19,8 @@ const Registration = (props) => {
 
   const [toLogin, setToLogin] = useState(false);
 
+  const [status, setStatus] = useState();
+
   const firstName = useRef(null);
   const lastName = useRef(null);
   const email = useRef(null);
@@ -26,6 +30,7 @@ const Registration = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setStatus("loading");
 
     const response = await registerUser({
       name: firstName.current.value + " " + lastName.current.value,
@@ -38,8 +43,15 @@ const Registration = (props) => {
     console.log("register response: ", response);
 
     if (response) {
+      setStatus("done");
       setToLogin(true);
+    } else {
+      setStatus();
     }
+  };
+
+  const handleInput = (event) => {
+    return status === "done" && setStatus();
   };
 
   if (toLogin) {
@@ -60,6 +72,8 @@ const Registration = (props) => {
           name="FirstName"
           id="FirstName"
           required
+          onInput={handleInput}
+          disabled={status}
         />
       </div>
 
@@ -71,17 +85,35 @@ const Registration = (props) => {
           name="LastName"
           id="LastName"
           required
+          onInput={handleInput}
+          disabled={status}
         />
       </div>
 
       <div className="email formField">
         <label htmlFor="Email">Email</label>
-        <input ref={email} type="email" name="Email" id="Email" required />
+        <input
+          ref={email}
+          type="email"
+          name="Email"
+          id="Email"
+          required
+          onInput={handleInput}
+          disabled={status}
+        />
       </div>
 
       <div className="company formField">
         <label htmlFor="Company">Company</label>
-        <input ref={company} type="text" name="Company" id="Company" required />
+        <input
+          ref={company}
+          type="text"
+          name="Company"
+          id="Company"
+          required
+          onInput={handleInput}
+          disabled={status}
+        />
       </div>
       <div className="position formField">
         <label htmlFor="Position">Position</label>
@@ -91,6 +123,8 @@ const Registration = (props) => {
           name="Position"
           id="Position"
           required
+          onInput={handleInput}
+          disabled={status}
         />
       </div>
 
@@ -102,13 +136,15 @@ const Registration = (props) => {
           name="Password"
           id="Password"
           required
+          onInput={handleInput}
+          disabled={status}
         />
       </div>
 
       <div className="submit formField">
-        <button className="btn" type="submit">
+        <ButtonConfirm type="submit" state={status} disabled={status}>
           Register
-        </button>
+        </ButtonConfirm>
       </div>
     </form>
   );

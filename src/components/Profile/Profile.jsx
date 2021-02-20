@@ -1,8 +1,10 @@
 import React, { useContext, useRef, useState } from "react";
-import { editUser } from "../requests/requests";
+import { editUser } from "../../requests/requests";
 import { UserContext } from "../Context/Context";
 
 import "./Profile.scss";
+
+import ButtonConfirm from "../styles/buttons/ButtonConfirm";
 
 /**
  * Profile isresponsible for rendering a page where the user can
@@ -17,8 +19,11 @@ const Profile = (props) => {
   const company = useRef(null);
   const position = useRef(null);
 
+  const [status, setStatus] = useState();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setStatus("loading");
 
     const response = await editUser({
       name: firstName.current.value + " " + lastName.current.value,
@@ -28,8 +33,15 @@ const Profile = (props) => {
 
     console.log("edit user response: ", response);
     if (response) {
+      setStatus("done");
       setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+    } else {
+      setStatus();
     }
+  };
+
+  const handleInput = (event) => {
+    return status === "done" && setStatus();
   };
 
   return (
@@ -43,6 +55,8 @@ const Profile = (props) => {
             name="FirstName"
             id="FirstName"
             required
+            onInput={handleInput}
+            disabled={status}
           />
         </div>
 
@@ -54,6 +68,8 @@ const Profile = (props) => {
             name="LastName"
             id="LastName"
             required
+            onInput={handleInput}
+            disabled={status}
           />
         </div>
 
@@ -65,6 +81,8 @@ const Profile = (props) => {
             name="Company"
             id="Company"
             required
+            onInput={handleInput}
+            disabled={status}
           />
         </div>
         <div className="position formField">
@@ -75,13 +93,20 @@ const Profile = (props) => {
             name="Position"
             id="Position"
             required
+            onInput={handleInput}
+            disabled={status}
           />
         </div>
 
         <div className="submit formField">
-          <button className="btn btnConfirm" type="submit">
+          <ButtonConfirm
+            type="submit"
+            title="Save changes"
+            state={status}
+            disabled={status}
+          >
             Save
-          </button>
+          </ButtonConfirm>
         </div>
       </form>
     </div>

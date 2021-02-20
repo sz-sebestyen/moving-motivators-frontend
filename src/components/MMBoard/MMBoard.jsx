@@ -52,24 +52,28 @@ const getDropCoords = (event, mmb, dragOffset) => {
 };
 
 const MMBoard = (props) => {
+  const { starterCards, setSaveCards } = props;
   const mmb = useRef(null);
+
+  const [cards, setCards] = useState(getFallbackCards());
 
   /**
    * Transform data into a usable form.
    */
-  let cardList = Array(10).fill();
-  if (props.starterCards) {
-    props.starterCards.forEach((card) => {
-      cardList[stringToNumCard[card.type]] = {
-        value: stringToNumValue[card.value],
-        index: card.position,
-      };
-    });
-  } else {
-    cardList = getFallbackCards();
-  }
+  useEffect(() => {
+    let cardList = Array(10).fill();
+    if (starterCards) {
+      starterCards.forEach((card) => {
+        cardList[stringToNumCard[card.type]] = {
+          value: stringToNumValue[card.value],
+          index: card.position,
+        };
+      });
 
-  const [cards, setCards] = useState(cardList);
+      setCards(cardList);
+    }
+  }, [starterCards]);
+
   const [dragTarget, setDragTarget] = useState();
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragOverTarget, setDragOverTarget] = useState({});
@@ -108,7 +112,7 @@ const MMBoard = (props) => {
     }));
 
     console.log("cards updated: ", saveList);
-    props.setSaveCards(saveList);
+    setSaveCards(saveList);
   }, [cards]);
 
   const handleDragOver = (event) => {

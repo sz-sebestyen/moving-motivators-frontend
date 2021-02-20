@@ -12,6 +12,9 @@ import InvitationPopUp from "./InvitationPopUp";
 import QuestionForm from "./QuestionForm";
 import Question from "./Question";
 
+import ButtonPrimary from "../styles/buttons/ButtonPrimary";
+import ButtonDecline from "../styles/buttons/ButtonDecline";
+
 /**
  * QuestionGroupPage is responsible for rendering a page where the user
  * can view their questions in a question group. They can also delete
@@ -55,23 +58,19 @@ const QuestionGroupPage = (props) => {
       {/* only visible for owner */}
       {currentGroup && currentGroup.ownerId === userContext.user.id && (
         <div className="questionsMenu">
-          <button
-            type="button"
-            className="btn"
-            onClick={() => setInCreation(true)}
-          >
+          <ButtonPrimary type="button" onClick={() => setInCreation(true)}>
             Add question
-          </button>
-          <button
-            className="btn"
+          </ButtonPrimary>
+          <ButtonPrimary
+            title="Invite member"
             type="button"
             onClick={() => setInInvitation(true)}
           >
-            Invite member
-          </button>
-          <button className="btn btnDelete" type="button">
+            Invite
+          </ButtonPrimary>
+          <ButtonDecline title="Delete this group" type="button">
             Delete group
-          </button>
+          </ButtonDecline>
         </div>
       )}
 
