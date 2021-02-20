@@ -24,17 +24,10 @@ const AnswerPage = (props) => {
   const note = useRef(null);
   const [saveCards, setSaveCards] = useState();
 
-  const [cardListId, setCardListId] = useState(
-    userContext.user.defaultCardListId
-  );
-
-  const starterCards = useCards(cardListId);
+  const defaultCards = useCards(userContext.user.defaultCardListId);
+  const previousCards = useCards(question && question.answerId);
 
   useEffect(() => console.log("question: ", question));
-
-  useEffect(() => {
-    setCardListId(question && question.answerId);
-  }, [question]);
 
   /**
    * Sets the question to be displayed.
@@ -93,7 +86,10 @@ const AnswerPage = (props) => {
 
       <h1 className="title">{question ? question.value : ""}</h1>
 
-      <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
+      <MMBoard
+        starterCards={previousCards || defaultCards}
+        setSaveCards={setSaveCards}
+      />
 
       <div className="note">
         <textarea
