@@ -2,12 +2,11 @@ import MMBoard from "../MMBoard/MMBoard";
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../Context/Context";
 import { saveDefault } from "../requests/requests";
+import useCards from "../hooks/useCards";
 
 import "./BoardPage.scss";
 
 import ButtonConfirm from "../styles/buttons/ButtonConfirm";
-
-import useDefaultCards from "../hooks/useDefaultCards";
 
 /**
  * BoardPage component is responsible for rendering a page where the user can
@@ -18,24 +17,11 @@ import useDefaultCards from "../hooks/useDefaultCards";
  */
 const BoardPage = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
-  // const [starterCards, setStarterCards] = useState();
-  const starterCards = useDefaultCards(userContext.user.defaultCardListId);
+  const starterCards = useCards(userContext.user.defaultCardListId);
 
   const [saveCards, setSaveCards] = useState();
-
   const [status, setStatus] = useState();
 
-  /**
-   * Fetched the previously saved oreder.
-   */
-  /*   const loadCardList = async () => {
-    if (userContext.user.defaultCardListId) {
-      const cardList = await getCardList(userContext.user.defaultCardListId);
-      console.log("got card list: ", cardList);
-      setStarterCards(cardList);
-    }
-  };
-*/
   useEffect(() => {
     setStatus();
   }, [saveCards]);

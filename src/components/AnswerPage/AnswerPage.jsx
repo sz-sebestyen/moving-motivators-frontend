@@ -2,12 +2,8 @@ import { useParams } from "react-router-dom";
 import { useContext, useState, useEffect, useRef } from "react";
 import { QuestionsContext, UserContext } from "../Context/Context";
 import MMBoard from "../MMBoard/MMBoard";
-import {
-  getCardList,
-  setAnswer,
-  closeQuestion,
-  editNote,
-} from "../requests/requests";
+import { setAnswer, closeQuestion, editNote } from "../requests/requests";
+import useCards from "../hooks/useCards";
 
 import "./AnswerPage.scss";
 
@@ -26,32 +22,19 @@ const AnswerPage = (props) => {
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
   const [question, setQuestion] = useState({});
   const note = useRef(null);
-
-  const [starterCards, setStarterCards] = useState();
   const [saveCards, setSaveCards] = useState();
+
+  const [cardListId, setCardListId] = useState(
+    userContext.user.defaultCardListId
+  );
+
+  const starterCards = useCards(cardListId);
 
   useEffect(() => console.log("question: ", question));
 
-  /**
-   * Fetches the defalut card order previously save by the user.
-   */
-  const loadDefault = async () => {
-    if (userContext.user.defaultCardListId) {
-      const cardList = await getCardList(userContext.user.defaultCardListId);
-      console.log("got card list: ", cardList);
-      setStarterCards(cardList);
-    }
-  };
-
-  /**
-   * Fetches an already saved answer.
-   * @param {*} que
-   */
-  const loadPrevAnswer = async (que) => {
-    const cardList = await getCardList(que.answerId);
-    console.log("prevAnswerCardList: ", cardList);
-    setStarterCards(cardList);
-  };
+  useEffect(() => {
+    setCardListId(question && question.answerId);
+  }, [question]);
 
   /**
    * Sets the question to be displayed.
@@ -61,12 +44,6 @@ const AnswerPage = (props) => {
       (que) => que.id.toString() === questionId
     );
     setQuestion(que);
-
-    if (que && que.answerId !== null) {
-      loadPrevAnswer(que);
-    } else {
-      loadDefault();
-    }
   }, [userContext, questionsContext, groupId, questionId]);
 
   const Save = async () => {
@@ -116,21 +93,17 @@ const AnswerPage = (props) => {
 
       <h1 className="title">{question ? question.value : ""}</h1>
 
-      {starterCards && (
-        <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
-      )}
+      <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
 
-      {starterCards && (
-        <div className="note">
-          <textarea
-            ref={note}
-            defaultValue={question && question.note}
-            placeholder="save a note"
-            disabled={question ? question.closed : question}
-            style={{ resize: "none" }}
-          ></textarea>
-        </div>
-      )}
+      <div className="note">
+        <textarea
+          ref={note}
+          defaultValue={question && question.note}
+          placeholder="save a note"
+          disabled={question ? question.closed : question}
+          style={{ resize: "none" }}
+        ></textarea>
+      </div>
     </main>
   );
 };

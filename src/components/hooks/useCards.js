@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getCardList } from "../requests/requests";
 
-const useDefaultCards = (cardListId) => {
+const useCards = (cardListId) => {
   const [defaultCards, setDefaultCards] = useState();
 
   /**
@@ -22,4 +22,4 @@ const useDefaultCards = (cardListId) => {
   return defaultCards;
 };
 
-export default useDefaultCards;
+export default useCards;
