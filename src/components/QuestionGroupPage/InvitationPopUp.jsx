@@ -6,8 +6,8 @@ import ButtonSecondary from "../styles/buttons/ButtonSecondary";
 import ButtonConfirm from "../styles/buttons/ButtonConfirm";
 
 /**
- * InvitationPopUP component is responsible for rendering a form and search
- *  bar where the use can search for other users to invite to the group.
+ * InvitationPopUp component renders a form and searchbar
+ *  where the user can search for other users to invite to the group.
  */
 const InvitationPopUp = (props) => {
   const { currentGroup, setInInvitation } = props;
@@ -22,7 +22,6 @@ const InvitationPopUp = (props) => {
   };
 
   const handleInvite = async (user) => {
-    // TODO: invite user
     const inviteAnswer = await newInvite(currentGroup, user.id);
     console.log("inviteAnswer", inviteAnswer);
   };
