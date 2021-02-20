@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { button } from "./button";
 import Loading from "./Loading";
+import Success from "./Success";
 
 const buttonColor = "#5cb85c";
 
@@ -27,10 +28,11 @@ const InnerButtonConfirm = styled.button`
 `;
 
 const ButtonConfirm = (props) => {
-  const { state, onDone, children, ...rest } = props;
+  const { state, children, ...rest } = props;
   return (
     <InnerButtonConfirm {...rest}>
-      {state !== "done" ? children : onDone}
+      {children}
+      {state === "done" && <Success />}
       {state === "loading" && <Loading />}
     </InnerButtonConfirm>
   );

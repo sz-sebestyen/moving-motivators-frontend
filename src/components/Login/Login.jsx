@@ -8,7 +8,7 @@ import { login } from "../requests/requests";
 import ButtonConfirm from "../styles/buttons/ButtonConfirm";
 
 /**
- * Logincomponent is responsible for rendering a page where the user can
+ * Login component renders a page where the user can
  * log in with a from.
  * @param {*} props
  */
@@ -21,12 +21,16 @@ const Login = (props) => {
   const [status, setStatus] = useState();
 
   const handleSave = async (event) => {
-    if (emailInput.current.value && passwordInput.current.value) {
+    event.preventDefault();
+    const email = emailInput.current.value.trim();
+    const password = passwordInput.current.value;
+
+    if (email && password) {
       setStatus("loading");
 
       const data = await login({
-        email: emailInput.current.value,
-        password: passwordInput.current.value,
+        email,
+        password,
       });
 
       if (data) {
@@ -40,6 +44,8 @@ const Login = (props) => {
           loggedIn: true,
           user: data.user,
         }));
+      } else {
+        setStatus();
       }
     }
   };
@@ -49,7 +55,7 @@ const Login = (props) => {
   }
 
   return (
-    <form className={style.loginForm + " form"}>
+    <form className={style.loginForm + " form"} onSubmit={handleSave}>
       <div className={style.email}>
         <label htmlFor="loginFormEmail">Email</label>
         <input
@@ -57,8 +63,11 @@ const Login = (props) => {
           type="email"
           name="loginFormEmail"
           id="loginFormEmail"
+          required
+          onInput={(event) => status === "done" && setStatus()}
         />
       </div>
+
       <div className={style.password}>
         <label htmlFor="loginFormPassword">Password</label>
         <input
@@ -66,16 +75,13 @@ const Login = (props) => {
           type="password"
           name="loginFormPassword"
           id="loginFormPassword"
+          required
+          onInput={(event) => status === "done" && setStatus()}
         />
       </div>
+
       <div className={style.submit}>
-        <ButtonConfirm
-          type="button"
-          onClick={handleSave}
-          state={status}
-          onDone="success"
-          disabled={status}
-        >
+        <ButtonConfirm type="submit" state={status} disabled={status}>
           Login
         </ButtonConfirm>
       </div>
