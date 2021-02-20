@@ -1,11 +1,13 @@
 import MMBoard from "../MMBoard/MMBoard";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../Context/Context";
-import { getCardList, saveDefault } from "../requests/requests";
+import { saveDefault } from "../requests/requests";
 
 import "./BoardPage.scss";
 
 import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+
+import useDefaultCards from "../hooks/useDefaultCards";
 
 /**
  * BoardPage component is responsible for rendering a page where the user can
@@ -16,37 +18,53 @@ import ButtonConfirm from "../styles/buttons/ButtonConfirm";
  */
 const BoardPage = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
-  const [starterCards, setStarterCards] = useState();
+  // const [starterCards, setStarterCards] = useState();
+  const starterCards = useDefaultCards(userContext.user.defaultCardListId);
+
   const [saveCards, setSaveCards] = useState();
+
+  const [status, setStatus] = useState();
 
   /**
    * Fetched the previously saved oreder.
    */
-  const loadCardList = async () => {
+  /*   const loadCardList = async () => {
     if (userContext.user.defaultCardListId) {
       const cardList = await getCardList(userContext.user.defaultCardListId);
       console.log("got card list: ", cardList);
       setStarterCards(cardList);
     }
   };
-
+*/
   useEffect(() => {
-    loadCardList();
-  }, [userContext]);
+    setStatus();
+  }, [saveCards]);
 
   const Save = async () => {
     if (saveCards) {
+      setStatus("loading");
       console.log("cards to be saved:", saveCards);
       const data = await saveDefault(saveCards);
       console.log("saveDefaultCards answer:", data);
-      setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+      if (data) {
+        setStatus("done");
+        setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+      } else {
+        setStatus();
+      }
     }
   };
 
   return (
     <main className="boardPage">
       <div className="boardMenu">
-        <ButtonConfirm title={"Save as default"} type="button" onClick={Save}>
+        <ButtonConfirm
+          title={"Save as default"}
+          type="button"
+          onClick={Save}
+          state={status}
+          disabled={status}
+        >
           Save
         </ButtonConfirm>
       </div>
