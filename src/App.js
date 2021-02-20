@@ -30,7 +30,7 @@ import {
   getSentNotifications,
   getReceivedNotifications,
   getInvited,
-} from "./components/requests/requests";
+} from "./requests/requests";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
