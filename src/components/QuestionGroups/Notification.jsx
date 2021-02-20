@@ -13,12 +13,13 @@ import ButtonDecline from "../styles/buttons/ButtonDecline";
  * @param {*} props
  */
 const Notification = (props) => {
-  const [answered, setAnswered] = useState(false);
   const [userContext, setUserContext] = useContext(UserContext);
 
   const [origin, setOrigin] = useState();
 
-  console.log(props.data);
+  const [status, setStatus] = useState();
+
+  console.log("showing notification", props.data);
 
   /**
    * Loads information about the user who sent the invitation.
@@ -38,6 +39,26 @@ const Notification = (props) => {
     loadNotiData();
   }, []);
 
+  const handleAccept = async () => {
+    setStatus("loading");
+    const acceptAns = await acceptInvite(props.data);
+    console.log("acceptAns:", acceptAns);
+    if (acceptAns) {
+      setStatus("done");
+      setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+    } else {
+      setStatus();
+    }
+  };
+
+  const handleDecline = async () => {
+    setStatus("loading");
+    const declineAns = await declineInvite(props.data);
+    console.log("declineAns:", declineAns);
+    setStatus();
+    setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+  };
+
   return (
     <li className="notification paper notify">
       <span>
@@ -49,13 +70,9 @@ const Notification = (props) => {
       <ButtonConfirm
         type="button"
         title="Accept invitation"
-        disabled={answered}
-        onClick={async () => {
-          const acceptAns = await acceptInvite(props.data);
-          console.log("acceptAns:", acceptAns);
-          if (acceptAns) setAnswered(true);
-          setUserContext((prev) => ({ ...prev, dataLoaded: false }));
-        }}
+        disabled={status}
+        onClick={handleAccept}
+        state={status}
       >
         Accept
       </ButtonConfirm>
@@ -63,13 +80,9 @@ const Notification = (props) => {
       <ButtonDecline
         title="Decline invitation"
         type="button"
-        disabled={answered}
-        onClick={async () => {
-          const declineAns = await declineInvite(props.data);
-          console.log("declineAns:", declineAns);
-          setAnswered(true);
-          setUserContext((prev) => ({ ...prev, dataLoaded: false }));
-        }}
+        disabled={status}
+        onClick={handleDecline}
+        state={status}
       >
         Decline
       </ButtonDecline>

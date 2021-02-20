@@ -30,7 +30,7 @@ const QuestionForm = (props) => {
 
     if (newQuestion) {
       setStatus("done");
-      props.setInCreation(false);
+      //props.setInCreation(false);
       setQuestionsContext((prev) => [...prev, newQuestion]);
     } else {
       setStatus();
