@@ -46,8 +46,15 @@ const Login = (props) => {
         }));
       } else {
         setStatus();
+        passwordInput.current.setCustomValidity("Wrong password or email!");
+        passwordInput.current.reportValidity();
       }
     }
+  };
+
+  const handleInput = (event) => {
+    passwordInput.current.setCustomValidity("");
+    return status === "done" && setStatus();
   };
 
   if (userContext.loggedIn) {
@@ -64,7 +71,8 @@ const Login = (props) => {
           name="loginFormEmail"
           id="loginFormEmail"
           required
-          onInput={(event) => status === "done" && setStatus()}
+          onInput={handleInput}
+          disabled={status}
         />
       </div>
 
@@ -76,7 +84,8 @@ const Login = (props) => {
           name="loginFormPassword"
           id="loginFormPassword"
           required
-          onInput={(event) => status === "done" && setStatus()}
+          onInput={handleInput}
+          disabled={status}
         />
       </div>
 
