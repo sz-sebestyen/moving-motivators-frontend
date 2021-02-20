@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../Context/Context";
 import { Redirect } from "react-router-dom";
-import { registerUser } from "../requests/requests";
+import { registerUser } from "../../requests/requests";
 
 import "./Registration.scss";
 

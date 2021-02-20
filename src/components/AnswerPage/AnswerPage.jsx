@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { useContext, useState, useEffect, useRef } from "react";
 import { QuestionsContext, UserContext } from "../Context/Context";
 import MMBoard from "../MMBoard/MMBoard";
-import { setAnswer, closeQuestion, editNote } from "../requests/requests";
-import useCards from "../hooks/useCards";
+import { setAnswer, closeQuestion, editNote } from "../../requests/requests";
+import useCards from "../../hooks/useCards";
 
 import "./AnswerPage.scss";
 

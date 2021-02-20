@@ -1,11 +1,6 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
-import { GroupsContext, UserContext } from "../Context/Context";
-import {
-  createQuestionGroup,
-  acceptInvite,
-  declineInvite,
-  getUser,
-} from "../requests/requests";
+import React, { useContext, useRef } from "react";
+import { GroupsContext } from "../Context/Context";
+import { createQuestionGroup } from "../../requests/requests";
 
 import ButtonSecondary from "../styles/buttons/ButtonSecondary";
 import ButtonConfirm from "../styles/buttons/ButtonConfirm";

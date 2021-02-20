@@ -1,4 +1,4 @@
-import { searchUser, newInvite } from "../requests/requests";
+import { searchUser, newInvite } from "../../requests/requests";
 import { useState, useRef } from "react";
 
 import ButtonPrimary from "../styles/buttons/ButtonPrimary";

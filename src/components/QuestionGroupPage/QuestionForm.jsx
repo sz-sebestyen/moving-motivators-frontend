@@ -1,4 +1,4 @@
-import { createQuestion } from "../requests/requests";
+import { createQuestion } from "../../requests/requests";
 import { useContext, useRef } from "react";
 import { QuestionsContext } from "../Context/Context";
 

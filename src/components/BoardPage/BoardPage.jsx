@@ -1,8 +1,8 @@
 import MMBoard from "../MMBoard/MMBoard";
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../Context/Context";
-import { saveDefault } from "../requests/requests";
-import useCards from "../hooks/useCards";
+import { saveDefault } from "../../requests/requests";
+import useCards from "../../hooks/useCards";
 
 import "./BoardPage.scss";
 

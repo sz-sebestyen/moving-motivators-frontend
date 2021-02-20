@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { editUser } from "../requests/requests";
+import { editUser } from "../../requests/requests";
 import { UserContext } from "../Context/Context";
 
 import "./Profile.scss";
