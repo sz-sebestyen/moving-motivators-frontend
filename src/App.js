@@ -44,10 +44,6 @@ function App() {
   const [groupsContext, setGroupsContext] = useState(defaultGroups);
   const [questionsContext, setQuestionsContext] = useState(defaultQuestions);
 
-  useEffect(() => {
-    console.log("userContext changed ", userContext);
-  }, [userContext]);
-
   const updateQuestions = async (newGroups) => {
     const newQuestionRows = await getAllQuestions(newGroups);
     console.log("new questions: ", newQuestionRows);
@@ -96,6 +92,7 @@ function App() {
           user: user,
           received: receivedNoties || [],
           sent: sentNoties || [],
+          dataLoaded: true,
         }));
 
         updateGroups(user);
@@ -103,8 +100,6 @@ function App() {
         removeUserId();
         removeToken();
       }
-
-      setUserContext((prev) => ({ ...prev, dataLoaded: true }));
     }
   };
 
@@ -112,7 +107,7 @@ function App() {
     if (!userContext.dataLoaded) {
       updateUser();
     }
-  });
+  }, [userContext]);
 
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>
