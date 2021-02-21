@@ -2,8 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../Context/Context";
 import { acceptInvite, declineInvite, getUser } from "../../requests/requests";
 
+import styled from "styled-components";
 import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 import ButtonDecline from "../styled/buttons/ButtonDecline";
+import { paper } from "../styled/css/paper";
 
 /**
  * Notification component renders a list item that whows an invitation to
@@ -60,7 +62,7 @@ const Notification = (props) => {
   };
 
   return (
-    <li className="notification paper notify">
+    <StyledNotification>
       <span>
         {origin
           ? `${origin.inviter.name} invited you to a group (${props.data.groupId})!`
@@ -86,8 +88,27 @@ const Notification = (props) => {
       >
         Decline
       </ButtonDecline>
-    </li>
+    </StyledNotification>
   );
 };
+
+const StyledNotification = styled.li`
+  flex-basis: 100%;
+  padding: 6px 10px;
+  ${paper}
+
+  &.notify {
+    border: 2px solid #f0ad4e;
+  }
+
+  display: flex;
+  gap: 15px;
+  align-items: center;
+
+  span {
+    cursor: default;
+    margin-right: auto;
+  }
+`;
 
 export default Notification;

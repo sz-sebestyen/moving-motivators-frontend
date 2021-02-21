@@ -1,13 +1,26 @@
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { paper } from "../styled/css/paper";
 
 const Group = (props) => {
   return (
-    <li className="group paper">
-      <Link to={`/question-group/${props.group.id}`}>
+    <StyledGroup>
+      <StyledLink to={`/question-group/${props.group.id}`}>
         {`${/* props.group.id */ ""} ${props.group.value}`}
-      </Link>
-    </li>
+      </StyledLink>
+    </StyledGroup>
   );
 };
+
+const StyledGroup = styled.li`
+  flex-basis: 100%;
+  padding: 6px 10px;
+  ${paper}
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
 
 export default Group;

@@ -4,6 +4,8 @@ import { createQuestionGroup } from "../../requests/requests";
 
 import ButtonSecondary from "../styled/buttons/ButtonSecondary";
 import ButtonConfirm from "../styled/buttons/ButtonConfirm";
+import PopUpWrap from "../styled/PopUpWrap";
+import PopUpForm from "../styled/PopUpForm";
 
 /**
  * GroupFrom component renders a form where the user can create a new group.
@@ -34,8 +36,8 @@ const GroupForm = (props) => {
   };
 
   return (
-    <div className="groupFormWrap">
-      <form className="groupForm form" onSubmit={handleSubmit}>
+    <PopUpWrap>
+      <PopUpForm onSubmit={handleSubmit}>
         <input
           ref={input}
           type="text"
@@ -57,8 +59,8 @@ const GroupForm = (props) => {
         >
           Cancel
         </ButtonSecondary>
-      </form>
-    </div>
+      </PopUpForm>
+    </PopUpWrap>
   );
 };
 

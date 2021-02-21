@@ -1,9 +1,12 @@
 import { searchUser, newInvite } from "../../requests/requests";
 import { useState, useRef } from "react";
 
+import styled from "styled-components";
 import ButtonPrimary from "../styled/buttons/ButtonPrimary";
 import ButtonSecondary from "../styled/buttons/ButtonSecondary";
 import ButtonConfirm from "../styled/buttons/ButtonConfirm";
+import PopUpWrap from "../styled/PopUpWrap";
+import PopUpForm from "../styled/PopUpForm";
 
 /**
  * InvitationPopUp component renders a form and searchbar
@@ -27,24 +30,23 @@ const InvitationPopUp = (props) => {
   };
 
   return (
-    <div className="invitationPopUpWrap">
-      <div className="invitationPopUp form">
-        <form className="search" onSubmit={handleSearch}>
-          <input
-            required
-            ref={input}
-            type="text"
-            name="invitationName"
-            id="invitationName"
-            placeholder="exact fullname"
-            autoFocus
-          />
-          <ButtonPrimary type="submit">Search</ButtonPrimary>
-          <ButtonSecondary type="button" onClick={() => setInInvitation(false)}>
-            Cancel
-          </ButtonSecondary>
-        </form>
-        <ul className="searchResults">
+    <PopUpWrap>
+      <PopUpForm onSubmit={handleSearch}>
+        <input
+          required
+          ref={input}
+          type="text"
+          name="invitationName"
+          id="invitationName"
+          placeholder="exact fullname"
+          autoFocus
+        />
+        <ButtonPrimary type="submit">Search</ButtonPrimary>
+        <ButtonSecondary type="button" onClick={() => setInInvitation(false)}>
+          Cancel
+        </ButtonSecondary>
+
+        <ResultList>
           {searchResults.map((user) => (
             <li key={user.id} className="paper">
               <span className="resultName">{user.name}</span>{" "}
@@ -54,10 +56,30 @@ const InvitationPopUp = (props) => {
               </ButtonConfirm>
             </li>
           ))}
-        </ul>
-      </div>
-    </div>
+        </ResultList>
+      </PopUpForm>
+    </PopUpWrap>
   );
 };
+
+const ResultList = styled.ul`
+  list-style: none;
+  flex-basis: 100%;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 5px;
+
+    .resultCompany {
+      color: lightgray;
+    }
+
+    span:first-child {
+      margin-right: auto;
+    }
+  }
+`;
 
 export default InvitationPopUp;

@@ -35,8 +35,6 @@ import {
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
 
-import "./App.scss";
-
 /**
  * App component is responsible for rendering the navigation bar and routing
  * the pages. And providing context with the fetched groups and guestions.
@@ -123,44 +121,37 @@ function App() {
           value={[questionsContext, setQuestionsContext]}
         >
           <Router>
-            <div
-              className="App"
-              onDragStart={(event) => event.preventDefault()}
-            >
-              <Navigation />
+            <Navigation />
 
-              <div className="pages">
-                <Switch>
-                  <Route path="/login">
-                    <Login />
-                  </Route>
-                  <Route path="/register">
-                    <Registration />
-                  </Route>
-                  <Route path="/board">
-                    <BoardPage />
-                  </Route>
-                  <Route path="/groups">
-                    <GroupsPage />
-                  </Route>
-                  <Route path="/question-group/:id">
-                    <QuestionsPage />
-                  </Route>
-                  <Route path="/question/:groupId/:questionId">
-                    <AnswerPage />
-                  </Route>
-                  <Route path="/profile">
-                    <Profile />
-                  </Route>
-                  <Route path="/timeline">
-                    <Timeline />
-                  </Route>
-                  <Route path="/">
-                    <Home />
-                  </Route>
-                </Switch>
-              </div>
-            </div>
+            <Switch>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/register">
+                <Registration />
+              </Route>
+              <Route path="/board">
+                <BoardPage />
+              </Route>
+              <Route path="/groups">
+                <GroupsPage />
+              </Route>
+              <Route path="/question-group/:id">
+                <QuestionsPage />
+              </Route>
+              <Route path="/question/:groupId/:questionId">
+                <AnswerPage />
+              </Route>
+              <Route path="/profile">
+                <Profile />
+              </Route>
+              <Route path="/timeline">
+                <Timeline />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
           </Router>
         </QuestionsContext.Provider>
       </GroupsContext.Provider>

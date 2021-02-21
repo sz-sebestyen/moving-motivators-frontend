@@ -4,6 +4,8 @@ import { QuestionsContext } from "../Context/Context";
 
 import ButtonSecondary from "../styled/buttons/ButtonSecondary";
 import ButtonConfirm from "../styled/buttons/ButtonConfirm";
+import PopUpWrap from "../styled/PopUpWrap";
+import PopUpForm from "../styled/PopUpForm";
 
 /**
  * QuestionForm component is responsible for rendering a form which the user can
@@ -42,8 +44,8 @@ const QuestionForm = (props) => {
   };
 
   return (
-    <div className="questionFormWrap">
-      <form className="questionForm form" onSubmit={handleSubmit}>
+    <PopUpWrap>
+      <PopUpForm onSubmit={handleSubmit}>
         <input
           ref={input}
           type="text"
@@ -65,8 +67,8 @@ const QuestionForm = (props) => {
         >
           Cancel
         </ButtonSecondary>
-      </form>
-    </div>
+      </PopUpForm>
+    </PopUpWrap>
   );
 };
 

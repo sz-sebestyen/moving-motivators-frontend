@@ -6,14 +6,15 @@ import {
   QuestionsContext,
 } from "../Context/Context";
 
-import "./QuestionsPage.scss";
-
 import InvitationPopUp from "./InvitationPopUp";
 import QuestionForm from "./QuestionForm";
 import Question from "./Question";
 
+import styled from "styled-components";
 import ButtonPrimary from "../styled/buttons/ButtonPrimary";
 import ButtonDecline from "../styled/buttons/ButtonDecline";
+import Menu from "../styled/Menu";
+import Page from "../styled/Page";
 
 /**
  * QuestionsPage is responsible for rendering a page where the user
@@ -44,7 +45,7 @@ const QuestionsPage = (props) => {
   );
 
   return (
-    <main className="questionsPage">
+    <Page>
       {inCreation && (
         <QuestionForm setInCreation={setInCreation} groupId={id} />
       )}
@@ -57,7 +58,7 @@ const QuestionsPage = (props) => {
 
       {/* only visible for owner */}
       {currentGroup && currentGroup.ownerId === userContext.user.id && (
-        <div className="questionsMenu">
+        <Menu>
           <ButtonPrimary type="button" onClick={() => setInCreation(true)}>
             Add question
           </ButtonPrimary>
@@ -71,12 +72,12 @@ const QuestionsPage = (props) => {
           <ButtonDecline title="Delete this group" type="button">
             Delete group
           </ButtonDecline>
-        </div>
+        </Menu>
       )}
 
-      <h1 className="groupTitle">{currentGroup && currentGroup.value}</h1>
+      <GroupTitle>{currentGroup && currentGroup.value}</GroupTitle>
 
-      <ul className="allQuestions">
+      <QuestionList>
         {questions.map((question) => (
           <Question
             key={question.id}
@@ -84,9 +85,21 @@ const QuestionsPage = (props) => {
             groupId={id}
           ></Question>
         ))}
-      </ul>
-    </main>
+      </QuestionList>
+    </Page>
   );
 };
+
+const GroupTitle = styled.h1`
+  margin-top: 30px;
+  margin-bottom: 20px;
+`;
+
+const QuestionList = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+`;
 
 export default QuestionsPage;
