@@ -44,10 +44,6 @@ function App() {
   const [groupsContext, setGroupsContext] = useState(defaultGroups);
   const [questionsContext, setQuestionsContext] = useState(defaultQuestions);
 
-  useEffect(() => {
-    console.log("userContext changed ", userContext);
-  }, [userContext]);
-
   const updateQuestions = async (newGroups) => {
     const newQuestionRows = await getAllQuestions(newGroups);
     console.log("new questions: ", newQuestionRows);
@@ -59,15 +55,20 @@ function App() {
   };
 
   const updateGroups = async (user) => {
-    const newGroups = await getQuestionGroups(user.groupIds);
-    console.log("groups: ", newGroups);
+    const responses = await Promise.allSettled([
+      getQuestionGroups(user.groupIds),
+      getInvited(),
+    ]);
 
-    const invited = await getInvited();
+    const newGroups =
+      responses[0].status === "fulfilled" ? responses[0].value : [];
+    const invited =
+      responses[1].status === "fulfilled" ? responses[1].value : [];
+
+    console.log("groups: ", newGroups);
     console.log("invited Answer:", invited);
 
-    const allGroups = [...(newGroups || []), ...(invited || [])].sort(
-      (a, b) => b.id - a.id
-    );
+    const allGroups = [...newGroups, ...invited].sort((a, b) => b.id - a.id);
 
     if (allGroups) {
       setGroupsContext(() => allGroups);
@@ -80,14 +81,23 @@ function App() {
    */
   const updateUser = async () => {
     if (getToken() && getUserId()) {
-      const user = await getUser(getUserId());
+      const user = !userContext.loggedIn
+        ? await getUser(getUserId())
+        : userContext.user;
       console.log("user:", user);
 
       if (user) {
-        const sentNoties = await getSentNotifications();
-        console.log("sent notifications:", sentNoties);
+        const responses = await Promise.allSettled([
+          getSentNotifications(),
+          getReceivedNotifications(),
+        ]);
 
-        const receivedNoties = await getReceivedNotifications();
+        const sentNoties =
+          responses[0].status === "fulfilled" ? responses[0].value : [];
+        const receivedNoties =
+          responses[1].status === "fulfilled" ? responses[1].value : [];
+
+        console.log("sent notifications:", sentNoties);
         console.log("received notifications:", receivedNoties);
 
         setUserContext((prev) => ({
@@ -96,6 +106,7 @@ function App() {
           user: user,
           received: receivedNoties || [],
           sent: sentNoties || [],
+          dataLoaded: true,
         }));
 
         updateGroups(user);
@@ -103,8 +114,6 @@ function App() {
         removeUserId();
         removeToken();
       }
-
-      setUserContext((prev) => ({ ...prev, dataLoaded: true }));
     }
   };
 
@@ -112,7 +121,7 @@ function App() {
     if (!userContext.dataLoaded) {
       updateUser();
     }
-  });
+  }, [userContext]);
 
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>
