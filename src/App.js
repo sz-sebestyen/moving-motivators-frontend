@@ -76,14 +76,26 @@ function App() {
    */
   const updateUser = async () => {
     if (getToken() && getUserId()) {
-      const user = await getUser(getUserId());
+      const user = !userContext.loggedIn
+        ? await getUser(getUserId())
+        : userContext.user;
       console.log("user:", user);
 
       if (user) {
-        const sentNoties = await getSentNotifications();
-        console.log("sent notifications:", sentNoties);
+        // const sentNoties = await getSentNotifications();
+        // const receivedNoties = await getReceivedNotifications();
 
-        const receivedNoties = await getReceivedNotifications();
+        const responses = await Promise.allSettled([
+          getSentNotifications(),
+          getReceivedNotifications(),
+        ]);
+
+        const sentNoties =
+          responses[0].status === "fulfilled" ? responses[0].value : [];
+        const receivedNoties =
+          responses[1].status === "fulfilled" ? responses[1].value : [];
+
+        console.log("sent notifications:", sentNoties);
         console.log("received notifications:", receivedNoties);
 
         setUserContext((prev) => ({
