@@ -55,15 +55,20 @@ function App() {
   };
 
   const updateGroups = async (user) => {
-    const newGroups = await getQuestionGroups(user.groupIds);
-    console.log("groups: ", newGroups);
+    const responses = await Promise.allSettled([
+      getQuestionGroups(user.groupIds),
+      getInvited(),
+    ]);
 
-    const invited = await getInvited();
+    const newGroups =
+      responses[0].status === "fulfilled" ? responses[0].value : [];
+    const invited =
+      responses[1].status === "fulfilled" ? responses[1].value : [];
+
+    console.log("groups: ", newGroups);
     console.log("invited Answer:", invited);
 
-    const allGroups = [...(newGroups || []), ...(invited || [])].sort(
-      (a, b) => b.id - a.id
-    );
+    const allGroups = [...newGroups, ...invited].sort((a, b) => b.id - a.id);
 
     if (allGroups) {
       setGroupsContext(() => allGroups);
@@ -82,9 +87,6 @@ function App() {
       console.log("user:", user);
 
       if (user) {
-        // const sentNoties = await getSentNotifications();
-        // const receivedNoties = await getReceivedNotifications();
-
         const responses = await Promise.allSettled([
           getSentNotifications(),
           getReceivedNotifications(),
