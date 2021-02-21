@@ -1,9 +1,9 @@
 import { searchUser, newInvite } from "../../requests/requests";
 import { useState, useRef } from "react";
 
-import ButtonPrimary from "../styles/buttons/ButtonPrimary";
-import ButtonSecondary from "../styles/buttons/ButtonSecondary";
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonPrimary from "../styled/buttons/ButtonPrimary";
+import ButtonSecondary from "../styled/buttons/ButtonSecondary";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 
 /**
  * InvitationPopUp component renders a form and searchbar

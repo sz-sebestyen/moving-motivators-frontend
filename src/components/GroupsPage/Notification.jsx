@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../Context/Context";
 import { acceptInvite, declineInvite, getUser } from "../../requests/requests";
 
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
-import ButtonDecline from "../styles/buttons/ButtonDecline";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
+import ButtonDecline from "../styled/buttons/ButtonDecline";
 
 /**
  * Notification component renders a list item that whows an invitation to

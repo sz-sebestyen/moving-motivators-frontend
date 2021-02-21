@@ -6,23 +6,23 @@ import {
   QuestionsContext,
 } from "../Context/Context";
 
-import "./QuestionGroupPage.scss";
+import "./QuestionsPage.scss";
 
 import InvitationPopUp from "./InvitationPopUp";
 import QuestionForm from "./QuestionForm";
 import Question from "./Question";
 
-import ButtonPrimary from "../styles/buttons/ButtonPrimary";
-import ButtonDecline from "../styles/buttons/ButtonDecline";
+import ButtonPrimary from "../styled/buttons/ButtonPrimary";
+import ButtonDecline from "../styled/buttons/ButtonDecline";
 
 /**
- * QuestionGroupPage is responsible for rendering a page where the user
+ * QuestionsPage is responsible for rendering a page where the user
  * can view their questions in a question group. They can also delete
  * the group, and a new question or invite another user to the group.
  *
  * @param {*} props
  */
-const QuestionGroupPage = (props) => {
+const QuestionsPage = (props) => {
   const { id } = useParams();
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
   const [groupsContext, setGroupsContext] = useContext(GroupsContext);
@@ -89,4 +89,4 @@ const QuestionGroupPage = (props) => {
   );
 };
 
-export default QuestionGroupPage;
+export default QuestionsPage;

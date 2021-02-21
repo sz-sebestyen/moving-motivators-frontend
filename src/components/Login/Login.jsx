@@ -5,7 +5,7 @@ import React, { useContext, useRef, useState } from "react";
 import { UserContext, setToken, setUserId } from "../Context/Context";
 import { login } from "../../requests/requests";
 
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 
 /**
  * Login component renders a page where the user can

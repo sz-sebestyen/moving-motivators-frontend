@@ -2,8 +2,8 @@ import React, { useContext, useRef, useState } from "react";
 import { GroupsContext } from "../Context/Context";
 import { createQuestionGroup } from "../../requests/requests";
 
-import ButtonSecondary from "../styles/buttons/ButtonSecondary";
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonSecondary from "../styled/buttons/ButtonSecondary";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 
 /**
  * GroupFrom component renders a form where the user can create a new group.

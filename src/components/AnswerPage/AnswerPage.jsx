@@ -1,15 +1,17 @@
 import { useParams } from "react-router-dom";
 import { useContext, useState, useEffect, useRef } from "react";
+
 import { QuestionsContext, UserContext } from "../Context/Context";
-import MMBoard from "../MMBoard/MMBoard";
 import { setAnswer, closeQuestion, editNote } from "../../requests/requests";
 import useCards from "../../hooks/useCards";
 
-import "./AnswerPage.scss";
+import MMBoard from "../MMBoard/MMBoard";
 
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
-import ButtonDecline from "../styles/buttons/ButtonDecline";
-import Menu from "../styles/Menu";
+import styled from "styled-components";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
+import ButtonDecline from "../styled/buttons/ButtonDecline";
+import Menu from "../styled/Menu";
+import Page from "../styled/Page";
 
 /**
  * AnswerPage component is responsible for redering a page where the user can
@@ -88,7 +90,7 @@ const AnswerPage = (props) => {
   };
 
   return (
-    <main className="answerPage">
+    <Page>
       <Menu>
         {question && question.closed ? (
           <ButtonDecline disabled>Finalized</ButtonDecline>
@@ -115,24 +117,36 @@ const AnswerPage = (props) => {
         )}
       </Menu>
 
-      <h1 className="title">{question ? question.value : ""}</h1>
+      <QuestionTitle>{question ? question.value : ""}</QuestionTitle>
 
       <MMBoard
         starterCards={previousCards || defaultCards}
         setSaveCards={setSaveCards}
       />
 
-      <div className="note">
-        <textarea
-          ref={note}
-          defaultValue={question && question.note}
-          placeholder="save a note"
-          disabled={question && question.closed}
-          style={{ resize: "none" }}
-        ></textarea>
-      </div>
-    </main>
+      <NoteArea
+        ref={note}
+        defaultValue={question && question.note}
+        placeholder="save a note"
+        disabled={question && question.closed}
+        style={{ resize: "none" }}
+      />
+    </Page>
   );
 };
+
+const QuestionTitle = styled.h1`
+  text-align: center;
+  margin-bottom: 40px;
+`;
+
+const NoteArea = styled.textarea`
+  appearance: none;
+  display: block;
+  width: 500px;
+  height: 50px;
+  padding: 5px;
+  margin: 25px auto;
+`;
 
 export default AnswerPage;

@@ -2,8 +2,8 @@ import { createQuestion } from "../../requests/requests";
 import { useContext, useRef, useState } from "react";
 import { QuestionsContext } from "../Context/Context";
 
-import ButtonSecondary from "../styles/buttons/ButtonSecondary";
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonSecondary from "../styled/buttons/ButtonSecondary";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 
 /**
  * QuestionForm component is responsible for rendering a form which the user can

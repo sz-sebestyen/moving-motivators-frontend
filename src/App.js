@@ -5,8 +5,8 @@ import BoardPage from "./components/BoardPage/BoardPage";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Timeline from "./components/Timeline/Timeline";
-import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
-import QuestionGroupPage from "./components/QuestionGroupPage/QuestionGroupPage";
+import GroupsPage from "./components/GroupsPage/GroupsPage";
+import QuestionsPage from "./components/QuestionsPage/QuestionsPage";
 import AnswerPage from "./components/AnswerPage/AnswerPage";
 import Registration from "./components/Registration/Registration";
 
@@ -141,10 +141,10 @@ function App() {
                     <BoardPage />
                   </Route>
                   <Route path="/groups">
-                    <QuestionGroups />
+                    <GroupsPage />
                   </Route>
                   <Route path="/question-group/:id">
-                    <QuestionGroupPage />
+                    <QuestionsPage />
                   </Route>
                   <Route path="/question/:groupId/:questionId">
                     <AnswerPage />

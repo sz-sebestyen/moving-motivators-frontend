@@ -4,7 +4,7 @@ import { UserContext } from "../Context/Context";
 
 import "./Profile.scss";
 
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 
 /**
  * Profile isresponsible for rendering a page where the user can

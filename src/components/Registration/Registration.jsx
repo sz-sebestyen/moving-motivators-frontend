@@ -5,7 +5,7 @@ import { registerUser } from "../../requests/requests";
 
 import "./Registration.scss";
 
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 
 /**
  * Registration component renders a page where the user can register.

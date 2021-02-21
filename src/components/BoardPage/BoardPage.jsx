@@ -6,7 +6,7 @@ import useCards from "../../hooks/useCards";
 
 import "./BoardPage.scss";
 
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 
 /**
  * BoardPage component is responsible for rendering a page where the user can
