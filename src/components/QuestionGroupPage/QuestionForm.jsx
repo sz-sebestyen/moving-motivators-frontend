@@ -53,7 +53,7 @@ const QuestionForm = (props) => {
           required
           autoFocus
           onInput={handleInput}
-          disabled={status}
+          disabled={status === "loading"}
         />
         <ButtonConfirm type="submit" state={status} disabled={status}>
           Create
@@ -61,7 +61,7 @@ const QuestionForm = (props) => {
         <ButtonSecondary
           type="button"
           onClick={() => props.setInCreation(false)}
-          disabled={status}
+          disabled={status === "loading"}
         >
           Cancel
         </ButtonSecondary>

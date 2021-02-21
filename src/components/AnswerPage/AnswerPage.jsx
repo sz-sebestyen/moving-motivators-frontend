@@ -9,6 +9,7 @@ import "./AnswerPage.scss";
 
 import ButtonConfirm from "../styles/buttons/ButtonConfirm";
 import ButtonDecline from "../styles/buttons/ButtonDecline";
+import Menu from "../styles/Menu";
 
 /**
  * AnswerPage component is responsible for redering a page where the user can
@@ -88,7 +89,7 @@ const AnswerPage = (props) => {
 
   return (
     <main className="answerPage">
-      <div className="answerMenu">
+      <Menu>
         {question && question.closed ? (
           <ButtonDecline disabled>Finalized</ButtonDecline>
         ) : (
@@ -112,7 +113,7 @@ const AnswerPage = (props) => {
             </ButtonDecline>
           </>
         )}
-      </div>
+      </Menu>
 
       <h1 className="title">{question ? question.value : ""}</h1>
 
