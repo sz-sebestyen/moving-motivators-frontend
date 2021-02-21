@@ -32,6 +32,7 @@ const AnswerPage = (props) => {
       questionsContext.find((que) => que.id.toString() === questionId)
     );
   }, [questionsContext]);
+  useEffect(() => console.log("question: ", question), [question]);
 
   const note = useRef(null);
   const [saveCards, setSaveCards] = useState();
@@ -41,8 +42,6 @@ const AnswerPage = (props) => {
 
   const [saveStatus, setSaveStatus] = useState();
   const [finalizeStatus, setFinalizeStatus] = useState();
-
-  useEffect(() => console.log("question: ", question));
 
   const Save = async () => {
     if (!question) return;
