@@ -1,15 +1,6 @@
-html,
-body,
-#root,
-.App {
-  min-height: 100vh;
-}
+import { css } from "styled-components";
 
-.pages {
-  //min-height: calc(100% - 42px);
-}
-
-.paper {
+export const paper = css`
   color: rgba(0, 0, 0, 0.87);
   background-color: #fff;
   border-radius: 4px;
@@ -21,21 +12,4 @@ body,
     box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
       0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
   }
-
-  &.notify {
-    border: 2px solid #f0ad4e;
-  }
-}
-
-input {
-  height: 2em;
-  padding: 0 3px;
-}
-
-.form {
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
-    0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
-}
+`;

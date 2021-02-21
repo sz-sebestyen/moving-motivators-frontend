@@ -4,9 +4,9 @@ import { UserContext } from "../Context/Context";
 import { saveDefault } from "../../requests/requests";
 import useCards from "../../hooks/useCards";
 
-import "./BoardPage.scss";
-
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
+import Menu from "../styled/Menu";
+import Page from "../styled/Page";
 
 /**
  * BoardPage component is responsible for rendering a page where the user can
@@ -42,8 +42,8 @@ const BoardPage = (props) => {
   };
 
   return (
-    <main className="boardPage">
-      <div className="boardMenu">
+    <Page>
+      <Menu>
         <ButtonConfirm
           title={"Save as default"}
           type="button"
@@ -53,9 +53,9 @@ const BoardPage = (props) => {
         >
           Save
         </ButtonConfirm>
-      </div>
+      </Menu>
       <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
-    </main>
+    </Page>
   );
 };
 

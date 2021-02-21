@@ -2,9 +2,8 @@ import React, { useContext, useRef, useState } from "react";
 import { editUser } from "../../requests/requests";
 import { UserContext } from "../Context/Context";
 
-import "./Profile.scss";
-
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
+import Form from "../styled/Form/Form";
 
 /**
  * Profile isresponsible for rendering a page where the user can
@@ -45,71 +44,70 @@ const Profile = (props) => {
   };
 
   return (
-    <div className="profile">
-      <form className="profileForm form" onSubmit={handleSubmit}>
-        <div className="firstName formField">
-          <label htmlFor="FirstName">First name</label>
-          <input
-            ref={firstName}
-            type="text"
-            name="FirstName"
-            id="FirstName"
-            required
-            onInput={handleInput}
-            disabled={status}
-          />
-        </div>
+    <Form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="FirstName">First name</label>
+        <input
+          ref={firstName}
+          type="text"
+          name="FirstName"
+          id="FirstName"
+          required
+          onInput={handleInput}
+          disabled={status}
+        />
+      </div>
 
-        <div className="lastName formField">
-          <label htmlFor="LastName">Last name</label>
-          <input
-            ref={lastName}
-            type="text"
-            name="LastName"
-            id="LastName"
-            required
-            onInput={handleInput}
-            disabled={status}
-          />
-        </div>
+      <div>
+        <label htmlFor="LastName">Last name</label>
+        <input
+          ref={lastName}
+          type="text"
+          name="LastName"
+          id="LastName"
+          required
+          onInput={handleInput}
+          disabled={status}
+        />
+      </div>
 
-        <div className="company formField">
-          <label htmlFor="Company">Company</label>
-          <input
-            ref={company}
-            type="text"
-            name="Company"
-            id="Company"
-            required
-            onInput={handleInput}
-            disabled={status}
-          />
-        </div>
-        <div className="position formField">
-          <label htmlFor="Position">Position</label>
-          <input
-            ref={position}
-            type="text"
-            name="Position"
-            id="Position"
-            required
-            onInput={handleInput}
-            disabled={status}
-          />
-        </div>
+      <div>
+        <label htmlFor="Company">Company</label>
+        <input
+          ref={company}
+          type="text"
+          name="Company"
+          id="Company"
+          required
+          onInput={handleInput}
+          disabled={status}
+        />
+      </div>
 
-        <div className="submit formField">
-          <ButtonConfirm
-            type="submit"
-            title="Save changes"
-            state={status}
-            disabled={status}
-          >
-            Save
-          </ButtonConfirm>
-        </div>
-      </form>
-    </div>
+      <div>
+        <label htmlFor="Position">Position</label>
+        <input
+          ref={position}
+          type="text"
+          name="Position"
+          id="Position"
+          required
+          onInput={handleInput}
+          disabled={status}
+        />
+      </div>
+
+      <div>
+        <ButtonConfirm
+          type="submit"
+          title="Save changes"
+          state={status}
+          disabled={status}
+        >
+          Save
+        </ButtonConfirm>
+      </div>
+    </Form>
   );
 };
 

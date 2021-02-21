@@ -2,8 +2,10 @@ import { createQuestion } from "../../requests/requests";
 import { useContext, useRef, useState } from "react";
 import { QuestionsContext } from "../Context/Context";
 
-import ButtonSecondary from "../styles/buttons/ButtonSecondary";
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonSecondary from "../styled/buttons/ButtonSecondary";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
+import PopUpWrap from "../styled/PopUpWrap";
+import PopUpForm from "../styled/PopUpForm";
 
 /**
  * QuestionForm component is responsible for rendering a form which the user can
@@ -42,8 +44,8 @@ const QuestionForm = (props) => {
   };
 
   return (
-    <div className="questionFormWrap">
-      <form className="questionForm form" onSubmit={handleSubmit}>
+    <PopUpWrap>
+      <PopUpForm onSubmit={handleSubmit}>
         <input
           ref={input}
           type="text"
@@ -53,7 +55,7 @@ const QuestionForm = (props) => {
           required
           autoFocus
           onInput={handleInput}
-          disabled={status}
+          disabled={status === "loading"}
         />
         <ButtonConfirm type="submit" state={status} disabled={status}>
           Create
@@ -61,12 +63,12 @@ const QuestionForm = (props) => {
         <ButtonSecondary
           type="button"
           onClick={() => props.setInCreation(false)}
-          disabled={status}
+          disabled={status === "loading"}
         >
           Cancel
         </ButtonSecondary>
-      </form>
-    </div>
+      </PopUpForm>
+    </PopUpWrap>
   );
 };
 

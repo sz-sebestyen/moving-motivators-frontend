@@ -5,8 +5,8 @@ import BoardPage from "./components/BoardPage/BoardPage";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Timeline from "./components/Timeline/Timeline";
-import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
-import QuestionGroupPage from "./components/QuestionGroupPage/QuestionGroupPage";
+import GroupsPage from "./components/GroupsPage/GroupsPage";
+import QuestionsPage from "./components/QuestionsPage/QuestionsPage";
 import AnswerPage from "./components/AnswerPage/AnswerPage";
 import Registration from "./components/Registration/Registration";
 
@@ -34,8 +34,6 @@ import {
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
-
-import "./App.scss";
 
 /**
  * App component is responsible for rendering the navigation bar and routing
@@ -123,44 +121,37 @@ function App() {
           value={[questionsContext, setQuestionsContext]}
         >
           <Router>
-            <div
-              className="App"
-              onDragStart={(event) => event.preventDefault()}
-            >
-              <Navigation />
+            <Navigation />
 
-              <div className="pages">
-                <Switch>
-                  <Route path="/login">
-                    <Login />
-                  </Route>
-                  <Route path="/register">
-                    <Registration />
-                  </Route>
-                  <Route path="/board">
-                    <BoardPage />
-                  </Route>
-                  <Route path="/groups">
-                    <QuestionGroups />
-                  </Route>
-                  <Route path="/question-group/:id">
-                    <QuestionGroupPage />
-                  </Route>
-                  <Route path="/question/:groupId/:questionId">
-                    <AnswerPage />
-                  </Route>
-                  <Route path="/profile">
-                    <Profile />
-                  </Route>
-                  <Route path="/timeline">
-                    <Timeline />
-                  </Route>
-                  <Route path="/">
-                    <Home />
-                  </Route>
-                </Switch>
-              </div>
-            </div>
+            <Switch>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/register">
+                <Registration />
+              </Route>
+              <Route path="/board">
+                <BoardPage />
+              </Route>
+              <Route path="/groups">
+                <GroupsPage />
+              </Route>
+              <Route path="/question-group/:id">
+                <QuestionsPage />
+              </Route>
+              <Route path="/question/:groupId/:questionId">
+                <AnswerPage />
+              </Route>
+              <Route path="/profile">
+                <Profile />
+              </Route>
+              <Route path="/timeline">
+                <Timeline />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
           </Router>
         </QuestionsContext.Provider>
       </GroupsContext.Provider>

@@ -1,4 +1,3 @@
-import "./MMBoard.scss";
 import { useState, useRef, useEffect } from "react";
 import {
   NUMBER_OF_CARDS,
@@ -8,6 +7,8 @@ import {
   numToStringValue,
 } from "./CardLib";
 import MMCard, { CARD_SIZE, TILE_SIZE } from "./MMCard";
+
+import styled from "styled-components";
 
 /**
  * MMBoard component is responsible for rendering a board where the user can
@@ -130,15 +131,14 @@ const MMBoard = (props) => {
   };
 
   return (
-    <div className="mmbOuter">
-      <div className="direction">
+    <MmbWrap>
+      <Directions>
         <div className="left">Least important</div>
         <div className="right">Most important</div>
-      </div>
+      </Directions>
 
-      <div
+      <Mmb
         ref={mmb}
-        className="mmb"
         onDragOver={handleDragOver}
         onDragStart={(event) => event.preventDefault()}
       >
@@ -155,9 +155,41 @@ const MMBoard = (props) => {
                 isDragged={dragTarget === cards[type].index}
               />
             ))}
-      </div>
-    </div>
+      </Mmb>
+    </MmbWrap>
   );
 };
+
+const MmbWrap = styled.div`
+  width: 1200px;
+  margin: 0 auto;
+`;
+
+const Directions = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: stretch;
+  font-size: 1.4em;
+  padding-bottom: 10px;
+
+  .left {
+    flex-basis: 50%;
+    text-align: left;
+  }
+
+  .right {
+    flex-basis: 50%;
+    text-align: right;
+  }
+`;
+
+const Mmb = styled.div`
+  box-sizing: content-box;
+  position: relative;
+  width: 100%;
+  height: 360px;
+  border-top: 5px solid green;
+  border-bottom: 5px solid red;
+`;
 
 export default MMBoard;

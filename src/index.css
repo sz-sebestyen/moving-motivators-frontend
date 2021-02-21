@@ -23,3 +23,8 @@ h6 {
   font-weight: 400;
   cursor: default;
 }
+
+input {
+  height: 2em;
+  padding: 0 3px;
+}

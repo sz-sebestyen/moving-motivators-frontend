@@ -1,11 +1,11 @@
-import style from "./Login.module.scss";
 import { Redirect } from "react-router-dom";
 import React, { useContext, useRef, useState } from "react";
 
 import { UserContext, setToken, setUserId } from "../Context/Context";
 import { login } from "../../requests/requests";
 
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
+import Form from "../styled/Form/Form";
 
 /**
  * Login component renders a page where the user can
@@ -62,8 +62,8 @@ const Login = (props) => {
   }
 
   return (
-    <form className={style.loginForm + " form"} onSubmit={handleSave}>
-      <div className={style.email}>
+    <Form onSubmit={handleSave}>
+      <div>
         <label htmlFor="loginFormEmail">Email</label>
         <input
           ref={emailInput}
@@ -76,7 +76,7 @@ const Login = (props) => {
         />
       </div>
 
-      <div className={style.password}>
+      <div>
         <label htmlFor="loginFormPassword">Password</label>
         <input
           ref={passwordInput}
@@ -89,12 +89,12 @@ const Login = (props) => {
         />
       </div>
 
-      <div className={style.submit}>
+      <div>
         <ButtonConfirm type="submit" state={status} disabled={status}>
           Login
         </ButtonConfirm>
       </div>
-    </form>
+    </Form>
   );
 };
 

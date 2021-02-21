@@ -1,21 +1,22 @@
 import React, { useContext, useState, useEffect } from "react";
 import { GroupsContext, UserContext } from "../Context/Context";
 
-import "./QuestionGroups.scss";
-
 import GroupForm from "./GroupForm";
 import Notification from "./Notification";
 import Group from "./Group";
 
-import ButtonPrimary from "../styles/buttons/ButtonPrimary";
+import styled from "styled-components";
+import ButtonPrimary from "../styled/buttons/ButtonPrimary";
+import Menu from "../styled/Menu";
+import Page from "../styled/Page";
 
 /**
- * QuestionGroups component renders the groups which the user is a member of.
+ * GroupsPage component renders the groups which the user is a member of.
  * TODO: The groups are separated into different sections by owner id.
  *
  * @param {*} props
  */
-const QuestionGroups = (props) => {
+const GroupsPage = (props) => {
   const [groupsContext, setGroupsContext] = useContext(GroupsContext);
   const [userContext, setUserContext] = useContext(UserContext);
   const [inCreation, setInCreation] = useState(false);
@@ -26,50 +27,62 @@ const QuestionGroups = (props) => {
   }, [groupsContext]);
 
   return (
-    <main className="groupsPage">
+    <Page>
       {inCreation && <GroupForm setInCreation={setInCreation} />}
 
-      <div className="questionGroupMenu">
+      <Menu>
         <ButtonPrimary onClick={() => setInCreation(true)}>
           Add group
         </ButtonPrimary>
-      </div>
+      </Menu>
 
       {userContext.received.length !== 0 && (
         <section className="notifications">
-          <h2 className="notificationsTitle">Notifications</h2>
-          <ul>
+          <GroupTitle>Notifications</GroupTitle>
+          <GroupList>
             {userContext.received.map((notif) => (
               <Notification key={notif.id} data={notif} />
             ))}
-          </ul>
+          </GroupList>
         </section>
       )}
 
       <section className="ownGroups">
-        <h2 className="ownGroupsTitle">My own groups</h2>
-        <ul>
+        <GroupTitle>My own groups</GroupTitle>
+        <GroupList>
           {groups
             .filter((group) => group.ownerId === userContext.user.id)
             .map((group) => (
               <Group key={group.id} group={group}></Group>
             ))}
-        </ul>
+        </GroupList>
       </section>
 
       <section className="otherGroups">
-        <h2 className="otherGroupsTitle">Other groups</h2>
-        <ul className="allGroups">
+        <GroupTitle>Other groups</GroupTitle>
+        <GroupList>
           {/* TODO: format groups into lists by ownerIds */}
           {groups
             .filter((group) => group.ownerId !== userContext.user.id)
             .map((group) => (
               <Group key={group.id} group={group}></Group>
             ))}
-        </ul>
+        </GroupList>
       </section>
-    </main>
+    </Page>
   );
 };
 
-export default QuestionGroups;
+const GroupTitle = styled.h2`
+  margin-top: 30px;
+  margin-bottom: 20px;
+`;
+
+const GroupList = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+`;
+
+export default GroupsPage;

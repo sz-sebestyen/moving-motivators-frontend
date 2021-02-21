@@ -6,23 +6,24 @@ import {
   QuestionsContext,
 } from "../Context/Context";
 
-import "./QuestionGroupPage.scss";
-
 import InvitationPopUp from "./InvitationPopUp";
 import QuestionForm from "./QuestionForm";
 import Question from "./Question";
 
-import ButtonPrimary from "../styles/buttons/ButtonPrimary";
-import ButtonDecline from "../styles/buttons/ButtonDecline";
+import styled from "styled-components";
+import ButtonPrimary from "../styled/buttons/ButtonPrimary";
+import ButtonDecline from "../styled/buttons/ButtonDecline";
+import Menu from "../styled/Menu";
+import Page from "../styled/Page";
 
 /**
- * QuestionGroupPage is responsible for rendering a page where the user
+ * QuestionsPage is responsible for rendering a page where the user
  * can view their questions in a question group. They can also delete
  * the group, and a new question or invite another user to the group.
  *
  * @param {*} props
  */
-const QuestionGroupPage = (props) => {
+const QuestionsPage = (props) => {
   const { id } = useParams();
   const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
   const [groupsContext, setGroupsContext] = useContext(GroupsContext);
@@ -44,7 +45,7 @@ const QuestionGroupPage = (props) => {
   );
 
   return (
-    <main className="questionsPage">
+    <Page>
       {inCreation && (
         <QuestionForm setInCreation={setInCreation} groupId={id} />
       )}
@@ -57,7 +58,7 @@ const QuestionGroupPage = (props) => {
 
       {/* only visible for owner */}
       {currentGroup && currentGroup.ownerId === userContext.user.id && (
-        <div className="questionsMenu">
+        <Menu>
           <ButtonPrimary type="button" onClick={() => setInCreation(true)}>
             Add question
           </ButtonPrimary>
@@ -71,12 +72,12 @@ const QuestionGroupPage = (props) => {
           <ButtonDecline title="Delete this group" type="button">
             Delete group
           </ButtonDecline>
-        </div>
+        </Menu>
       )}
 
-      <h1 className="groupTitle">{currentGroup && currentGroup.value}</h1>
+      <GroupTitle>{currentGroup && currentGroup.value}</GroupTitle>
 
-      <ul className="allQuestions">
+      <QuestionList>
         {questions.map((question) => (
           <Question
             key={question.id}
@@ -84,9 +85,21 @@ const QuestionGroupPage = (props) => {
             groupId={id}
           ></Question>
         ))}
-      </ul>
-    </main>
+      </QuestionList>
+    </Page>
   );
 };
 
-export default QuestionGroupPage;
+const GroupTitle = styled.h1`
+  margin-top: 30px;
+  margin-bottom: 20px;
+`;
+
+const QuestionList = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+`;
+
+export default QuestionsPage;

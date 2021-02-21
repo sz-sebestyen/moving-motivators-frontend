@@ -3,9 +3,9 @@ import { UserContext } from "../Context/Context";
 import { Redirect } from "react-router-dom";
 import { registerUser } from "../../requests/requests";
 
-import "./Registration.scss";
+import Form from "../styled/Form/Form";
 
-import ButtonConfirm from "../styles/buttons/ButtonConfirm";
+import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 
 /**
  * Registration component renders a page where the user can register.
@@ -63,8 +63,8 @@ const Registration = (props) => {
   }
 
   return (
-    <form className="registrationForm form" onSubmit={handleSubmit}>
-      <div className="firstName formField">
+    <Form onSubmit={handleSubmit}>
+      <div>
         <label htmlFor="FirstName">First name</label>
         <input
           ref={firstName}
@@ -77,7 +77,7 @@ const Registration = (props) => {
         />
       </div>
 
-      <div className="lastName formField">
+      <div>
         <label htmlFor="LastName">Last name</label>
         <input
           ref={lastName}
@@ -90,7 +90,7 @@ const Registration = (props) => {
         />
       </div>
 
-      <div className="email formField">
+      <div>
         <label htmlFor="Email">Email</label>
         <input
           ref={email}
@@ -103,7 +103,7 @@ const Registration = (props) => {
         />
       </div>
 
-      <div className="company formField">
+      <div>
         <label htmlFor="Company">Company</label>
         <input
           ref={company}
@@ -115,7 +115,7 @@ const Registration = (props) => {
           disabled={status}
         />
       </div>
-      <div className="position formField">
+      <div>
         <label htmlFor="Position">Position</label>
         <input
           ref={position}
@@ -128,7 +128,7 @@ const Registration = (props) => {
         />
       </div>
 
-      <div className="password formField">
+      <div>
         <label htmlFor="Password">Password</label>
         <input
           ref={password}
@@ -141,12 +141,12 @@ const Registration = (props) => {
         />
       </div>
 
-      <div className="submit formField">
+      <div>
         <ButtonConfirm type="submit" state={status} disabled={status}>
           Register
         </ButtonConfirm>
       </div>
-    </form>
+    </Form>
   );
 };
 
