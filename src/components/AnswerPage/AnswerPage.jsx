@@ -13,6 +13,8 @@ import ButtonDecline from "../styled/buttons/ButtonDecline";
 import Menu from "../styled/Menu";
 import Page from "../styled/Page";
 
+import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
+
 /**
  * AnswerPage component is responsible for redering a page where the user can
  * arrange their cards and set a note to a question in a question group.
@@ -40,13 +42,11 @@ const AnswerPage = (props) => {
   const defaultCards = useCards(userContext.user.defaultCardListId);
   const previousCards = useCards(question && question.answerId);
 
-  const [saveStatus, setSaveStatus] = useState();
+  const [isSaved, setIsSaved] = useState(false);
   const [finalizeStatus, setFinalizeStatus] = useState();
 
   const Save = async () => {
     if (!question) return;
-
-    setSaveStatus("loading");
 
     let setAnsAnswer;
     let noteAnswer;
@@ -63,16 +63,13 @@ const AnswerPage = (props) => {
     }
 
     if (setAnsAnswer || noteAnswer) {
-      setSaveStatus("done");
+      setIsSaved(true);
+      setTimeout(() => {
+        setIsSaved(false);
+      }, 1500);
       setUserContext((prev) => ({ ...prev, dataLoaded: false }));
-    } else {
-      setSaveStatus();
     }
   };
-
-  useEffect(() => {
-    setSaveStatus();
-  }, [saveCards]);
 
   /**
    * Finalize the answer to the question. It will no longer be editable.
@@ -92,26 +89,27 @@ const AnswerPage = (props) => {
     <Page>
       <Menu>
         {question && question.closed ? (
-          <ButtonDecline disabled>Finalized</ButtonDecline>
+          <ButtonWithResponse variant="danger" disabled>
+            Finalized
+          </ButtonWithResponse>
         ) : (
           <>
-            <ButtonConfirm
-              type="button"
+            <ButtonWithResponse
+              variant="confirm"
               onClick={Save}
-              disabled={saveStatus || finalizeStatus}
-              state={saveStatus}
+              disabled={finalizeStatus}
+              hasSucceeded={isSaved}
             >
               Save
-            </ButtonConfirm>
+            </ButtonWithResponse>
 
-            <ButtonDecline
-              type="button"
+            <ButtonWithResponse
+              variant="danger"
               onClick={Close}
-              disabled={finalizeStatus || finalizeStatus}
-              state={finalizeStatus}
+              disabled={finalizeStatus}
             >
               Finalize
-            </ButtonDecline>
+            </ButtonWithResponse>
           </>
         )}
       </Menu>
