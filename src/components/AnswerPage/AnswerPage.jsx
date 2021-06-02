@@ -21,7 +21,8 @@ import Menu from "./Menu";
 const AnswerPage = (props) => {
   const { /* groupId, */ questionId } = useParams();
   const [userContext, setUserContext] = useContext(UserContext);
-  const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
+  const [questionsContext /*, setQuestionsContext */] =
+    useContext(QuestionsContext);
 
   const [question, setQuestion] = useState(
     questionsContext.find((que) => que.id.toString() === questionId)
@@ -30,8 +31,8 @@ const AnswerPage = (props) => {
     setQuestion(
       questionsContext.find((que) => que.id.toString() === questionId)
     );
-  }, [questionsContext]);
-  useEffect(() => console.log("question: ", question), [question]);
+  }, [questionsContext, questionId]);
+  // useEffect(() => console.log("question: ", question), [question]);
 
   const note = useRef(null);
   const [saveCards, setSaveCards] = useState();
@@ -49,14 +50,14 @@ const AnswerPage = (props) => {
     let noteAnswer;
 
     if (saveCards) {
-      console.log("cards to be saved:", saveCards);
+      // console.log("cards to be saved:", saveCards);
       setAnsAnswer = await setAnswer(question.id, saveCards);
-      console.log("setAnswer answer:", setAnsAnswer);
+      // console.log("setAnswer answer:", setAnsAnswer);
     }
 
     if (note.current.value !== "") {
       noteAnswer = await editNote(question.id, note.current.value);
-      console.log("noteAnswer:", noteAnswer);
+      // console.log("noteAnswer:", noteAnswer);
     }
 
     if (setAnsAnswer || noteAnswer) {
@@ -74,8 +75,8 @@ const AnswerPage = (props) => {
   const close = async () => {
     if (!question) return;
     setFinalizeStatus("loading");
-    const closeAnswre = await closeQuestion(question.id);
-    console.log("closeAnswer:", closeAnswre);
+    /* const closeAnswre = */ await closeQuestion(question.id);
+    // console.log("closeAnswer:", closeAnswre);
     setFinalizeStatus();
 
     // TODO: set question closed
