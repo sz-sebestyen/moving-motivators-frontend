@@ -8,12 +8,9 @@ import useCards from "../../hooks/useCards";
 import MMBoard from "../MMBoard/MMBoard";
 
 import styled from "styled-components";
-import ButtonConfirm from "../styled/buttons/ButtonConfirm";
-import ButtonDecline from "../styled/buttons/ButtonDecline";
-import Menu from "../styled/Menu";
 import Page from "../styled/Page";
 
-import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
+import Menu from "./Menu";
 
 /**
  * AnswerPage component is responsible for redering a page where the user can
@@ -45,7 +42,7 @@ const AnswerPage = (props) => {
   const [isSaved, setIsSaved] = useState(false);
   const [finalizeStatus, setFinalizeStatus] = useState();
 
-  const Save = async () => {
+  const save = async () => {
     if (!question) return;
 
     let setAnsAnswer;
@@ -74,7 +71,7 @@ const AnswerPage = (props) => {
   /**
    * Finalize the answer to the question. It will no longer be editable.
    */
-  const Close = async () => {
+  const close = async () => {
     if (!question) return;
     setFinalizeStatus("loading");
     const closeAnswre = await closeQuestion(question.id);
@@ -87,32 +84,10 @@ const AnswerPage = (props) => {
 
   return (
     <Page>
-      <Menu>
-        {question && question.closed ? (
-          <ButtonWithResponse variant="danger" disabled>
-            Finalized
-          </ButtonWithResponse>
-        ) : (
-          <>
-            <ButtonWithResponse
-              variant="confirm"
-              onClick={Save}
-              disabled={finalizeStatus}
-              hasSucceeded={isSaved}
-            >
-              Save
-            </ButtonWithResponse>
-
-            <ButtonWithResponse
-              variant="danger"
-              onClick={Close}
-              disabled={finalizeStatus}
-            >
-              Finalize
-            </ButtonWithResponse>
-          </>
-        )}
-      </Menu>
+      <Menu
+        isClosedAnswer={question && question.closed}
+        {...{ save, close, isSaved, finalizeStatus }}
+      />
 
       <QuestionTitle>{question ? question.value : ""}</QuestionTitle>
 
