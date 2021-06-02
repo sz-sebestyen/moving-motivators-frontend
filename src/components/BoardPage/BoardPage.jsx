@@ -4,9 +4,9 @@ import { UserContext } from "../Context/Context";
 import { saveDefault } from "../../requests/requests";
 import useCards from "../../hooks/useCards";
 
-import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 import Menu from "../styled/Menu";
 import Page from "../styled/Page";
+import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
 
 /**
  * BoardPage component is responsible for rendering a page where the user can
@@ -20,23 +20,20 @@ const BoardPage = (props) => {
   const starterCards = useCards(userContext.user.defaultCardListId);
 
   const [saveCards, setSaveCards] = useState();
-  const [status, setStatus] = useState();
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    setStatus();
+    saveCards && setIsSaved(false);
   }, [saveCards]);
 
-  const Save = async () => {
+  const save = async () => {
     if (saveCards) {
-      setStatus("loading");
-      console.log("cards to be saved:", saveCards);
+      // console.log("cards to be saved:", saveCards);
       const data = await saveDefault(saveCards);
-      console.log("saveDefaultCards answer:", data);
+      // console.log("saveDefaultCards answer:", data);
       if (data) {
-        setStatus("done");
+        setIsSaved(true);
         setUserContext((prev) => ({ ...prev, dataLoaded: false }));
-      } else {
-        setStatus();
       }
     }
   };
@@ -44,15 +41,14 @@ const BoardPage = (props) => {
   return (
     <Page>
       <Menu>
-        <ButtonConfirm
+        <ButtonWithResponse
+          variant="confirm"
           title={"Save as default"}
-          type="button"
-          onClick={Save}
-          state={status}
-          disabled={status}
+          onClick={save}
+          hasSucceeded={isSaved}
         >
           Save
-        </ButtonConfirm>
+        </ButtonWithResponse>
       </Menu>
       <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
     </Page>
