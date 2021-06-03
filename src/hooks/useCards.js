@@ -17,7 +17,7 @@ const useCards = (cardListId) => {
 
   useEffect(() => {
     loadCardList();
-  }, [cardListId]);
+  }, [cardListId]); // eslint-disable-line
 
   return defaultCards;
 };

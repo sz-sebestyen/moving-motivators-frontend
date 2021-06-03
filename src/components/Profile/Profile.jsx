@@ -12,7 +12,7 @@ import Form from "../styled/Form/Form";
  * @param {*} props
  */
 const Profile = (props) => {
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [, /* userContext */ setUserContext] = useContext(UserContext);
   const firstName = useRef(null);
   const lastName = useRef(null);
   const company = useRef(null);

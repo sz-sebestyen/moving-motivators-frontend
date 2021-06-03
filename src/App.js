@@ -121,7 +121,7 @@ function App() {
     if (!userContext.dataLoaded) {
       updateUser();
     }
-  }, [userContext]);
+  }, [userContext]); // eslint-disable-line
 
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>

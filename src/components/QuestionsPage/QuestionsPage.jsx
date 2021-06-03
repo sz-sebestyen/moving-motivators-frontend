@@ -25,9 +25,10 @@ import Page from "../styled/Page";
  */
 const QuestionsPage = (props) => {
   const { id } = useParams();
-  const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
-  const [groupsContext, setGroupsContext] = useContext(GroupsContext);
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [questionsContext /* , setQuestionsContext */] =
+    useContext(QuestionsContext);
+  const [groupsContext /* , setGroupsContext */] = useContext(GroupsContext);
+  const [userContext /* , setUserContext */] = useContext(UserContext);
   const [inCreation, setInCreation] = useState(false);
   const [inInvitation, setInInvitation] = useState(false);
   const [questions, setQuestions] = useState([]);

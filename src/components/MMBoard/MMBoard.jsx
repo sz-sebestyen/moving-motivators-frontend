@@ -114,7 +114,7 @@ const MMBoard = (props) => {
 
     console.log("cards updated: ", saveList);
     setSaveCards(saveList);
-  }, [cards]);
+  }, [cards]); // eslint-disable-line
 
   const handleDragOver = (event) => {
     event.preventDefault();

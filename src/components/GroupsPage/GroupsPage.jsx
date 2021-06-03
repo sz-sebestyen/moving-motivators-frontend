@@ -17,8 +17,8 @@ import Page from "../styled/Page";
  * @param {*} props
  */
 const GroupsPage = (props) => {
-  const [groupsContext, setGroupsContext] = useContext(GroupsContext);
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [groupsContext /* , setGroupsContext */] = useContext(GroupsContext);
+  const [userContext /* , setUserContext */] = useContext(UserContext);
   const [inCreation, setInCreation] = useState(false);
   const [groups, setGroups] = useState([]);
 

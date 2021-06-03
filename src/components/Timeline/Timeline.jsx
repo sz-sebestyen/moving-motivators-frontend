@@ -1,4 +1,4 @@
-import { useState, useRef, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../Context/Context";
 
 import { getCardLists } from "../../requests/requests";
@@ -11,7 +11,7 @@ import { getCardLists } from "../../requests/requests";
  * @param {*} props
  */
 const Timeline = (props) => {
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [userContext /* , setUserContext */] = useContext(UserContext);
 
   const [olderLists, setOlderLists] = useState();
 
@@ -27,7 +27,7 @@ const Timeline = (props) => {
     if (userContext.user.olderCardListsIds) {
       loadLists();
     }
-  }, []);
+  }, []); // eslint-disable-line
 
   return (
     <div className="timeline">

@@ -15,7 +15,7 @@ import ButtonConfirm from "../styled/buttons/ButtonConfirm";
  * @param {*} props
  */
 const Registration = (props) => {
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [userContext /* , setUserContext */] = useContext(UserContext);
 
   const [toLogin, setToLogin] = useState(false);
 

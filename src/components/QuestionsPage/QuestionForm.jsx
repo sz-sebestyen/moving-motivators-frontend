@@ -14,7 +14,8 @@ import PopUpForm from "../styled/PopUpForm";
  * @param {*} props
  */
 const QuestionForm = (props) => {
-  const [questionsContext, setQuestionsContext] = useContext(QuestionsContext);
+  const [, /* questionsContext */ setQuestionsContext] =
+    useContext(QuestionsContext);
   const input = useRef(null);
 
   const [status, setStatus] = useState();
