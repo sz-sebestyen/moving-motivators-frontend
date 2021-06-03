@@ -40,7 +40,6 @@ const AnswerPage = (props) => {
   const defaultCards = useCards(userContext.user.defaultCardListId);
   const previousCards = useCards(question && question.answerId);
 
-  const [isSaved, setIsSaved] = useState(false);
   const [finalizeStatus, setFinalizeStatus] = useState();
 
   const save = async () => {
@@ -61,10 +60,6 @@ const AnswerPage = (props) => {
     }
 
     if (setAnsAnswer || noteAnswer) {
-      setIsSaved(true);
-      setTimeout(() => {
-        setIsSaved(false);
-      }, 1500);
       setUserContext((prev) => ({ ...prev, dataLoaded: false }));
     }
   };
@@ -87,7 +82,7 @@ const AnswerPage = (props) => {
     <Page>
       <Menu
         isClosedAnswer={question && question.closed}
-        {...{ save, close, isSaved, finalizeStatus }}
+        {...{ save, close, finalizeStatus }}
       />
 
       <QuestionTitle>{question ? question.value : ""}</QuestionTitle>

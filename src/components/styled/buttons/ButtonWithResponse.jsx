@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { button } from "./button";
-import ButtonWithAsyncAction from "./ButtonWithAsyncAction";
+import Loading from "./Loading";
+import Success from "./Success";
 
 const StyledDangerButton = styled.button`
   ${button}
@@ -51,10 +53,43 @@ const buttonTypes = {
   confirm: StyledConfirmButton,
 };
 
-const ButtonWithResponse = ({ variant, ...rest }) => {
-  const WrappedButton = ButtonWithAsyncAction(buttonTypes[variant]);
+const ButtonWithResponse = ({
+  variant,
+  children,
+  onClick: asyncAction,
+  disabled = false,
+  ...rest
+}) => {
+  const ButtonType = buttonTypes[variant];
 
-  return <WrappedButton {...rest} />;
+  const [isBusy, setIsBusy] = useState(false);
+  const [hasSucceeded, setHasSucceeded] = useState(false);
+
+  const handleClick = async (event) => {
+    setIsBusy(true);
+    await asyncAction(event);
+    setIsBusy(false);
+
+    setHasSucceeded(true);
+    setTimeout(() => {
+      setHasSucceeded(false);
+    }, 1500);
+  };
+
+  const shouldDisable = isBusy || disabled;
+
+  return (
+    <ButtonType
+      type="button"
+      onClick={handleClick}
+      disabled={shouldDisable}
+      {...rest}
+    >
+      {children}
+      {hasSucceeded && <Success />}
+      {isBusy && <Loading />}
+    </ButtonType>
+  );
 };
 
 export default ButtonWithResponse;

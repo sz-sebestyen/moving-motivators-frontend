@@ -1,5 +1,5 @@
 import MMBoard from "../MMBoard/MMBoard";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { UserContext } from "../Context/Context";
 import { saveDefault } from "../../requests/requests";
 import useCards from "../../hooks/useCards";
@@ -20,11 +20,6 @@ const BoardPage = (props) => {
   const starterCards = useCards(userContext.user.defaultCardListId);
 
   const [saveCards, setSaveCards] = useState();
-  const [isSaved, setIsSaved] = useState(false);
-
-  useEffect(() => {
-    saveCards && setIsSaved(false);
-  }, [saveCards]);
 
   const save = async () => {
     if (saveCards) {
@@ -32,7 +27,6 @@ const BoardPage = (props) => {
       const shouldUpdate = await saveDefault(saveCards);
       // console.log("saveDefaultCards answer:", shouldUpdate);
       if (shouldUpdate) {
-        setIsSaved(true);
         setUserContext((prev) => ({ ...prev, dataLoaded: false }));
       }
     }
@@ -45,7 +39,6 @@ const BoardPage = (props) => {
           variant="confirm"
           title={"Save as default"}
           onClick={save}
-          hasSucceeded={isSaved}
         >
           Save
         </ButtonWithResponse>

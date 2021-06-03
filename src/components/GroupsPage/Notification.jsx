@@ -18,9 +18,6 @@ const Notification = (props) => {
 
   const [origin, setOrigin] = useState();
 
-  const [isDeclined, setIsDeclined] = useState(false);
-  const [isAccepted, setIsAccepted] = useState(false);
-
   // console.log("showing notification", props.data);
 
   /**
@@ -45,7 +42,6 @@ const Notification = (props) => {
     const acceptAns = await acceptInvite(props.data);
     // console.log("acceptAns:", acceptAns);
     if (acceptAns) {
-      setIsAccepted(true);
       setUserContext((prev) => ({ ...prev, dataLoaded: false }));
     }
   };
@@ -54,7 +50,6 @@ const Notification = (props) => {
     const declineAnswer = await declineInvite(props.data);
     // console.log("declineAnswer:", declineAnswer);
     if (declineAnswer) {
-      setIsDeclined(true);
       setUserContext((prev) => ({ ...prev, dataLoaded: false }));
     }
   };
@@ -71,7 +66,6 @@ const Notification = (props) => {
         variant="confirm"
         title="Accept invitation"
         onClick={handleAccept}
-        hasSucceeded={isAccepted}
       >
         Accept
       </ButtonWithResponse>
@@ -80,7 +74,6 @@ const Notification = (props) => {
         variant="danger"
         title="Decline invitation"
         onClick={handleDecline}
-        hasSucceeded={isDeclined}
       >
         Decline
       </ButtonWithResponse>

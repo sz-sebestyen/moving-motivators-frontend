@@ -14,8 +14,6 @@ const GroupForm = (props) => {
   const [, /* groupsContext */ setGroupsContext] = useContext(GroupsContext);
   const [groupName, setGroupName] = useState("");
 
-  const [hasSucceeded, setHasSucceeded] = useState(false);
-
   const createGroup = async (event) => {
     event.preventDefault();
 
@@ -31,14 +29,11 @@ const GroupForm = (props) => {
     // console.log("newGroup: ", newGroup);
 
     if (newGroup) {
-      setHasSucceeded(true);
       setGroupsContext((prev) => [...prev, newGroup]);
     }
   };
 
   const handleInput = (event) => {
-    hasSucceeded && setHasSucceeded(false);
-
     setGroupName(event.target.value);
   };
 
@@ -54,14 +49,10 @@ const GroupForm = (props) => {
           autoFocus
           onInput={handleInput}
           value={groupName}
-          disabled={hasSucceeded === "loading"}
+          // disabled={hasSucceeded === "loading"}
         />
 
-        <ButtonWithResponse
-          variant="confirm"
-          onClick={createGroup}
-          hasSucceeded={hasSucceeded}
-        >
+        <ButtonWithResponse variant="confirm" onClick={createGroup}>
           Create
         </ButtonWithResponse>
 

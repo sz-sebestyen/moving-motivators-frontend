@@ -1,13 +1,7 @@
 import Menu from "../styled/Menu";
 import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
 
-const AnswerPageMenu = ({
-  isClosedAnswer,
-  save,
-  close,
-  isSaved,
-  finalizeStatus,
-}) => (
+const AnswerPageMenu = ({ isClosedAnswer, save, close, finalizeStatus }) => (
   <Menu>
     {isClosedAnswer ? (
       <ButtonWithResponse variant="danger" disabled>
@@ -19,7 +13,6 @@ const AnswerPageMenu = ({
           variant="confirm"
           onClick={save}
           disabled={finalizeStatus}
-          hasSucceeded={isSaved}
         >
           Save
         </ButtonWithResponse>
