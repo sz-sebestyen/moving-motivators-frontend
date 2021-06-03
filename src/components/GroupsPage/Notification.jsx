@@ -3,9 +3,8 @@ import { UserContext } from "../Context/Context";
 import { acceptInvite, declineInvite, getUser } from "../../requests/requests";
 
 import styled from "styled-components";
-import ButtonConfirm from "../styled/buttons/ButtonConfirm";
-import ButtonDecline from "../styled/buttons/ButtonDecline";
 import { paper } from "../styled/css/paper";
+import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
 
 /**
  * Notification component renders a list item that whows an invitation to
@@ -15,20 +14,21 @@ import { paper } from "../styled/css/paper";
  * @param {*} props
  */
 const Notification = (props) => {
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [, /* userContext */ setUserContext] = useContext(UserContext);
 
   const [origin, setOrigin] = useState();
 
-  const [status, setStatus] = useState();
+  const [isDeclined, setIsDeclined] = useState(false);
+  const [isAccepted, setIsAccepted] = useState(false);
 
-  console.log("showing notification", props.data);
+  // console.log("showing notification", props.data);
 
   /**
    * Loads information about the user who sent the invitation.
    */
   const loadNotiData = async () => {
     const inviter = await getUser(props.data.senderId);
-    console.log("inviter", inviter);
+    // console.log("inviter", inviter);
 
     // forbidden 403 can not access others groups
     /*     const theGroup = await getQuestionGroup(props.data.groupId);
@@ -39,26 +39,24 @@ const Notification = (props) => {
 
   useEffect(() => {
     loadNotiData();
-  }, []);
+  }, []); // eslint-disable-line
 
   const handleAccept = async () => {
-    setStatus("loading");
     const acceptAns = await acceptInvite(props.data);
-    console.log("acceptAns:", acceptAns);
+    // console.log("acceptAns:", acceptAns);
     if (acceptAns) {
-      setStatus("done");
+      setIsAccepted(true);
       setUserContext((prev) => ({ ...prev, dataLoaded: false }));
-    } else {
-      setStatus();
     }
   };
 
   const handleDecline = async () => {
-    setStatus("loading");
-    const declineAns = await declineInvite(props.data);
-    console.log("declineAns:", declineAns);
-    setStatus();
-    setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+    const declineAnswer = await declineInvite(props.data);
+    // console.log("declineAnswer:", declineAnswer);
+    if (declineAnswer) {
+      setIsDeclined(true);
+      setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+    }
   };
 
   return (
@@ -69,25 +67,23 @@ const Notification = (props) => {
           : ""}
       </span>
 
-      <ButtonConfirm
-        type="button"
+      <ButtonWithResponse
+        variant="confirm"
         title="Accept invitation"
-        disabled={status}
         onClick={handleAccept}
-        state={status}
+        hasSucceeded={isAccepted}
       >
         Accept
-      </ButtonConfirm>
+      </ButtonWithResponse>
 
-      <ButtonDecline
+      <ButtonWithResponse
+        variant="danger"
         title="Decline invitation"
-        type="button"
-        disabled={status}
         onClick={handleDecline}
-        state={status}
+        hasSucceeded={isDeclined}
       >
         Decline
-      </ButtonDecline>
+      </ButtonWithResponse>
     </StyledNotification>
   );
 };
