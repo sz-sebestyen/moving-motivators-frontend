@@ -1,61 +1,73 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { GroupsContext } from "../Context/Context";
 import { createQuestionGroup } from "../../requests/requests";
 
 import ButtonSecondary from "../styled/buttons/ButtonSecondary";
-import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 import PopUpWrap from "../styled/PopUpWrap";
 import PopUpForm from "../styled/PopUpForm";
+import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
 
 /**
  * GroupFrom component renders a form where the user can create a new group.
  */
 const GroupForm = (props) => {
-  const [groupsContext, setGroupsContext] = useContext(GroupsContext);
-  const input = useRef(null);
+  const [, /* groupsContext */ setGroupsContext] = useContext(GroupsContext);
+  const [groupName, setGroupName] = useState("");
 
-  const [status, setStatus] = useState();
+  const [hasSucceeded, setHasSucceeded] = useState(false);
 
-  const handleSubmit = async (event) => {
+  const createGroup = async (event) => {
     event.preventDefault();
-    setStatus("loading");
-    const newGroup = await createQuestionGroup(input.current.value);
 
-    console.log("newGroup: ", newGroup);
+    const cleanGroupName = groupName.trim();
+
+    if (!cleanGroupName) {
+      // TODO: alert user for empty input
+      return;
+    }
+
+    const newGroup = await createQuestionGroup(cleanGroupName);
+
+    // console.log("newGroup: ", newGroup);
 
     if (newGroup) {
-      setStatus("done");
+      setHasSucceeded(true);
       setGroupsContext((prev) => [...prev, newGroup]);
-    } else {
-      setStatus();
     }
   };
 
   const handleInput = (event) => {
-    return status === "done" && setStatus();
+    hasSucceeded && setHasSucceeded(false);
+
+    setGroupName(event.target.value);
   };
 
   return (
     <PopUpWrap>
-      <PopUpForm onSubmit={handleSubmit}>
+      <PopUpForm>
         <input
-          ref={input}
           type="text"
-          name="newGroupName"
-          id="newGroupName"
-          placeholder="new group name"
+          name="groupName"
+          id="groupName"
+          placeholder="Group Name"
           required
           autoFocus
           onInput={handleInput}
-          disabled={status === "loading"}
+          value={groupName}
+          disabled={hasSucceeded === "loading"}
         />
-        <ButtonConfirm type="submit" state={status} disabled={status}>
+
+        <ButtonWithResponse
+          variant="confirm"
+          onClick={createGroup}
+          hasSucceeded={hasSucceeded}
+        >
           Create
-        </ButtonConfirm>
+        </ButtonWithResponse>
+
         <ButtonSecondary
           type="button"
           onClick={() => props.setInCreation(false)}
-          disabled={status === "loading"}
         >
           Cancel
         </ButtonSecondary>

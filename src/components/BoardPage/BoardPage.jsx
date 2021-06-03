@@ -29,9 +29,9 @@ const BoardPage = (props) => {
   const save = async () => {
     if (saveCards) {
       // console.log("cards to be saved:", saveCards);
-      const data = await saveDefault(saveCards);
-      // console.log("saveDefaultCards answer:", data);
-      if (data) {
+      const shouldUpdate = await saveDefault(saveCards);
+      // console.log("saveDefaultCards answer:", shouldUpdate);
+      if (shouldUpdate) {
         setIsSaved(true);
         setUserContext((prev) => ({ ...prev, dataLoaded: false }));
       }
