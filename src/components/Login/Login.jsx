@@ -33,6 +33,8 @@ const Login = (props) => {
         password,
       });
 
+      setIsBusy(false);
+
       if (data) {
         setToken(data.token);
         setUserId(data.user.id);
@@ -43,7 +45,6 @@ const Login = (props) => {
           user: data.user,
         }));
       } else {
-        setIsBusy(false);
         passwordInput.current.setCustomValidity("Wrong password or email!");
         passwordInput.current.reportValidity();
       }
