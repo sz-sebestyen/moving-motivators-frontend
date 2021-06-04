@@ -15,54 +15,79 @@ const ZOOM_Z_INDEX = 999;
 
 const DRAGGED_CARD_OPACITY = 0;
 
-/**
- * Renders a card.
- * @param {*} props
- */
-const MMCard = (props) => {
-  const [zoom, setZoom] = useState(false);
+const MMCard = ({ card, setDragTarget, setDragOffset, isDragged, type }) => {
+  const [isZoomed, setIsZoomed] = useState(false);
+
+  const handleDragStart = (event) => {
+    event.stopPropagation();
+    event.dataTransfer.effectAllowed = "move";
+    setDragTarget(card.index);
+    const { x, y } = event.target.getBoundingClientRect();
+    setDragOffset({
+      x: event.clientX - x,
+      y: event.clientY - y,
+    });
+  };
+
+  const handleDragEnd = () => setDragTarget();
+
+  const toggleZoom = () => setIsZoomed((prev) => !prev);
+
+  const cardOpacity = isDragged ? { opacity: DRAGGED_CARD_OPACITY } : {};
+
+  const notZoomedCardPosition = {
+    top: card.value * CARD_SIZE + "px",
+    left: card.index * CARD_SIZE + "px",
+  };
+
+  const cardPosition = isZoomed ? zoomedCardPosition : notZoomedCardPosition;
+
+  const inlineCardStyle = {
+    ...cardPosition,
+    ...cardOpacity,
+  };
 
   return (
     <MmCard
-      className={props.isDragged && "noTransition"}
-      onDragStart={(event) => {
-        event.stopPropagation();
-        event.dataTransfer.effectAllowed = "move";
-        props.setDragTarget(props.card.index);
-        const box = event.target.getBoundingClientRect();
-        props.setDragOffset({
-          x: event.clientX - box.x,
-          y: event.clientY - box.y,
-        });
-      }}
-      onDragEnd={() => props.setDragTarget()}
-      style={
-        zoom
-          ? {
-              top: ZOOM_TOP + "px",
-              left: ZOOM_LEFT + "px",
-              width: CARD_SIZE * ZOOM + "px",
-              height: CARD_SIZE * ZOOM + "px",
-              zIndex: ZOOM_Z_INDEX,
-            }
-          : {
-              top: props.card.value * CARD_SIZE + "px",
-              left: props.card.index * CARD_SIZE + "px",
-              ...(props.isDragged ? { opacity: DRAGGED_CARD_OPACITY } : {}),
-            }
-      }
+      className={isDragged && "noTransition"}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      style={inlineCardStyle}
       draggable
     >
-      <img src={cardMap[props.type]} alt="card" />
-      <img
-        src={zoom ? zoomOut : zoomIn}
-        alt="zoom toggle"
-        className="zoom"
-        onClick={() => setZoom((prev) => !prev)}
+      <CardImage src={cardMap[type]} alt="card" />
+
+      <ZoomToggleIcon
+        src={isZoomed ? zoomOut : zoomIn}
+        alt="zoom"
+        onClick={toggleZoom}
       />
     </MmCard>
   );
 };
+
+const zoomedCardPosition = {
+  top: ZOOM_TOP + "px",
+  left: ZOOM_LEFT + "px",
+  width: CARD_SIZE * ZOOM + "px",
+  height: CARD_SIZE * ZOOM + "px",
+  zIndex: ZOOM_Z_INDEX,
+};
+
+const ZoomToggleIcon = styled.img`
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 16%;
+  height: 16%;
+  cursor: pointer;
+`;
+
+const CardImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
 
 const MmCard = styled.div`
   position: absolute;
@@ -74,21 +99,6 @@ const MmCard = styled.div`
   &:not(.noTransition) {
     transition: top 250ms ease, left 250ms ease, width 250ms ease,
       height 250ms ease;
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .zoom {
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    width: 16%;
-    height: 16%;
-    cursor: pointer;
   }
 `;
 
