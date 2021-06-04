@@ -7,7 +7,7 @@ import Form from "../../components/UI/Form/Form";
 import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
- * Profile isresponsible for rendering a page where the user can
+ * Profile screen is responsible for rendering a page where the user can
  * update their user information.
  *
  * @param {*} props

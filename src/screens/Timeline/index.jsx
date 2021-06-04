@@ -5,7 +5,7 @@ import { getCardLists } from "../../requests";
 import Navigation from "../../components/Navigation";
 
 /**
- * Timeline component is responsible for rendering a page where
+ * Timeline screen is responsible for rendering a page where
  * the user can view their previously saved default card
  * arangements. Starting with the most recent.
  *

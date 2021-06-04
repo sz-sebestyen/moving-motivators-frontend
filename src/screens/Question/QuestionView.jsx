@@ -6,7 +6,7 @@ import ButtonDecline from "../styled/buttons/ButtonDecline";
 import Menu from "../styled/Menu";
 import Page from "../styled/Page";
 
-const AnswerPageView = ({
+const QuestionView = ({
   isClosed,
   saveAnswer,
   closeAnswer,
@@ -73,4 +73,4 @@ const NoteArea = styled.textarea`
   margin: 25px auto;
 `;
 
-export default AnswerPageView;
+export default QuestionView;

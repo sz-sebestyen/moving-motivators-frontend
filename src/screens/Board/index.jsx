@@ -10,13 +10,13 @@ import Page from "../../components/UI/Page";
 import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
- * BoardPage component is responsible for rendering a page where the user can
+ * Board screen is responsible for rendering a page where the user can
  * arrange and save a default card order, which will be the starter setup
  * under questions.
  *
  * @param {*} props
  */
-const BoardPage = (props) => {
+const Board = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
   const starterCards = useCards(userContext.user.defaultCardListId);
 
@@ -52,4 +52,4 @@ const BoardPage = (props) => {
   );
 };
 
-export default BoardPage;
+export default Board;

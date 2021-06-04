@@ -8,13 +8,13 @@ import Form from "../../components/UI/Form/Form";
 import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
- * Registration component renders a page where the user can register.
+ * Register screen renders a page where the user can register.
  * After successful registration the user is redirected to the login
  * page.
  *
  * @param {*} props
  */
-const Registration = (props) => {
+const Register = (props) => {
   const [userContext /* , setUserContext */] = useContext(UserContext);
 
   const [toLogin, setToLogin] = useState(false);
@@ -135,4 +135,4 @@ const Registration = (props) => {
   );
 };
 
-export default Registration;
+export default Register;

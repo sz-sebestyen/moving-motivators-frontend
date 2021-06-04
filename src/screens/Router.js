@@ -1,12 +1,12 @@
 import Home from "./Home";
-import BoardPage from "./BoardPage";
+import Board from "./Board";
 import Login from "./Login";
 import Profile from "./Profile";
 import Timeline from "./Timeline";
-import GroupsPage from "./GroupsPage";
-import QuestionsPage from "./QuestionsPage";
-import AnswerPage from "./AnswerPage/AnswerPage";
-import Registration from "./Registration";
+import Groups from "./Groups";
+import QuestionGroup from "./QuestionGroup";
+import Question from "./Question";
+import Register from "./Register";
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
@@ -16,27 +16,35 @@ const Router = () => (
       <Route path="/login">
         <Login />
       </Route>
+
       <Route path="/register">
-        <Registration />
+        <Register />
       </Route>
+
       <Route path="/board">
-        <BoardPage />
+        <Board />
       </Route>
+
       <Route path="/groups">
-        <GroupsPage />
+        <Groups />
       </Route>
+
       <Route path="/question-group/:id">
-        <QuestionsPage />
+        <QuestionGroup />
       </Route>
+
       <Route path="/question/:groupId/:questionId">
-        <AnswerPage />
+        <Question />
       </Route>
+
       <Route path="/profile">
         <Profile />
       </Route>
+
       <Route path="/timeline">
         <Timeline />
       </Route>
+
       <Route path="/">
         <Home />
       </Route>

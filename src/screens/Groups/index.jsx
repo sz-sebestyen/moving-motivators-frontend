@@ -12,12 +12,12 @@ import Menu from "../../components/UI/Menu";
 import Page from "../../components/UI/Page";
 
 /**
- * GroupsPage component renders the groups which the user is a member of.
+ * Groups screen renders the groups which the user is a member of.
  * TODO: The groups are separated into different sections by owner id.
  *
  * @param {*} props
  */
-const GroupsPage = (props) => {
+const Groups = (props) => {
   const [groupsContext /* , setGroupsContext */] = useContext(GroupsContext);
   const [userContext /* , setUserContext */] = useContext(UserContext);
   const [inCreation, setInCreation] = useState(false);
@@ -89,4 +89,4 @@ const GroupList = styled.ul`
   gap: 10px;
 `;
 
-export default GroupsPage;
+export default Groups;

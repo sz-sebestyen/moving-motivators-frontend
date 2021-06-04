@@ -14,12 +14,12 @@ import Page from "../../components/UI/Page";
 import Menu from "./Menu";
 
 /**
- * AnswerPage component is responsible for redering a page where the user can
+ * Question screen is responsible for redering a page where the user can
  * arrange their cards and set a note to a question in a question group.
  *
  * @param {*} props
  */
-const AnswerPage = (props) => {
+const Question = (props) => {
   const { /* groupId, */ questionId } = useParams();
   const [userContext, setUserContext] = useContext(UserContext);
   const [questionsContext /*, setQuestionsContext */] =
@@ -121,4 +121,4 @@ const NoteArea = styled.textarea`
   margin: 25px auto;
 `;
 
-export default AnswerPage;
+export default Question;

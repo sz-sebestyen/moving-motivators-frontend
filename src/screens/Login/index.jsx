@@ -9,7 +9,7 @@ import Form from "../../components/UI/Form/Form";
 import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
- * Login component renders a page where the user can
+ * Login screen renders a page where the user can
  * log in with a from.
  * @param {*} props
  */

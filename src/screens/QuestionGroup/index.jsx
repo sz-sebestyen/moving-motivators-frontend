@@ -14,13 +14,13 @@ import Page from "../../components/UI/Page";
 import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
- * QuestionsPage is responsible for rendering a page where the user
+ * QuestionGroup screen is responsible for rendering a page where the user
  * can view their questions in a question group. They can also delete
  * the group, and a new question or invite another user to the group.
  *
  * @param {*} props
  */
-const QuestionsPage = (props) => {
+const QuestionGroup = (props) => {
   const { id } = useParams();
   const [questionsContext /* , setQuestionsContext */] =
     useContext(QuestionsContext);
@@ -108,4 +108,4 @@ const QuestionList = styled.ul`
   gap: 10px;
 `;
 
-export default QuestionsPage;
+export default QuestionGroup;
