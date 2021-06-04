@@ -3,8 +3,8 @@ import { UserContext } from "../Context/Context";
 import { Redirect } from "react-router-dom";
 import { registerUser } from "../../requests/requests";
 
-import Form from "../styled/Form/Form";
-import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
+import Form from "../UI/Form/Form";
+import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";
 
 /**
  * Registration component renders a page where the user can register.

@@ -8,7 +8,7 @@ import useCards from "../../hooks/useCards";
 import MMBoard from "../MMBoard/MMBoard";
 
 import styled from "styled-components";
-import Page from "../styled/Page";
+import Page from "../UI/Page";
 
 import Menu from "./Menu";
 

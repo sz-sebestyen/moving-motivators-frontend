@@ -4,9 +4,9 @@ import { UserContext } from "../Context/Context";
 import { saveDefault } from "../../requests/requests";
 import useCards from "../../hooks/useCards";
 
-import Menu from "../styled/Menu";
-import Page from "../styled/Page";
-import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
+import Menu from "../UI/Menu";
+import Page from "../UI/Page";
+import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";
 
 /**
  * BoardPage component is responsible for rendering a page where the user can

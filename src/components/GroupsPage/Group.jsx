@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { paper } from "../styled/css/paper";
+import { paper } from "../UI/css/paper";
 
 const Group = (props) => {
   return (
