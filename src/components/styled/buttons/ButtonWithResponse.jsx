@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { button } from "./button";
 import Loading from "./Loading";
 import Success from "./Success";
@@ -65,16 +65,26 @@ const ButtonWithResponse = ({
   const [isBusy, setIsBusy] = useState(false);
   const [hasSucceeded, setHasSucceeded] = useState(false);
 
+  const isMounted = useRef(true);
+
   const handleClick = async (event) => {
     setIsBusy(true);
     await asyncAction(event);
-    setIsBusy(false);
 
-    setHasSucceeded(true);
-    setTimeout(() => {
-      setHasSucceeded(false);
-    }, 1500);
+    if (isMounted.current) {
+      setIsBusy(false);
+      setHasSucceeded(true);
+      setTimeout(() => {
+        setHasSucceeded(false);
+      }, 1500);
+    }
   };
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const shouldDisable = isBusy || disabled;
 
