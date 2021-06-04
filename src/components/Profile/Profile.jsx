@@ -2,8 +2,8 @@ import React, { useContext, useRef, useState } from "react";
 import { editUser } from "../../requests/requests";
 import { UserContext } from "../Context/Context";
 
-import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 import Form from "../styled/Form/Form";
+import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
 
 /**
  * Profile isresponsible for rendering a page where the user can
@@ -18,11 +18,14 @@ const Profile = (props) => {
   const company = useRef(null);
   const position = useRef(null);
 
-  const [status, setStatus] = useState();
+  const [isBusy, setIsBusy] = useState(false);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setStatus("loading");
+  const saveChanges = async (event) => {
+    // TODO: set default values of inputfields the current values
+
+    // TODO: check if inputs are not empty
+
+    setIsBusy(true);
 
     const response = await editUser({
       name: firstName.current.value + " " + lastName.current.value,
@@ -31,20 +34,15 @@ const Profile = (props) => {
     });
 
     console.log("edit user response: ", response);
+    setIsBusy(false);
+
     if (response) {
-      setStatus("done");
       setUserContext((prev) => ({ ...prev, dataLoaded: false }));
-    } else {
-      setStatus();
     }
   };
 
-  const handleInput = (event) => {
-    return status === "done" && setStatus();
-  };
-
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <div>
         <label htmlFor="FirstName">First name</label>
         <input
@@ -53,8 +51,7 @@ const Profile = (props) => {
           name="FirstName"
           id="FirstName"
           required
-          onInput={handleInput}
-          disabled={status}
+          disabled={isBusy}
         />
       </div>
 
@@ -66,8 +63,7 @@ const Profile = (props) => {
           name="LastName"
           id="LastName"
           required
-          onInput={handleInput}
-          disabled={status}
+          disabled={isBusy}
         />
       </div>
 
@@ -79,8 +75,7 @@ const Profile = (props) => {
           name="Company"
           id="Company"
           required
-          onInput={handleInput}
-          disabled={status}
+          disabled={isBusy}
         />
       </div>
 
@@ -92,20 +87,18 @@ const Profile = (props) => {
           name="Position"
           id="Position"
           required
-          onInput={handleInput}
-          disabled={status}
+          disabled={isBusy}
         />
       </div>
 
       <div>
-        <ButtonConfirm
-          type="submit"
+        <ButtonWithResponse
+          variant="confirm"
           title="Save changes"
-          state={status}
-          disabled={status}
+          onClick={saveChanges}
         >
           Save
-        </ButtonConfirm>
+        </ButtonWithResponse>
       </div>
     </Form>
   );
