@@ -4,9 +4,9 @@ import { useState, useRef } from "react";
 import styled from "styled-components";
 import ButtonPrimary from "../styled/buttons/ButtonPrimary";
 import ButtonSecondary from "../styled/buttons/ButtonSecondary";
-import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 import PopUpWrap from "../styled/PopUpWrap";
 import PopUpForm from "../styled/PopUpForm";
+import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
 
 /**
  * InvitationPopUp component renders a form and searchbar
@@ -38,7 +38,7 @@ const InvitationPopUp = (props) => {
           type="text"
           name="invitationName"
           id="invitationName"
-          placeholder="exact fullname"
+          placeholder="Exact Full Name"
           autoFocus
         />
         <ButtonPrimary type="submit">Search</ButtonPrimary>
@@ -51,9 +51,12 @@ const InvitationPopUp = (props) => {
             <li key={user.id} className="paper">
               <span className="resultName">{user.name}</span>{" "}
               <span className="resultCompany">{user.company}</span>
-              <ButtonConfirm type="button" onClick={() => handleInvite(user)}>
+              <ButtonWithResponse
+                variant="confirm"
+                onClick={async () => await handleInvite(user)}
+              >
                 Invite
-              </ButtonConfirm>
+              </ButtonWithResponse>
             </li>
           ))}
         </ResultList>
