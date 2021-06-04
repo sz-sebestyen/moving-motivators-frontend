@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { GroupsContext } from "../../context";
 import { createQuestionGroup } from "../../requests";
 
-import ButtonSecondary from "../UI/buttons/ButtonSecondary";
-import PopUpWrap from "../UI/PopUpWrap";
-import PopUpForm from "../UI/PopUpForm";
-import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";
+import ButtonSecondary from "../../components/UI/buttons/ButtonSecondary";
+import PopUpWrap from "../../components/UI/PopUpWrap";
+import PopUpForm from "../../components/UI/PopUpForm";
+import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
  * GroupFrom component renders a form where the user can create a new group.

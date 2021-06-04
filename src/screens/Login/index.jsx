@@ -4,8 +4,8 @@ import React, { useContext, useRef, useState } from "react";
 import { UserContext, setToken, setUserId } from "../../context";
 import { login } from "../../requests";
 
-import Form from "../UI/Form/Form";
-import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";
+import Form from "../../components/UI/Form/Form";
+import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
  * Login component renders a page where the user can

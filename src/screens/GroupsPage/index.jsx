@@ -6,9 +6,9 @@ import Notification from "./Notification";
 import Group from "./Group";
 
 import styled from "styled-components";
-import ButtonPrimary from "../UI/buttons/ButtonPrimary";
-import Menu from "../UI/Menu";
-import Page from "../UI/Page";
+import ButtonPrimary from "../../components/UI/buttons/ButtonPrimary";
+import Menu from "../../components/UI/Menu";
+import Page from "../../components/UI/Page";
 
 /**
  * GroupsPage component renders the groups which the user is a member of.

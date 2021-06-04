@@ -7,10 +7,10 @@ import QuestionForm from "./QuestionForm";
 import Question from "./Question";
 
 import styled from "styled-components";
-import ButtonPrimary from "../UI/buttons/ButtonPrimary";
-import Menu from "../UI/Menu";
-import Page from "../UI/Page";
-import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";
+import ButtonPrimary from "../../components/UI/buttons/ButtonPrimary";
+import Menu from "../../components/UI/Menu";
+import Page from "../../components/UI/Page";
+import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
  * QuestionsPage is responsible for rendering a page where the user

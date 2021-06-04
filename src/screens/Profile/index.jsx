@@ -2,8 +2,8 @@ import React, { useContext, useRef, useState } from "react";
 import { editUser } from "../../requests";
 import { UserContext } from "../../context";
 
-import Form from "../UI/Form/Form";
-import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";
+import Form from "../../components/UI/Form/Form";
+import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
  * Profile isresponsible for rendering a page where the user can

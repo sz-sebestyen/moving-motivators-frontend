@@ -3,14 +3,14 @@ import Navigation from "../components/Navigation";
 import Home from "./Home";
 
 // pages
-import BoardPage from "../components/BoardPage";
-import Login from "../components/Login";
-import Profile from "../components/Profile";
-import Timeline from "../components/Timeline";
-import GroupsPage from "../components/GroupsPage";
-import QuestionsPage from "../components/QuestionsPage";
-import AnswerPage from "../components/AnswerPage/AnswerPage";
-import Registration from "../components/Registration";
+import BoardPage from "./BoardPage";
+import Login from "./Login";
+import Profile from "./Profile";
+import Timeline from "./Timeline";
+import GroupsPage from "./GroupsPage";
+import QuestionsPage from "./QuestionsPage";
+import AnswerPage from "./AnswerPage/AnswerPage";
+import Registration from "./Registration";
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 

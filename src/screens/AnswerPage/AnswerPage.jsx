@@ -5,10 +5,10 @@ import { QuestionsContext, UserContext } from "../../context";
 import { setAnswer, closeQuestion, editNote } from "../../requests";
 import useCards from "../../hooks/useCards";
 
-import MMBoard from "../MMBoard/MMBoard";
+import MMBoard from "../../components/MMBoard/MMBoard";
 
 import styled from "styled-components";
-import Page from "../UI/Page";
+import Page from "../../components/UI/Page";
 
 import Menu from "./Menu";
 

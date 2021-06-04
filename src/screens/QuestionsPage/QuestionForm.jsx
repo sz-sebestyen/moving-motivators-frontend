@@ -2,10 +2,10 @@ import { createQuestion } from "../../requests";
 import { useContext, useRef } from "react";
 import { QuestionsContext } from "../../context";
 
-import ButtonSecondary from "../UI/buttons/ButtonSecondary";
-import PopUpWrap from "../UI/PopUpWrap";
-import PopUpForm from "../UI/PopUpForm";
-import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";
+import ButtonSecondary from "../../components/UI/buttons/ButtonSecondary";
+import PopUpWrap from "../../components/UI/PopUpWrap";
+import PopUpForm from "../../components/UI/PopUpForm";
+import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
  * QuestionForm component is responsible for rendering a form which the user can

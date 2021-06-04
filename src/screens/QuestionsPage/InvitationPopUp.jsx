@@ -2,11 +2,11 @@ import { searchUser, newInvite } from "../../requests";
 import { useState, useRef } from "react";
 
 import styled from "styled-components";
-import ButtonPrimary from "../UI/buttons/ButtonPrimary";
-import ButtonSecondary from "../UI/buttons/ButtonSecondary";
-import PopUpWrap from "../UI/PopUpWrap";
-import PopUpForm from "../UI/PopUpForm";
-import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";
+import ButtonPrimary from "../../components/UI/buttons/ButtonPrimary";
+import ButtonSecondary from "../../components/UI/buttons/ButtonSecondary";
+import PopUpWrap from "../../components/UI/PopUpWrap";
+import PopUpForm from "../../components/UI/PopUpForm";
+import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
  * InvitationPopUp component renders a form and searchbar

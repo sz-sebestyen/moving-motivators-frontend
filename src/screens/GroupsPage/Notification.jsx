@@ -3,8 +3,8 @@ import { UserContext } from "../../context";
 import { acceptInvite, declineInvite, getUser } from "../../requests";
 
 import styled from "styled-components";
-import { paper } from "../UI/css/paper";
-import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";
+import { paper } from "../../components/UI/css/paper";
+import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
  * Notification component renders a list item that whows an invitation to

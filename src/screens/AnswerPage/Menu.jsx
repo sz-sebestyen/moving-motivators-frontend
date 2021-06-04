@@ -1,5 +1,5 @@
-import Menu from "../UI/Menu";
-import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";
+import Menu from "../../components/UI/Menu";
+import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 const AnswerPageMenu = ({ isClosedAnswer, save, close, finalizeStatus }) => (
   <Menu>

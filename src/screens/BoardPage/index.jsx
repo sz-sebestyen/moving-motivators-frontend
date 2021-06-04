@@ -1,12 +1,12 @@
-import MMBoard from "../MMBoard/MMBoard";
+import MMBoard from "../../components/MMBoard/MMBoard";
 import { useState, useContext } from "react";
 import { UserContext } from "../../context";
 import { saveDefault } from "../../requests";
 import useCards from "../../hooks/useCards";
 
-import Menu from "../UI/Menu";
-import Page from "../UI/Page";
-import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";
+import Menu from "../../components/UI/Menu";
+import Page from "../../components/UI/Page";
+import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
 /**
  * BoardPage component is responsible for rendering a page where the user can
