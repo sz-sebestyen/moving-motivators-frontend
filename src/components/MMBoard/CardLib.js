@@ -1,13 +1,13 @@
-import cardIMG0 from "../../images/card-acceptance.png";
-import cardIMG1 from "../../images/card-curiosity.png";
-import cardIMG2 from "../../images/card-freedom.png";
-import cardIMG3 from "../../images/card-goal.png";
-import cardIMG4 from "../../images/card-honor.png";
-import cardIMG5 from "../../images/card-mastery.png";
-import cardIMG6 from "../../images/card-order.png";
-import cardIMG7 from "../../images/card-power.png";
-import cardIMG8 from "../../images/card-relatedness.png";
-import cardIMG9 from "../../images/card-status.png";
+import cardIMG0 from "./images/cards/card-acceptance.png";
+import cardIMG1 from "./images/cards/card-curiosity.png";
+import cardIMG2 from "./images/cards/card-freedom.png";
+import cardIMG3 from "./images/cards/card-goal.png";
+import cardIMG4 from "./images/cards/card-honor.png";
+import cardIMG5 from "./images/cards/card-mastery.png";
+import cardIMG6 from "./images/cards/card-order.png";
+import cardIMG7 from "./images/cards/card-power.png";
+import cardIMG8 from "./images/cards/card-relatedness.png";
+import cardIMG9 from "./images/cards/card-status.png";
 
 /**
  * CardLib module is responsible for transforming the card arrangement data

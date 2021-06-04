@@ -1,6 +1,6 @@
 import { useState } from "react";
-import zoomOut from "../../images/search-minus-solid.svg";
-import zoomIn from "../../images/search-plus-solid.svg";
+import zoomOut from "./images/zoom/search-minus-solid.svg";
+import zoomIn from "./images/zoom/search-plus-solid.svg";
 import { cardMap } from "./CardLib";
 
 import styled from "styled-components";
