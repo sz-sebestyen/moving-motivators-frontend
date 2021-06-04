@@ -1,5 +1,7 @@
 import Navigation from "./components/Navigation";
 
+import Home from "./screens/Home";
+
 // pages
 import BoardPage from "./components/BoardPage";
 import Login from "./components/Login";
@@ -33,7 +35,7 @@ import {
 } from "./requests";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 /**
  * App component is responsible for rendering the navigation bar and routing
@@ -167,16 +169,6 @@ function App() {
         </QuestionsContext.Provider>
       </GroupsContext.Provider>
     </UserContext.Provider>
-  );
-}
-
-function Home() {
-  const [userContext] = useContext(UserContext);
-  return (
-    <>
-      <p>{userContext.loggedIn ? "logged in with:" : "logged out"}</p>
-      <p>{userContext.user.name}</p>
-    </>
   );
 }
 
