@@ -4,8 +4,7 @@ import { Redirect } from "react-router-dom";
 import { registerUser } from "../../requests/requests";
 
 import Form from "../styled/Form/Form";
-
-import ButtonConfirm from "../styled/buttons/ButtonConfirm";
+import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
 
 /**
  * Registration component renders a page where the user can register.
@@ -19,39 +18,39 @@ const Registration = (props) => {
 
   const [toLogin, setToLogin] = useState(false);
 
-  const [status, setStatus] = useState();
+  const [isBusy, setIsBusy] = useState(false);
 
-  const firstName = useRef(null);
-  const lastName = useRef(null);
+  const name = useRef(null);
   const email = useRef(null);
   const company = useRef(null);
   const position = useRef(null);
   const password = useRef(null);
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    setStatus("loading");
+    // TODO: refactor to be more dry
+    const userInfo = {
+      name: name.current.value.trim(),
+      email: email.current.value.trim(),
+      company: company.current.value.trim(),
+      position: position.current.value.trim(),
+      password: password.current.value.trim(),
+    };
 
-    const response = await registerUser({
-      name: firstName.current.value + " " + lastName.current.value,
-      email: email.current.value,
-      company: company.current.value,
-      position: position.current.value,
-      password: password.current.value,
-    });
+    // TODO: check for empty inputs, and alert user
+
+    if (Object.values(userInfo).find((value) => value === "") === "") return;
+
+    setIsBusy(true);
+
+    const response = await registerUser(userInfo);
 
     console.log("register response: ", response);
 
-    if (response) {
-      setStatus("done");
-      setToLogin(true);
-    } else {
-      setStatus();
-    }
-  };
+    setIsBusy(false);
 
-  const handleInput = (event) => {
-    return status === "done" && setStatus();
+    if (response) {
+      setToLogin(true);
+    }
   };
 
   if (toLogin) {
@@ -63,30 +62,16 @@ const Registration = (props) => {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <div>
-        <label htmlFor="FirstName">First name</label>
+        <label htmlFor="Name">Name</label>
         <input
-          ref={firstName}
+          ref={name}
           type="text"
-          name="FirstName"
-          id="FirstName"
+          name="Name"
+          id="Name"
           required
-          onInput={handleInput}
-          disabled={status}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="LastName">Last name</label>
-        <input
-          ref={lastName}
-          type="text"
-          name="LastName"
-          id="LastName"
-          required
-          onInput={handleInput}
-          disabled={status}
+          disabled={isBusy}
         />
       </div>
 
@@ -98,8 +83,7 @@ const Registration = (props) => {
           name="Email"
           id="Email"
           required
-          onInput={handleInput}
-          disabled={status}
+          disabled={isBusy}
         />
       </div>
 
@@ -111,8 +95,7 @@ const Registration = (props) => {
           name="Company"
           id="Company"
           required
-          onInput={handleInput}
-          disabled={status}
+          disabled={isBusy}
         />
       </div>
       <div>
@@ -123,8 +106,7 @@ const Registration = (props) => {
           name="Position"
           id="Position"
           required
-          onInput={handleInput}
-          disabled={status}
+          disabled={isBusy}
         />
       </div>
 
@@ -136,15 +118,14 @@ const Registration = (props) => {
           name="Password"
           id="Password"
           required
-          onInput={handleInput}
-          disabled={status}
+          disabled={isBusy}
         />
       </div>
 
       <div>
-        <ButtonConfirm type="submit" state={status} disabled={status}>
+        <ButtonWithResponse variant="confirm" onClick={handleSubmit}>
           Register
-        </ButtonConfirm>
+        </ButtonWithResponse>
       </div>
     </Form>
   );

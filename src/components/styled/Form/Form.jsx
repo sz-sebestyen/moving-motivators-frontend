@@ -7,7 +7,7 @@ const Form = styled.form`
   align-items: stretch;
 
   width: 250px;
-  gap: 25px;
+  gap: 15px;
   padding: 25px;
   margin: 100px auto;
 
