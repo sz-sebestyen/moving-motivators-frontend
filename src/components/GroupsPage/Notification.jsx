@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { UserContext } from "../Context/Context";
-import { acceptInvite, declineInvite, getUser } from "../../requests/requests";
+import { UserContext } from "../../context";
+import { acceptInvite, declineInvite, getUser } from "../../requests";
 
 import styled from "styled-components";
 import { paper } from "../UI/css/paper";

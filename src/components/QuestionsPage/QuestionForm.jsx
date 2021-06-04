@@ -1,6 +1,6 @@
-import { createQuestion } from "../../requests/requests";
+import { createQuestion } from "../../requests";
 import { useContext, useRef } from "react";
-import { QuestionsContext } from "../Context/Context";
+import { QuestionsContext } from "../../context";
 
 import ButtonSecondary from "../UI/buttons/ButtonSecondary";
 import PopUpWrap from "../UI/PopUpWrap";

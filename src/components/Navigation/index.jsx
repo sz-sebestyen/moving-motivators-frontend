@@ -1,4 +1,4 @@
-import { UserContext, removeToken, removeUserId } from "../Context/Context";
+import { UserContext, removeToken, removeUserId } from "../../context";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";

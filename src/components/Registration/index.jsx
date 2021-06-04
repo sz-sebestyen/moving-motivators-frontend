@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
-import { UserContext } from "../Context/Context";
+import { UserContext } from "../../context";
 import { Redirect } from "react-router-dom";
-import { registerUser } from "../../requests/requests";
+import { registerUser } from "../../requests";
 
 import Form from "../UI/Form/Form";
 import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";

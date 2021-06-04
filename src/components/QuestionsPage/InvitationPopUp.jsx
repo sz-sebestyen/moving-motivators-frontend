@@ -1,4 +1,4 @@
-import { searchUser, newInvite } from "../../requests/requests";
+import { searchUser, newInvite } from "../../requests";
 import { useState, useRef } from "react";
 
 import styled from "styled-components";

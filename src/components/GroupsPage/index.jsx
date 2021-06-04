@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { GroupsContext, UserContext } from "../Context/Context";
+import { GroupsContext, UserContext } from "../../context";
 
 import GroupForm from "./GroupForm";
 import Notification from "./Notification";

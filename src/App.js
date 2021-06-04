@@ -1,14 +1,14 @@
-import Navigation from "./components/Navigation/Navigation";
+import Navigation from "./components/Navigation";
 
 // pages
-import BoardPage from "./components/BoardPage/BoardPage";
-import Login from "./components/Login/Login";
-import Profile from "./components/Profile/Profile";
-import Timeline from "./components/Timeline/Timeline";
-import GroupsPage from "./components/GroupsPage/GroupsPage";
-import QuestionsPage from "./components/QuestionsPage/QuestionsPage";
+import BoardPage from "./components/BoardPage";
+import Login from "./components/Login";
+import Profile from "./components/Profile";
+import Timeline from "./components/Timeline";
+import GroupsPage from "./components/GroupsPage";
+import QuestionsPage from "./components/QuestionsPage";
 import AnswerPage from "./components/AnswerPage/AnswerPage";
-import Registration from "./components/Registration/Registration";
+import Registration from "./components/Registration";
 
 import {
   UserContext,
@@ -21,7 +21,7 @@ import {
   getUserId,
   removeToken,
   removeUserId,
-} from "./components/Context/Context";
+} from "./context";
 
 import {
   getUser,
@@ -30,7 +30,7 @@ import {
   getSentNotifications,
   getReceivedNotifications,
   getInvited,
-} from "./requests/requests";
+} from "./requests";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";

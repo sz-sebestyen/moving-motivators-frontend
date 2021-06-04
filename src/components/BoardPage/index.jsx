@@ -1,7 +1,7 @@
 import MMBoard from "../MMBoard/MMBoard";
 import { useState, useContext } from "react";
-import { UserContext } from "../Context/Context";
-import { saveDefault } from "../../requests/requests";
+import { UserContext } from "../../context";
+import { saveDefault } from "../../requests";
 import useCards from "../../hooks/useCards";
 
 import Menu from "../UI/Menu";

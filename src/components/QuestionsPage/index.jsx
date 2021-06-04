@@ -1,10 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
-import {
-  UserContext,
-  GroupsContext,
-  QuestionsContext,
-} from "../Context/Context";
+import { UserContext, GroupsContext, QuestionsContext } from "../../context";
 
 import InvitationPopUp from "./InvitationPopUp";
 import QuestionForm from "./QuestionForm";

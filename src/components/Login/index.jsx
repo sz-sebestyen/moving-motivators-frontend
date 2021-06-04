@@ -1,8 +1,8 @@
 import { Redirect } from "react-router-dom";
 import React, { useContext, useRef, useState } from "react";
 
-import { UserContext, setToken, setUserId } from "../Context/Context";
-import { login } from "../../requests/requests";
+import { UserContext, setToken, setUserId } from "../../context";
+import { login } from "../../requests";
 
 import Form from "../UI/Form/Form";
 import ButtonWithResponse from "../UI/buttons/ButtonWithResponse";

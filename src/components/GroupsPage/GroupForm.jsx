@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { GroupsContext } from "../Context/Context";
-import { createQuestionGroup } from "../../requests/requests";
+import { GroupsContext } from "../../context";
+import { createQuestionGroup } from "../../requests";
 
 import ButtonSecondary from "../UI/buttons/ButtonSecondary";
 import PopUpWrap from "../UI/PopUpWrap";

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getCardList } from "../requests/requests";
+import { getCardList } from "../requests";
 
 const useCards = (cardListId) => {
   const [defaultCards, setDefaultCards] = useState();
