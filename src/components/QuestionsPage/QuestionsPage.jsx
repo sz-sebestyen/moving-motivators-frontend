@@ -12,9 +12,9 @@ import Question from "./Question";
 
 import styled from "styled-components";
 import ButtonPrimary from "../styled/buttons/ButtonPrimary";
-import ButtonDecline from "../styled/buttons/ButtonDecline";
 import Menu from "../styled/Menu";
 import Page from "../styled/Page";
+import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
 
 /**
  * QuestionsPage is responsible for rendering a page where the user
@@ -70,9 +70,14 @@ const QuestionsPage = (props) => {
           >
             Invite
           </ButtonPrimary>
-          <ButtonDecline title="Delete this group" type="button">
+
+          <ButtonWithResponse
+            variant="danger"
+            title="Delete this group"
+            onClick={() => {}}
+          >
             Delete group
-          </ButtonDecline>
+          </ButtonWithResponse>
         </Menu>
       )}
 
