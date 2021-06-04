@@ -1,11 +1,11 @@
 import { createQuestion } from "../../requests/requests";
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import { QuestionsContext } from "../Context/Context";
 
 import ButtonSecondary from "../styled/buttons/ButtonSecondary";
-import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 import PopUpWrap from "../styled/PopUpWrap";
 import PopUpForm from "../styled/PopUpForm";
+import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
 
 /**
  * QuestionForm component is responsible for rendering a form which the user can
@@ -18,53 +18,44 @@ const QuestionForm = (props) => {
     useContext(QuestionsContext);
   const input = useRef(null);
 
-  const [status, setStatus] = useState();
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setStatus("loading");
+  const submitNewQuestion = async (event) => {
+    // TODO: store input value in state, and disable Create button when input is empty
+    const newQuestionTitle = input.current.value.trim();
+    if (!newQuestionTitle) return;
 
     const newQuestion = await createQuestion({
       groupId: props.groupId,
-      value: input.current.value,
+      value: newQuestionTitle,
     });
 
     console.log("newQuestion: ", newQuestion);
 
     if (newQuestion) {
-      setStatus("done");
       //props.setInCreation(false);
       setQuestionsContext((prev) => [...prev, newQuestion]);
-    } else {
-      setStatus();
     }
-  };
-
-  const handleInput = (event) => {
-    return status === "done" && setStatus();
   };
 
   return (
     <PopUpWrap>
-      <PopUpForm onSubmit={handleSubmit}>
+      <PopUpForm>
         <input
           ref={input}
           type="text"
           name="newQuestionName"
           id="newQuestionName"
-          placeholder="New question"
+          placeholder="New Question"
           required
           autoFocus
-          onInput={handleInput}
-          disabled={status === "loading"}
         />
-        <ButtonConfirm type="submit" state={status} disabled={status}>
+
+        <ButtonWithResponse variant="confirm" onClick={submitNewQuestion}>
           Create
-        </ButtonConfirm>
+        </ButtonWithResponse>
+
         <ButtonSecondary
           type="button"
           onClick={() => props.setInCreation(false)}
-          disabled={status === "loading"}
         >
           Cancel
         </ButtonSecondary>
