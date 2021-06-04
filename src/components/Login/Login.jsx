@@ -4,7 +4,6 @@ import React, { useContext, useRef, useState } from "react";
 import { UserContext, setToken, setUserId } from "../Context/Context";
 import { login } from "../../requests/requests";
 
-import ButtonConfirm from "../styled/buttons/ButtonConfirm";
 import Form from "../styled/Form/Form";
 import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
 
@@ -16,18 +15,18 @@ import ButtonWithResponse from "../styled/buttons/ButtonWithResponse";
 const Login = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
 
-  const emailInput = useRef(null);
   const passwordInput = useRef(null);
 
-  const [status, setStatus] = useState();
+  const [isBusy, setIsBusy] = useState(false);
+  const [emailState, setEmailState] = useState("");
+  const [passwordState, setPasswordState] = useState("");
 
   const handleSave = async (event) => {
-    event.preventDefault();
-    const email = emailInput.current.value.trim();
-    const password = passwordInput.current.value;
+    const email = emailState.trim();
+    const password = passwordState.trim();
 
     if (email && password) {
-      setStatus("loading");
+      setIsBusy(true);
 
       const data = await login({
         email,
@@ -35,8 +34,6 @@ const Login = (props) => {
       });
 
       if (data) {
-        setStatus("done");
-
         setToken(data.token);
         setUserId(data.user.id);
 
@@ -46,16 +43,22 @@ const Login = (props) => {
           user: data.user,
         }));
       } else {
-        setStatus();
+        setIsBusy(false);
         passwordInput.current.setCustomValidity("Wrong password or email!");
         passwordInput.current.reportValidity();
       }
     }
   };
 
-  const handleInput = (event) => {
+  const handleEmail = (event) => {
     passwordInput.current.setCustomValidity("");
-    return status === "done" && setStatus();
+    setEmailState(event.target.value);
+  };
+
+  const handlePassword = (event) => {
+    passwordInput.current.setCustomValidity("");
+
+    setPasswordState(event.target.value);
   };
 
   if (userContext.loggedIn) {
@@ -63,17 +66,17 @@ const Login = (props) => {
   }
 
   return (
-    <Form onSubmit={handleSave}>
+    <Form>
       <div>
         <label htmlFor="loginFormEmail">Email</label>
         <input
-          ref={emailInput}
           type="email"
           name="loginFormEmail"
           id="loginFormEmail"
           required
-          onInput={handleInput}
-          disabled={status}
+          onChange={handleEmail}
+          disabled={isBusy}
+          value={emailState}
         />
       </div>
 
@@ -85,15 +88,16 @@ const Login = (props) => {
           name="loginFormPassword"
           id="loginFormPassword"
           required
-          onInput={handleInput}
-          disabled={status}
+          onChange={handlePassword}
+          disabled={isBusy}
+          value={passwordState}
         />
       </div>
 
       <div>
-        <ButtonConfirm type="submit" state={status} disabled={status}>
+        <ButtonWithResponse variant="confirm" onClick={handleSave}>
           Login
-        </ButtonConfirm>
+        </ButtonWithResponse>
       </div>
     </Form>
   );
