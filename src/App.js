@@ -62,8 +62,10 @@ function App() {
 
     const newGroups =
       responses[0].status === "fulfilled" ? responses[0].value : [];
+
+    // someetimes invited is fulfilled but the value is undefined
     const invited =
-      responses[1].status === "fulfilled" ? responses[1].value : [];
+      responses[1].status === "fulfilled" ? responses[1].value || [] : [];
 
     console.log("groups: ", newGroups);
     console.log("invited Answer:", invited);
