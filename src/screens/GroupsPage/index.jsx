@@ -4,6 +4,7 @@ import { GroupsContext, UserContext } from "../../context";
 import GroupForm from "./GroupForm";
 import Notification from "./Notification";
 import Group from "./Group";
+import Navigation from "../../components/Navigation";
 
 import styled from "styled-components";
 import ButtonPrimary from "../../components/UI/buttons/ButtonPrimary";
@@ -27,49 +28,52 @@ const GroupsPage = (props) => {
   }, [groupsContext]);
 
   return (
-    <Page>
-      {inCreation && <GroupForm setInCreation={setInCreation} />}
+    <>
+      <Navigation />
+      <Page>
+        {inCreation && <GroupForm setInCreation={setInCreation} />}
 
-      <Menu>
-        <ButtonPrimary onClick={() => setInCreation(true)}>
-          Add group
-        </ButtonPrimary>
-      </Menu>
+        <Menu>
+          <ButtonPrimary onClick={() => setInCreation(true)}>
+            Add group
+          </ButtonPrimary>
+        </Menu>
 
-      {userContext.received.length !== 0 && (
-        <section className="notifications">
-          <GroupTitle>Notifications</GroupTitle>
+        {userContext.received.length !== 0 && (
+          <section className="notifications">
+            <GroupTitle>Notifications</GroupTitle>
+            <GroupList>
+              {userContext.received.map((notif) => (
+                <Notification key={notif.id} data={notif} />
+              ))}
+            </GroupList>
+          </section>
+        )}
+
+        <section className="ownGroups">
+          <GroupTitle>My own groups</GroupTitle>
           <GroupList>
-            {userContext.received.map((notif) => (
-              <Notification key={notif.id} data={notif} />
-            ))}
+            {groups
+              .filter((group) => group.ownerId === userContext.user.id)
+              .map((group) => (
+                <Group key={group.id} group={group}></Group>
+              ))}
           </GroupList>
         </section>
-      )}
 
-      <section className="ownGroups">
-        <GroupTitle>My own groups</GroupTitle>
-        <GroupList>
-          {groups
-            .filter((group) => group.ownerId === userContext.user.id)
-            .map((group) => (
-              <Group key={group.id} group={group}></Group>
-            ))}
-        </GroupList>
-      </section>
-
-      <section className="otherGroups">
-        <GroupTitle>Other groups</GroupTitle>
-        <GroupList>
-          {/* TODO: format groups into lists by ownerIds */}
-          {groups
-            .filter((group) => group.ownerId !== userContext.user.id)
-            .map((group) => (
-              <Group key={group.id} group={group}></Group>
-            ))}
-        </GroupList>
-      </section>
-    </Page>
+        <section className="otherGroups">
+          <GroupTitle>Other groups</GroupTitle>
+          <GroupList>
+            {/* TODO: format groups into lists by ownerIds */}
+            {groups
+              .filter((group) => group.ownerId !== userContext.user.id)
+              .map((group) => (
+                <Group key={group.id} group={group}></Group>
+              ))}
+          </GroupList>
+        </section>
+      </Page>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import { UserContext } from "../../context";
 import { saveDefault } from "../../requests";
 import useCards from "../../hooks/useCards";
 
+import Navigation from "../../components/Navigation";
 import Menu from "../../components/UI/Menu";
 import Page from "../../components/UI/Page";
 import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
@@ -33,18 +34,21 @@ const BoardPage = (props) => {
   };
 
   return (
-    <Page>
-      <Menu>
-        <ButtonWithResponse
-          variant="confirm"
-          title={"Save as default"}
-          onClick={save}
-        >
-          Save
-        </ButtonWithResponse>
-      </Menu>
-      <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
-    </Page>
+    <>
+      <Navigation />
+      <Page>
+        <Menu>
+          <ButtonWithResponse
+            variant="confirm"
+            title={"Save as default"}
+            onClick={save}
+          >
+            Save
+          </ButtonWithResponse>
+        </Menu>
+        <MMBoard starterCards={starterCards} setSaveCards={setSaveCards} />
+      </Page>
+    </>
   );
 };
 

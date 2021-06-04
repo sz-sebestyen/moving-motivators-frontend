@@ -4,6 +4,7 @@ import React, { useContext, useRef, useState } from "react";
 import { UserContext, setToken, setUserId } from "../../context";
 import { login } from "../../requests";
 
+import Navigation from "../../components/Navigation";
 import Form from "../../components/UI/Form/Form";
 import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
@@ -67,40 +68,43 @@ const Login = (props) => {
   }
 
   return (
-    <Form>
-      <div>
-        <label htmlFor="loginFormEmail">Email</label>
-        <input
-          type="email"
-          name="loginFormEmail"
-          id="loginFormEmail"
-          required
-          onChange={handleEmail}
-          disabled={isBusy}
-          value={emailState}
-        />
-      </div>
+    <>
+      <Navigation />
+      <Form>
+        <div>
+          <label htmlFor="loginFormEmail">Email</label>
+          <input
+            type="email"
+            name="loginFormEmail"
+            id="loginFormEmail"
+            required
+            onChange={handleEmail}
+            disabled={isBusy}
+            value={emailState}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="loginFormPassword">Password</label>
-        <input
-          ref={passwordInput}
-          type="password"
-          name="loginFormPassword"
-          id="loginFormPassword"
-          required
-          onChange={handlePassword}
-          disabled={isBusy}
-          value={passwordState}
-        />
-      </div>
+        <div>
+          <label htmlFor="loginFormPassword">Password</label>
+          <input
+            ref={passwordInput}
+            type="password"
+            name="loginFormPassword"
+            id="loginFormPassword"
+            required
+            onChange={handlePassword}
+            disabled={isBusy}
+            value={passwordState}
+          />
+        </div>
 
-      <div>
-        <ButtonWithResponse variant="confirm" onClick={handleSave}>
-          Login
-        </ButtonWithResponse>
-      </div>
-    </Form>
+        <div>
+          <ButtonWithResponse variant="confirm" onClick={handleSave}>
+            Login
+          </ButtonWithResponse>
+        </div>
+      </Form>
+    </>
   );
 };
 

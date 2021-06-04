@@ -1,8 +1,4 @@
-import Navigation from "../components/Navigation";
-
 import Home from "./Home";
-
-// pages
 import BoardPage from "./BoardPage";
 import Login from "./Login";
 import Profile from "./Profile";
@@ -16,8 +12,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const Router = () => (
   <BrowserRouter>
-    <Navigation />
-
     <Switch>
       <Route path="/login">
         <Login />

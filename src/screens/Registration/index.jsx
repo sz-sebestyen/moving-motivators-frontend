@@ -3,6 +3,7 @@ import { UserContext } from "../../context";
 import { Redirect } from "react-router-dom";
 import { registerUser } from "../../requests";
 
+import Navigation from "../../components/Navigation";
 import Form from "../../components/UI/Form/Form";
 import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
@@ -62,72 +63,75 @@ const Registration = (props) => {
   }
 
   return (
-    <Form>
-      <div>
-        <label htmlFor="Name">Name</label>
-        <input
-          ref={name}
-          type="text"
-          name="Name"
-          id="Name"
-          required
-          disabled={isBusy}
-        />
-      </div>
+    <>
+      <Navigation />
+      <Form>
+        <div>
+          <label htmlFor="Name">Name</label>
+          <input
+            ref={name}
+            type="text"
+            name="Name"
+            id="Name"
+            required
+            disabled={isBusy}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="Email">Email</label>
-        <input
-          ref={email}
-          type="email"
-          name="Email"
-          id="Email"
-          required
-          disabled={isBusy}
-        />
-      </div>
+        <div>
+          <label htmlFor="Email">Email</label>
+          <input
+            ref={email}
+            type="email"
+            name="Email"
+            id="Email"
+            required
+            disabled={isBusy}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="Company">Company</label>
-        <input
-          ref={company}
-          type="text"
-          name="Company"
-          id="Company"
-          required
-          disabled={isBusy}
-        />
-      </div>
-      <div>
-        <label htmlFor="Position">Position</label>
-        <input
-          ref={position}
-          type="text"
-          name="Position"
-          id="Position"
-          required
-          disabled={isBusy}
-        />
-      </div>
+        <div>
+          <label htmlFor="Company">Company</label>
+          <input
+            ref={company}
+            type="text"
+            name="Company"
+            id="Company"
+            required
+            disabled={isBusy}
+          />
+        </div>
+        <div>
+          <label htmlFor="Position">Position</label>
+          <input
+            ref={position}
+            type="text"
+            name="Position"
+            id="Position"
+            required
+            disabled={isBusy}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="Password">Password</label>
-        <input
-          ref={password}
-          type="password"
-          name="Password"
-          id="Password"
-          required
-          disabled={isBusy}
-        />
-      </div>
+        <div>
+          <label htmlFor="Password">Password</label>
+          <input
+            ref={password}
+            type="password"
+            name="Password"
+            id="Password"
+            required
+            disabled={isBusy}
+          />
+        </div>
 
-      <div>
-        <ButtonWithResponse variant="confirm" onClick={handleSubmit}>
-          Register
-        </ButtonWithResponse>
-      </div>
-    </Form>
+        <div>
+          <ButtonWithResponse variant="confirm" onClick={handleSubmit}>
+            Register
+          </ButtonWithResponse>
+        </div>
+      </Form>
+    </>
   );
 };
 

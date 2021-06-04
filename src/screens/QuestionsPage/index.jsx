@@ -5,6 +5,7 @@ import { UserContext, GroupsContext, QuestionsContext } from "../../context";
 import InvitationPopUp from "./InvitationPopUp";
 import QuestionForm from "./QuestionForm";
 import Question from "./Question";
+import Navigation from "../../components/Navigation";
 
 import styled from "styled-components";
 import ButtonPrimary from "../../components/UI/buttons/ButtonPrimary";
@@ -42,53 +43,56 @@ const QuestionsPage = (props) => {
   );
 
   return (
-    <Page>
-      {inCreation && (
-        <QuestionForm setInCreation={setInCreation} groupId={id} />
-      )}
-      {inInvitation && (
-        <InvitationPopUp
-          setInInvitation={setInInvitation}
-          currentGroup={currentGroup}
-        />
-      )}
+    <>
+      <Navigation />
+      <Page>
+        {inCreation && (
+          <QuestionForm setInCreation={setInCreation} groupId={id} />
+        )}
+        {inInvitation && (
+          <InvitationPopUp
+            setInInvitation={setInInvitation}
+            currentGroup={currentGroup}
+          />
+        )}
 
-      {/* only visible for owner */}
-      {currentGroup && currentGroup.ownerId === userContext.user.id && (
-        <Menu>
-          <ButtonPrimary type="button" onClick={() => setInCreation(true)}>
-            Add question
-          </ButtonPrimary>
-          <ButtonPrimary
-            title="Invite member"
-            type="button"
-            onClick={() => setInInvitation(true)}
-          >
-            Invite
-          </ButtonPrimary>
+        {/* only visible for owner */}
+        {currentGroup && currentGroup.ownerId === userContext.user.id && (
+          <Menu>
+            <ButtonPrimary type="button" onClick={() => setInCreation(true)}>
+              Add question
+            </ButtonPrimary>
+            <ButtonPrimary
+              title="Invite member"
+              type="button"
+              onClick={() => setInInvitation(true)}
+            >
+              Invite
+            </ButtonPrimary>
 
-          <ButtonWithResponse
-            variant="danger"
-            title="Delete this group"
-            onClick={() => {}}
-          >
-            Delete group
-          </ButtonWithResponse>
-        </Menu>
-      )}
+            <ButtonWithResponse
+              variant="danger"
+              title="Delete this group"
+              onClick={() => {}}
+            >
+              Delete group
+            </ButtonWithResponse>
+          </Menu>
+        )}
 
-      <GroupTitle>{currentGroup && currentGroup.value}</GroupTitle>
+        <GroupTitle>{currentGroup && currentGroup.value}</GroupTitle>
 
-      <QuestionList>
-        {questions.map((question) => (
-          <Question
-            key={question.id}
-            question={question}
-            groupId={id}
-          ></Question>
-        ))}
-      </QuestionList>
-    </Page>
+        <QuestionList>
+          {questions.map((question) => (
+            <Question
+              key={question.id}
+              question={question}
+              groupId={id}
+            ></Question>
+          ))}
+        </QuestionList>
+      </Page>
+    </>
   );
 };
 

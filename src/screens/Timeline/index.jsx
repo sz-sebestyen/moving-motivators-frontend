@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../context";
 
 import { getCardLists } from "../../requests";
+import Navigation from "../../components/Navigation";
 
 /**
  * Timeline component is responsible for rendering a page where
@@ -30,19 +31,22 @@ const Timeline = (props) => {
   }, []); // eslint-disable-line
 
   return (
-    <div className="timeline">
-      {olderLists &&
-        olderLists.map((cards, index) => (
-          <div key={index}>
-            {cards
-              .sort((a, b) => a.position - b.position)
-              .map((card) => (
-                <span key={card.position}>{`${card.type} | `}</span>
-              ))}
-            <div>--------------------------------</div>
-          </div>
-        ))}
-    </div>
+    <>
+      <Navigation />
+      <div className="timeline">
+        {olderLists &&
+          olderLists.map((cards, index) => (
+            <div key={index}>
+              {cards
+                .sort((a, b) => a.position - b.position)
+                .map((card) => (
+                  <span key={card.position}>{`${card.type} | `}</span>
+                ))}
+              <div>--------------------------------</div>
+            </div>
+          ))}
+      </div>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useContext, useRef, useState } from "react";
 import { editUser } from "../../requests";
 import { UserContext } from "../../context";
 
+import Navigation from "../../components/Navigation";
 import Form from "../../components/UI/Form/Form";
 import ButtonWithResponse from "../../components/UI/buttons/ButtonWithResponse";
 
@@ -42,65 +43,68 @@ const Profile = (props) => {
   };
 
   return (
-    <Form>
-      <div>
-        <label htmlFor="FirstName">First name</label>
-        <input
-          ref={firstName}
-          type="text"
-          name="FirstName"
-          id="FirstName"
-          required
-          disabled={isBusy}
-        />
-      </div>
+    <>
+      <Navigation />
+      <Form>
+        <div>
+          <label htmlFor="FirstName">First name</label>
+          <input
+            ref={firstName}
+            type="text"
+            name="FirstName"
+            id="FirstName"
+            required
+            disabled={isBusy}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="LastName">Last name</label>
-        <input
-          ref={lastName}
-          type="text"
-          name="LastName"
-          id="LastName"
-          required
-          disabled={isBusy}
-        />
-      </div>
+        <div>
+          <label htmlFor="LastName">Last name</label>
+          <input
+            ref={lastName}
+            type="text"
+            name="LastName"
+            id="LastName"
+            required
+            disabled={isBusy}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="Company">Company</label>
-        <input
-          ref={company}
-          type="text"
-          name="Company"
-          id="Company"
-          required
-          disabled={isBusy}
-        />
-      </div>
+        <div>
+          <label htmlFor="Company">Company</label>
+          <input
+            ref={company}
+            type="text"
+            name="Company"
+            id="Company"
+            required
+            disabled={isBusy}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="Position">Position</label>
-        <input
-          ref={position}
-          type="text"
-          name="Position"
-          id="Position"
-          required
-          disabled={isBusy}
-        />
-      </div>
+        <div>
+          <label htmlFor="Position">Position</label>
+          <input
+            ref={position}
+            type="text"
+            name="Position"
+            id="Position"
+            required
+            disabled={isBusy}
+          />
+        </div>
 
-      <div>
-        <ButtonWithResponse
-          variant="confirm"
-          title="Save changes"
-          onClick={saveChanges}
-        >
-          Save
-        </ButtonWithResponse>
-      </div>
-    </Form>
+        <div>
+          <ButtonWithResponse
+            variant="confirm"
+            title="Save changes"
+            onClick={saveChanges}
+          >
+            Save
+          </ButtonWithResponse>
+        </div>
+      </Form>
+    </>
   );
 };
 

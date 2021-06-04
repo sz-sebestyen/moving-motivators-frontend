@@ -6,6 +6,7 @@ import { setAnswer, closeQuestion, editNote } from "../../requests";
 import useCards from "../../hooks/useCards";
 
 import MMBoard from "../../components/MMBoard/MMBoard";
+import Navigation from "../../components/Navigation";
 
 import styled from "styled-components";
 import Page from "../../components/UI/Page";
@@ -79,27 +80,30 @@ const AnswerPage = (props) => {
   };
 
   return (
-    <Page>
-      <Menu
-        isClosedAnswer={question && question.closed}
-        {...{ save, close, finalizeStatus }}
-      />
+    <>
+      <Navigation />
+      <Page>
+        <Menu
+          isClosedAnswer={question && question.closed}
+          {...{ save, close, finalizeStatus }}
+        />
 
-      <QuestionTitle>{question ? question.value : ""}</QuestionTitle>
+        <QuestionTitle>{question ? question.value : ""}</QuestionTitle>
 
-      <MMBoard
-        starterCards={previousCards || defaultCards}
-        setSaveCards={setSaveCards}
-      />
+        <MMBoard
+          starterCards={previousCards || defaultCards}
+          setSaveCards={setSaveCards}
+        />
 
-      <NoteArea
-        ref={note}
-        defaultValue={question && question.note}
-        placeholder="save a note"
-        disabled={question && question.closed}
-        style={{ resize: "none" }}
-      />
-    </Page>
+        <NoteArea
+          ref={note}
+          defaultValue={question && question.note}
+          placeholder="save a note"
+          disabled={question && question.closed}
+          style={{ resize: "none" }}
+        />
+      </Page>
+    </>
   );
 };
 
