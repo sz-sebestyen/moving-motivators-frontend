@@ -1,16 +1,4 @@
-import Navigation from "./components/Navigation";
-
-import Home from "./screens/Home";
-
-// pages
-import BoardPage from "./components/BoardPage";
-import Login from "./components/Login";
-import Profile from "./components/Profile";
-import Timeline from "./components/Timeline";
-import GroupsPage from "./components/GroupsPage";
-import QuestionsPage from "./components/QuestionsPage";
-import AnswerPage from "./components/AnswerPage/AnswerPage";
-import Registration from "./components/Registration";
+import Router from "./screens/Router";
 
 import {
   UserContext,
@@ -34,7 +22,6 @@ import {
   getInvited,
 } from "./requests";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 /**
@@ -133,39 +120,7 @@ function App() {
         <QuestionsContext.Provider
           value={[questionsContext, setQuestionsContext]}
         >
-          <Router>
-            <Navigation />
-
-            <Switch>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/register">
-                <Registration />
-              </Route>
-              <Route path="/board">
-                <BoardPage />
-              </Route>
-              <Route path="/groups">
-                <GroupsPage />
-              </Route>
-              <Route path="/question-group/:id">
-                <QuestionsPage />
-              </Route>
-              <Route path="/question/:groupId/:questionId">
-                <AnswerPage />
-              </Route>
-              <Route path="/profile">
-                <Profile />
-              </Route>
-              <Route path="/timeline">
-                <Timeline />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
-          </Router>
+          <Router />
         </QuestionsContext.Provider>
       </GroupsContext.Provider>
     </UserContext.Provider>
