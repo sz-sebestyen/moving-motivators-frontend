@@ -1,14 +1,4 @@
-import Navigation from "./components/Navigation/Navigation";
-
-// pages
-import BoardPage from "./components/BoardPage/BoardPage";
-import Login from "./components/Login/Login";
-import Profile from "./components/Profile/Profile";
-import Timeline from "./components/Timeline/Timeline";
-import QuestionGroups from "./components/QuestionGroups/QuestionGroups";
-import QuestionGroupPage from "./components/QuestionGroupPage/QuestionGroupPage";
-import AnswerPage from "./components/AnswerPage/AnswerPage";
-import Registration from "./components/Registration/Registration";
+import Router from "./screens/Router";
 
 import {
   UserContext,
@@ -21,7 +11,7 @@ import {
   getUserId,
   removeToken,
   removeUserId,
-} from "./components/Context/Context";
+} from "./context";
 
 import {
   getUser,
@@ -30,12 +20,9 @@ import {
   getSentNotifications,
   getReceivedNotifications,
   getInvited,
-} from "./components/requests/requests";
+} from "./requests";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import React, { useContext, useState, useEffect } from "react";
-
-import "./App.scss";
+import React, { useState, useEffect } from "react";
 
 /**
  * App component is responsible for rendering the navigation bar and routing
@@ -46,25 +33,31 @@ function App() {
   const [groupsContext, setGroupsContext] = useState(defaultGroups);
   const [questionsContext, setQuestionsContext] = useState(defaultQuestions);
 
-  useEffect(() => {
-    console.log("userContext changed ", userContext);
-  }, [userContext]);
-
   const updateQuestions = async (newGroups) => {
     const newQuestionRows = await getAllQuestions(newGroups);
     console.log("new questions: ", newQuestionRows);
 
+    /* Merge array of arrays into one array */
     const merged = [].concat.apply([], newQuestionRows);
     console.log("nextQContext: ", merged);
     setQuestionsContext(() => merged);
   };
 
   const updateGroups = async (user) => {
-    const newGroups = await getQuestionGroups(user.groupIds);
-    console.log("groups: ", newGroups);
+    const responses = await Promise.allSettled([
+      getQuestionGroups(user.groupIds),
+      getInvited(),
+    ]);
 
-    const invited = await getInvited();
-    console.log("inviAns:", invited);
+    const newGroups =
+      responses[0].status === "fulfilled" ? responses[0].value : [];
+
+    // someetimes invited is fulfilled but the value is undefined
+    const invited =
+      responses[1].status === "fulfilled" ? responses[1].value || [] : [];
+
+    console.log("groups: ", newGroups);
+    console.log("invited Answer:", invited);
 
     const allGroups = [...newGroups, ...invited].sort((a, b) => b.id - a.id);
 
@@ -79,22 +72,32 @@ function App() {
    */
   const updateUser = async () => {
     if (getToken() && getUserId()) {
-      const user = await getUser(getUserId());
+      const user = !userContext.loggedIn
+        ? await getUser(getUserId())
+        : userContext.user;
       console.log("user:", user);
 
       if (user) {
-        const sentNoties = await getSentNotifications();
-        console.log("sent notifications:", sentNoties);
+        const responses = await Promise.allSettled([
+          getSentNotifications(),
+          getReceivedNotifications(),
+        ]);
 
-        const receivedNoties = await getReceivedNotifications();
+        const sentNoties =
+          responses[0].status === "fulfilled" ? responses[0].value : [];
+        const receivedNoties =
+          responses[1].status === "fulfilled" ? responses[1].value : [];
+
+        console.log("sent notifications:", sentNoties);
         console.log("received notifications:", receivedNoties);
 
         setUserContext((prev) => ({
           ...prev,
           loggedIn: true,
           user: user,
-          received: receivedNoties,
-          sent: sentNoties,
+          received: receivedNoties || [],
+          sent: sentNoties || [],
+          dataLoaded: true,
         }));
 
         updateGroups(user);
@@ -102,8 +105,6 @@ function App() {
         removeUserId();
         removeToken();
       }
-
-      setUserContext((prev) => ({ ...prev, dataLoaded: true }));
     }
   };
 
@@ -111,7 +112,7 @@ function App() {
     if (!userContext.dataLoaded) {
       updateUser();
     }
-  });
+  }, [userContext]); // eslint-disable-line
 
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>
@@ -119,59 +120,10 @@ function App() {
         <QuestionsContext.Provider
           value={[questionsContext, setQuestionsContext]}
         >
-          <Router>
-            <div
-              className="App"
-              onDragStart={(event) => event.preventDefault()}
-            >
-              <Navigation />
-
-              <div className="pages">
-                <Switch>
-                  <Route path="/login">
-                    <Login />
-                  </Route>
-                  <Route path="/register">
-                    <Registration />
-                  </Route>
-                  <Route path="/board">
-                    <BoardPage />
-                  </Route>
-                  <Route path="/groups">
-                    <QuestionGroups />
-                  </Route>
-                  <Route path="/question-group/:id">
-                    <QuestionGroupPage />
-                  </Route>
-                  <Route path="/question/:groupId/:questionId">
-                    <AnswerPage />
-                  </Route>
-                  <Route path="/profile">
-                    <Profile />
-                  </Route>
-                  <Route path="/timeline">
-                    <Timeline />
-                  </Route>
-                  <Route path="/">
-                    <Home />
-                  </Route>
-                </Switch>
-              </div>
-            </div>
-          </Router>
+          <Router />
         </QuestionsContext.Provider>
       </GroupsContext.Provider>
     </UserContext.Provider>
-  );
-}
-
-function Home() {
-  const [userContext] = useContext(UserContext);
-  return (
-    <>
-      <p>{userContext.loggedIn ? "logged in with:" : "logged out"}</p>
-      <p>{userContext.user.name}</p>
-    </>
   );
 }
 

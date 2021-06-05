@@ -1,17 +1,15 @@
-import "./MMBoard.scss";
-import { useState, useRef, useContext, useEffect } from "react";
-
-import zoomOut from "../../images/search-minus-solid.svg";
-import zoomIn from "../../images/search-plus-solid.svg";
-
+import { useState, useRef, useEffect } from "react";
 import {
-  cardMap,
   NUMBER_OF_CARDS,
   stringToNumCard,
   numToStringCard,
   stringToNumValue,
   numToStringValue,
-} from "../CardLib/CardLib";
+} from "./CardLib";
+import MMCard from "./MMCard";
+import { CARD_SIZE, TILE_SIZE } from "./MMCardView";
+
+import styled from "styled-components";
 
 /**
  * MMBoard component is responsible for rendering a board where the user can
@@ -23,73 +21,13 @@ const MAX_VALUE = 2;
 const MIN_INDEX = 0;
 const MAX_INDEX = 9;
 
-const TILE_SIZE = 120;
-const CARD_SIZE = 120;
-const DEFAULT_CARD_VALUE = 1;
-
-const ZOOM = 3;
-const ZOOM_TOP = 0;
-const ZOOM_LEFT = 420;
-const ZOOM_Z_INDEX = 999;
-
-const DRAGGED_CARD_OPACITY = 0;
-
 /**
  * Provides a fallback card arrangement.
  */
-const getCards = () => {
+const getFallbackCards = () => {
   return Array(NUMBER_OF_CARDS)
     .fill()
-    .map((_, index) => ({ index, value: DEFAULT_CARD_VALUE }));
-};
-
-/**
- * Renders a card.
- * @param {*} props
- */
-const MMCard = (props) => {
-  const [zoom, setZoom] = useState(false);
-
-  return (
-    <div
-      className={`MMCard ${props.isDragged ? "" : "nice"}`}
-      onDragStart={(event) => {
-        event.stopPropagation();
-        event.dataTransfer.effectAllowed = "move";
-        props.setDragTarget(props.card.index);
-        const box = event.target.getBoundingClientRect();
-        props.setDragOffset({
-          x: event.clientX - box.x,
-          y: event.clientY - box.y,
-        });
-      }}
-      onDragEnd={() => props.setDragTarget()}
-      style={
-        zoom
-          ? {
-              top: ZOOM_TOP + "px",
-              left: ZOOM_LEFT + "px",
-              width: CARD_SIZE * ZOOM + "px",
-              height: CARD_SIZE * ZOOM + "px",
-              zIndex: ZOOM_Z_INDEX,
-            }
-          : {
-              top: props.card.value * CARD_SIZE + "px",
-              left: props.card.index * CARD_SIZE + "px",
-              ...(props.isDragged ? { opacity: DRAGGED_CARD_OPACITY } : {}),
-            }
-      }
-      draggable
-    >
-      <img src={cardMap[props.type]} alt="card" />
-      <img
-        src={zoom ? zoomOut : zoomIn}
-        alt="zoom toggle"
-        className="zoom"
-        onClick={() => setZoom((prev) => !prev)}
-      />
-    </div>
-  );
+    .map((_, index) => ({ index, value: 1 }));
 };
 
 /**
@@ -115,25 +53,28 @@ const getDropCoords = (event, mmb, dragOffset) => {
   return [index, value];
 };
 
-const MMBoard = (props) => {
+const MMBoard = ({ starterCards, setSaveCards }) => {
   const mmb = useRef(null);
+
+  const [cards, setCards] = useState(getFallbackCards());
 
   /**
    * Transform data into a usable form.
    */
-  let cardList = Array(10).fill();
-  if (props.starterCards) {
-    props.starterCards.forEach((card) => {
-      cardList[stringToNumCard[card.type]] = {
-        value: stringToNumValue[card.value],
-        index: card.position,
-      };
-    });
-  } else {
-    cardList = getCards();
-  }
+  useEffect(() => {
+    let cardList = Array(10).fill();
+    if (starterCards) {
+      starterCards.forEach((card) => {
+        cardList[stringToNumCard[card.type]] = {
+          value: stringToNumValue[card.value],
+          index: card.position,
+        };
+      });
 
-  const [cards, setCards] = useState(cardList);
+      setCards(cardList);
+    }
+  }, [starterCards]);
+
   const [dragTarget, setDragTarget] = useState();
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragOverTarget, setDragOverTarget] = useState({});
@@ -172,8 +113,8 @@ const MMBoard = (props) => {
     }));
 
     console.log("cards updated: ", saveList);
-    props.setSaveCards(saveList);
-  }, [cards]);
+    setSaveCards(saveList);
+  }, [cards]); // eslint-disable-line
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -190,15 +131,14 @@ const MMBoard = (props) => {
   };
 
   return (
-    <div className="mmbOuter">
-      <div className="direction">
+    <MmbWrap>
+      <Directions>
         <div className="left">Least important</div>
         <div className="right">Most important</div>
-      </div>
+      </Directions>
 
-      <div
+      <Mmb
         ref={mmb}
-        className="mmb"
         onDragOver={handleDragOver}
         onDragStart={(event) => event.preventDefault()}
       >
@@ -215,9 +155,41 @@ const MMBoard = (props) => {
                 isDragged={dragTarget === cards[type].index}
               />
             ))}
-      </div>
-    </div>
+      </Mmb>
+    </MmbWrap>
   );
 };
+
+const MmbWrap = styled.div`
+  width: 1200px;
+  margin: 0 auto;
+`;
+
+const Directions = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: stretch;
+  font-size: 1.4em;
+  padding-bottom: 10px;
+
+  .left {
+    flex-basis: 50%;
+    text-align: left;
+  }
+
+  .right {
+    flex-basis: 50%;
+    text-align: right;
+  }
+`;
+
+const Mmb = styled.div`
+  box-sizing: content-box;
+  position: relative;
+  width: 100%;
+  height: 360px;
+  border-top: 5px solid green;
+  border-bottom: 5px solid red;
+`;
 
 export default MMBoard;
