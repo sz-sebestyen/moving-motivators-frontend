@@ -13,6 +13,16 @@ import styled from "styled-components";
 export default function Navigation(props) {
   const [userContext, setUserContext] = useContext(UserContext);
 
+  const logOut = () => {
+    setUserContext((prev) => ({
+      ...prev,
+      loggedIn: false,
+      dataLoaded: false,
+    }));
+    removeUserId();
+    removeToken();
+  };
+
   const baseNavLinks = [
     {
       text: "Home",
@@ -41,15 +51,7 @@ export default function Navigation(props) {
       text: "Log out",
       props: {
         to: "/login",
-        onClick: (event) => {
-          setUserContext((prev) => ({
-            ...prev,
-            loggedIn: false,
-            dataLoaded: false,
-          }));
-          removeUserId();
-          removeToken();
-        },
+        onClick: logOut,
       },
     },
   ];
@@ -73,13 +75,11 @@ export default function Navigation(props) {
   return (
     <Nav>
       <ul>
-        {navlinks.map((navlink, index) => {
-          return (
-            <li key={index}>
-              <StyledLink {...navlink.props}>{navlink.text}</StyledLink>
-            </li>
-          );
-        })}
+        {navlinks.map((navlink, index) => (
+          <li key={index}>
+            <StyledLink {...navlink.props}>{navlink.text}</StyledLink>
+          </li>
+        ))}
       </ul>
     </Nav>
   );
