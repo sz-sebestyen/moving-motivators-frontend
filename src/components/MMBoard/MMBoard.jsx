@@ -6,7 +6,8 @@ import {
   stringToNumValue,
   numToStringValue,
 } from "./CardLib";
-import MMCard, { CARD_SIZE, TILE_SIZE } from "./MMCard";
+import MMCard from "./MMCard";
+import { CARD_SIZE, TILE_SIZE } from "./MMCardView";
 
 import styled from "styled-components";
 
