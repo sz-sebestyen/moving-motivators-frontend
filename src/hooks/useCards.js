@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getCardList } from "../requests/requests";
+import { getCardList } from "../requests";
 
 const useCards = (cardListId) => {
   const [defaultCards, setDefaultCards] = useState();
@@ -17,7 +17,7 @@ const useCards = (cardListId) => {
 
   useEffect(() => {
     loadCardList();
-  }, [cardListId]);
+  }, [cardListId]); // eslint-disable-line
 
   return defaultCards;
 };

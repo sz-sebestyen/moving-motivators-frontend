@@ -1,14 +1,4 @@
-import Navigation from "./components/Navigation/Navigation";
-
-// pages
-import BoardPage from "./components/BoardPage/BoardPage";
-import Login from "./components/Login/Login";
-import Profile from "./components/Profile/Profile";
-import Timeline from "./components/Timeline/Timeline";
-import GroupsPage from "./components/GroupsPage/GroupsPage";
-import QuestionsPage from "./components/QuestionsPage/QuestionsPage";
-import AnswerPage from "./components/AnswerPage/AnswerPage";
-import Registration from "./components/Registration/Registration";
+import Router from "./screens/Router";
 
 import {
   UserContext,
@@ -21,7 +11,7 @@ import {
   getUserId,
   removeToken,
   removeUserId,
-} from "./components/Context/Context";
+} from "./context";
 
 import {
   getUser,
@@ -30,10 +20,9 @@ import {
   getSentNotifications,
   getReceivedNotifications,
   getInvited,
-} from "./requests/requests";
+} from "./requests";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 /**
  * App component is responsible for rendering the navigation bar and routing
@@ -62,8 +51,10 @@ function App() {
 
     const newGroups =
       responses[0].status === "fulfilled" ? responses[0].value : [];
+
+    // someetimes invited is fulfilled but the value is undefined
     const invited =
-      responses[1].status === "fulfilled" ? responses[1].value : [];
+      responses[1].status === "fulfilled" ? responses[1].value || [] : [];
 
     console.log("groups: ", newGroups);
     console.log("invited Answer:", invited);
@@ -121,7 +112,7 @@ function App() {
     if (!userContext.dataLoaded) {
       updateUser();
     }
-  }, [userContext]);
+  }, [userContext]); // eslint-disable-line
 
   return (
     <UserContext.Provider value={[userContext, setUserContext]}>
@@ -129,52 +120,10 @@ function App() {
         <QuestionsContext.Provider
           value={[questionsContext, setQuestionsContext]}
         >
-          <Router>
-            <Navigation />
-
-            <Switch>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/register">
-                <Registration />
-              </Route>
-              <Route path="/board">
-                <BoardPage />
-              </Route>
-              <Route path="/groups">
-                <GroupsPage />
-              </Route>
-              <Route path="/question-group/:id">
-                <QuestionsPage />
-              </Route>
-              <Route path="/question/:groupId/:questionId">
-                <AnswerPage />
-              </Route>
-              <Route path="/profile">
-                <Profile />
-              </Route>
-              <Route path="/timeline">
-                <Timeline />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
-          </Router>
+          <Router />
         </QuestionsContext.Provider>
       </GroupsContext.Provider>
     </UserContext.Provider>
-  );
-}
-
-function Home() {
-  const [userContext] = useContext(UserContext);
-  return (
-    <>
-      <p>{userContext.loggedIn ? "logged in with:" : "logged out"}</p>
-      <p>{userContext.user.name}</p>
-    </>
   );
 }
 

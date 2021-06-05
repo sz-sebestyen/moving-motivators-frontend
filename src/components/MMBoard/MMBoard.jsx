@@ -6,7 +6,8 @@ import {
   stringToNumValue,
   numToStringValue,
 } from "./CardLib";
-import MMCard, { CARD_SIZE, TILE_SIZE } from "./MMCard";
+import MMCard from "./MMCard";
+import { CARD_SIZE, TILE_SIZE } from "./MMCardView";
 
 import styled from "styled-components";
 
@@ -52,8 +53,7 @@ const getDropCoords = (event, mmb, dragOffset) => {
   return [index, value];
 };
 
-const MMBoard = (props) => {
-  const { starterCards, setSaveCards } = props;
+const MMBoard = ({ starterCards, setSaveCards }) => {
   const mmb = useRef(null);
 
   const [cards, setCards] = useState(getFallbackCards());
@@ -114,7 +114,7 @@ const MMBoard = (props) => {
 
     console.log("cards updated: ", saveList);
     setSaveCards(saveList);
-  }, [cards]);
+  }, [cards]); // eslint-disable-line
 
   const handleDragOver = (event) => {
     event.preventDefault();
