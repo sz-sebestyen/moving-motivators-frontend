@@ -52,8 +52,7 @@ const getDropCoords = (event, mmb, dragOffset) => {
   return [index, value];
 };
 
-const MMBoard = (props) => {
-  const { starterCards, setSaveCards } = props;
+const MMBoard = ({ starterCards, setSaveCards }) => {
   const mmb = useRef(null);
 
   const [cards, setCards] = useState(getFallbackCards());
