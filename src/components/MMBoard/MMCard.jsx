@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { memo } from "react";
 import MMCardView from "./MMCardView";
+import WithZoom from "./WithZoom";
+import { CARD_SIZE } from "./MMCardView";
+
+const DRAGGED_CARD_OPACITY = 0;
 
 const MMCard = ({ card, setDragTarget, setDragOffset, isDragged, type }) => {
-  const [isZoomed, setIsZoomed] = useState(false);
-
   const handleDragStart = (event) => {
     event.stopPropagation();
     event.dataTransfer.effectAllowed = "move";
@@ -15,23 +17,36 @@ const MMCard = ({ card, setDragTarget, setDragOffset, isDragged, type }) => {
     });
   };
 
-  const handleDragEnd = () => setDragTarget();
+  const handleDragEnd = () => {
+    setDragTarget();
+    console.log("end");
+  };
 
-  const toggleZoom = () => setIsZoomed((prev) => !prev);
+  const MMCardViewWithZoom = WithZoom(MMCardView);
+
+  const notZoomedCardPosition = {
+    top: card.value * CARD_SIZE + "px",
+    left: card.index * CARD_SIZE + "px",
+  };
+
+  const cardOpacity = isDragged ? { opacity: DRAGGED_CARD_OPACITY } : {};
+
+  const inlineCardStyle = {
+    ...notZoomedCardPosition,
+    ...cardOpacity,
+  };
 
   return (
-    <MMCardView
+    <MMCardViewWithZoom
+      style={inlineCardStyle}
       {...{
-        card,
         isDragged,
         handleDragStart,
         handleDragEnd,
         type,
-        isZoomed,
-        toggleZoom,
       }}
     />
   );
 };
 
-export default MMCard;
+export default memo(MMCard);
