@@ -29,6 +29,8 @@ const Board = (props) => {
       // console.log("saveDefaultCards answer:", shouldUpdate);
       if (shouldUpdate) {
         setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+
+        return true;
       }
     }
   };

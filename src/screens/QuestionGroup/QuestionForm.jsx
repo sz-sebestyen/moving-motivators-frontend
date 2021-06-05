@@ -18,10 +18,10 @@ const QuestionForm = (props) => {
     useContext(QuestionsContext);
   const input = useRef(null);
 
-  const submitNewQuestion = async (event) => {
+  const submitNewQuestion = async () => {
     // TODO: store input value in state, and disable Create button when input is empty
     const newQuestionTitle = input.current.value.trim();
-    if (!newQuestionTitle) return;
+    if (!newQuestionTitle) return false;
 
     const newQuestion = await createQuestion({
       groupId: props.groupId,
@@ -33,6 +33,7 @@ const QuestionForm = (props) => {
     if (newQuestion) {
       //props.setInCreation(false);
       setQuestionsContext((prev) => [...prev, newQuestion]);
+      return true;
     }
   };
 

@@ -27,7 +27,7 @@ const Register = (props) => {
   const position = useRef(null);
   const password = useRef(null);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async () => {
     // TODO: refactor to be more dry
     const userInfo = {
       name: name.current.value.trim(),
@@ -51,6 +51,7 @@ const Register = (props) => {
 
     if (response) {
       setToLogin(true);
+      return true;
     }
   };
 

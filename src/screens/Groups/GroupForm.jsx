@@ -30,6 +30,7 @@ const GroupForm = (props) => {
 
     if (newGroup) {
       setGroupsContext((prev) => [...prev, newGroup]);
+      return true;
     }
   };
 

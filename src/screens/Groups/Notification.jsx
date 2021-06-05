@@ -38,19 +38,21 @@ const Notification = (props) => {
     loadNotiData();
   }, []); // eslint-disable-line
 
-  const handleAccept = async () => {
+  const accept = async () => {
     const acceptAns = await acceptInvite(props.data);
     // console.log("acceptAns:", acceptAns);
     if (acceptAns) {
       setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+      return true;
     }
   };
 
-  const handleDecline = async () => {
+  const decline = async () => {
     const declineAnswer = await declineInvite(props.data);
     // console.log("declineAnswer:", declineAnswer);
     if (declineAnswer) {
       setUserContext((prev) => ({ ...prev, dataLoaded: false }));
+      return true;
     }
   };
 
@@ -65,7 +67,7 @@ const Notification = (props) => {
       <ButtonWithResponse
         variant="confirm"
         title="Accept invitation"
-        onClick={handleAccept}
+        onClick={accept}
       >
         Accept
       </ButtonWithResponse>
@@ -73,7 +75,7 @@ const Notification = (props) => {
       <ButtonWithResponse
         variant="danger"
         title="Decline invitation"
-        onClick={handleDecline}
+        onClick={decline}
       >
         Decline
       </ButtonWithResponse>

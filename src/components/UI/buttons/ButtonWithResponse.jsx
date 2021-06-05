@@ -69,14 +69,17 @@ const ButtonWithResponse = ({
 
   const handleClick = async (event) => {
     setIsBusy(true);
-    await asyncAction(event);
+    const isSuccessful = await asyncAction(event);
 
     if (isMounted.current) {
       setIsBusy(false);
-      setHasSucceeded(true);
-      setTimeout(() => {
-        setHasSucceeded(false);
-      }, 1500);
+
+      if (isSuccessful) {
+        setHasSucceeded(true);
+        setTimeout(() => {
+          setHasSucceeded(false);
+        }, 1500);
+      }
     }
   };
 
