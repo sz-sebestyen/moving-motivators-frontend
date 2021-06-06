@@ -5,22 +5,9 @@ import styled from "styled-components";
 export const TILE_SIZE = 120;
 export const CARD_SIZE = 120;
 
-const MMCardView = ({
-  isDragged,
-  handleDragStart,
-  handleDragEnd,
-  type,
-  children,
-  style,
-}) => {
+const MMCardView = ({ type, children, ...rest }) => {
   return (
-    <CardBox
-      className={isDragged && "noTransition"}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      draggable
-      style={style}
-    >
+    <CardBox {...rest}>
       <CardImage src={cardMap[type]} alt="card" />
 
       {children}

@@ -152,7 +152,6 @@ const MMBoard = ({ starterCards, setSaveCards }) => {
                 key={type}
                 setDragTarget={setDragTarget}
                 setDragOffset={setDragOffset}
-                isDragged={dragTarget === cards[type].index}
               />
             ))}
       </Mmb>
