@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import {
   NUMBER_OF_CARDS,
   stringToNumCard,
@@ -22,35 +22,32 @@ const MIN_INDEX = 0;
 const MAX_INDEX = 9;
 
 /**
+ * Computes the index and value of the place that is being draged over.
+ *
+ * @param {*} target Target HTMLElement
+ * @param {*} mmb Reference to the board div.
+ */
+const getDropCoords = (target, mmb) => {
+  const box = mmb.getBoundingClientRect();
+  const targetBound = target.getBoundingClientRect();
+
+  let index = Math.floor((targetBound.x + CARD_SIZE / 2 - box.x) / TILE_SIZE);
+  let value = Math.floor((targetBound.y + CARD_SIZE / 2 - box.y) / TILE_SIZE);
+
+  if (index < MIN_INDEX) index = MIN_INDEX;
+  else if (index > MAX_INDEX) index = MAX_INDEX;
+  if (value < MIN_VALUE) value = MIN_VALUE;
+  else if (value > MAX_VALUE) value = MAX_VALUE;
+  return [index, value];
+};
+
+/**
  * Provides a fallback card arrangement.
  */
 const getFallbackCards = () => {
   return Array(NUMBER_OF_CARDS)
     .fill()
     .map((_, index) => ({ index, value: 1 }));
-};
-
-/**
- * Computes the index and value of the place that is being draged over.
- *
- * @param {*} event
- * @param {*} mmb Reference to the board div.
- * @param {*} dragOffset the position of the cursor compared to the cards
- * top left corner when the drag started.
- */
-const getDropCoords = (event, mmb, dragOffset) => {
-  const box = mmb.getBoundingClientRect();
-  let index = Math.floor(
-    (event.clientX + CARD_SIZE / 2 - dragOffset.x - box.x) / TILE_SIZE
-  );
-  let value = Math.floor(
-    (event.clientY + CARD_SIZE / 2 - dragOffset.y - box.y) / TILE_SIZE
-  );
-  if (index < MIN_INDEX) index = MIN_INDEX;
-  else if (index > MAX_INDEX) index = MAX_INDEX;
-  if (value < MIN_VALUE) value = MIN_VALUE;
-  else if (value > MAX_VALUE) value = MAX_VALUE;
-  return [index, value];
 };
 
 const MMBoard = ({ starterCards, setSaveCards }) => {
@@ -76,8 +73,6 @@ const MMBoard = ({ starterCards, setSaveCards }) => {
   }, [starterCards]);
 
   const [dragTarget, setDragTarget] = useState();
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const [dragOverTarget, setDragOverTarget] = useState({});
 
   /**
    * Sets the new state of the cards.
@@ -116,19 +111,20 @@ const MMBoard = ({ starterCards, setSaveCards }) => {
     setSaveCards(saveList);
   }, [cards]); // eslint-disable-line
 
-  const handleDragOver = (event) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-    const [index, value] = getDropCoords(event, mmb.current, dragOffset);
-    if (
-      (dragOverTarget.value !== value || dragOverTarget.index !== index) &&
-      Number.isInteger(dragTarget)
-    ) {
-      setDragOverTarget({ value, index });
-      changeCardsOrder(dragTarget, index, value);
-      setDragTarget(index);
-    }
-  };
+  const handleDragOver = useCallback(
+    (target, cursorX, cursorY) => {
+      const [index, value] = getDropCoords(target, mmb.current);
+
+      if (
+        dragTarget &&
+        (dragTarget.value !== value || dragTarget.index !== index)
+      ) {
+        setDragTarget({ index, value });
+        changeCardsOrder(dragTarget.index, index, value);
+      }
+    },
+    [dragTarget]
+  );
 
   return (
     <MmbWrap>
@@ -137,21 +133,18 @@ const MMBoard = ({ starterCards, setSaveCards }) => {
         <div className="right">Most important</div>
       </Directions>
 
-      <Mmb
-        ref={mmb}
-        onDragOver={handleDragOver}
-        onDragStart={(event) => event.preventDefault()}
-      >
+      <Mmb ref={mmb} onDragStart={(event) => event.preventDefault()}>
         {cards &&
           Array(NUMBER_OF_CARDS)
             .fill()
             .map((_, type) => (
               <MMCard
+                mmbRef={mmb}
                 type={type}
                 card={cards[type]}
                 key={type}
                 setDragTarget={setDragTarget}
-                setDragOffset={setDragOffset}
+                handleDragOver={handleDragOver}
               />
             ))}
       </Mmb>
@@ -187,8 +180,6 @@ const Mmb = styled.div`
   position: relative;
   width: 100%;
   height: 360px;
-  border-top: 5px solid green;
-  border-bottom: 5px solid red;
 `;
 
 export default MMBoard;
