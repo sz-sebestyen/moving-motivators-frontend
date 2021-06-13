@@ -29,9 +29,7 @@ const CardBox = styled.div`
   height: 120px;
   cursor: grab;
   overflow: hidden;
-
-  &:not(.noTransition) {
-    transition: top 250ms ease, left 250ms ease, width 250ms ease,
-      height 250ms ease;
-  }
+  /* 
+  transition: top 250ms ease, left 250ms ease, width 250ms ease,
+    height 250ms ease; */
 `;
